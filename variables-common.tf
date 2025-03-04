@@ -61,16 +61,9 @@ variable "network_interfaces" {
       primary = optional(bool, false)
     })), [])
   }))
-  default = [ {
-    name = "name1"
-    accelerated_networking_enabled = false
-    nic_ip_config = [ {
-      name = "name2"
-      private_ip_address_allocation = "demow"
-      primary = true
-    } ]
-  } ]
-}
+  default = []
+  } 
+  
 variable "name" { 
     type = string 
     default = "1wee"
