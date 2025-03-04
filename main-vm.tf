@@ -8,16 +8,17 @@ resource "azurerm_virtual_machine_data_disk_attachment" "attach_disk" {
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
-   for_each = { for idx, vm in local.vm_list : "${vm.name}-${idx}" => vm }
-  name                  = var.name
+   #for_each = { for idx, vm in local.vm_list : "${vm.name}-${idx}" => vm }
+   for_each = length(azurerm_network_interface.nic) > 0 ? { for idx, vm in var.vm_config : vm.name => vm } : {}
+  name                  = each.value.name
   location              = var.location
   resource_group_name   = var.resource_group_name
-  size                  = var.size
-  admin_username        = var.admin_username
-  admin_password        = var.admin_password
+  size                  = each.value.size
+  admin_username        = each.value.admin_username
+  admin_password        = each.value.admin_password
   zone                  = var.zones[0]
   disable_password_authentication = false #var.password_auth_disabled
-  network_interface_ids = var.nic_ids
+  network_interface_ids = [ for nic in azurerm_network_interface.nic : nic.id] #var.nic_ids
 
   # OS Disk Configuration
   os_disk {
