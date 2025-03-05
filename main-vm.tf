@@ -1,15 +1,6 @@
-resource "azurerm_virtual_machine_data_disk_attachment" "attach_disk" {
-
-  for_each = { for idx, disk_id in var.data_disk_ids : idx => disk_id }
-  managed_disk_id = each.value
-  virtual_machine_id = azurerm_linux_virtual_machine.vm[each.key]
-  lun = tonumber(each.key)
-  caching = "ReadWrite"
-}
-
 resource "azurerm_linux_virtual_machine" "vm" {
-   #for_each = { for idx, vm in local.vm_list : "${vm.name}-${idx}" => vm }
-   for_each = length(azurerm_network_interface.nic) > 0 ? { for idx, vm in var.vm_config : vm.name => vm } : {}
+  for_each = { for obj in local.vm_list : obj.name => obj }
+   
   name                  = each.value.name
   location              = var.location
   resource_group_name   = var.resource_group_name
@@ -18,7 +9,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   admin_password        = each.value.admin_password
   zone                  = var.zones[0]
   disable_password_authentication = false #var.password_auth_disabled
-  network_interface_ids = [ for nic in azurerm_network_interface.nic : nic.id] #var.nic_ids
+  network_interface_ids = toset([for v in values(module.nic[each.key].nic_interface_list) : v.id ])
 
   # OS Disk Configuration
   os_disk {
