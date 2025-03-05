@@ -22,18 +22,15 @@ variable "vm_name" {
   default = "vm1"
 }
 
-variable "disks" {
-  description = "List of disks for this VM"
-  type = list(object({
-    name = string
-    size = number
-  }))
-  default = [ {
-     size = 64
-     name = "data-disk"
-  } ]
+# variable "disks" {
+#   description = "List of disks for this VM"
+#   type = optional(list(object({
+#     name = string
+#     size = number
+#     storage_account_type = string
+#   })), [])
   
-}
+# }
 variable "resource_group_name" {
   description = "Resource group name"
   type        = string
@@ -172,4 +169,17 @@ variable "tags" {
     "env" = "local-dev"
   }
 }
-
+# variable "resource_group_object" {
+#   description = "Resource Group Object"
+#   type        = any
+#   #default = "demorg1"
+# }
+variable "subscription_id" {
+  description = "ID of the Subscription"
+  type        = string
+  validation {
+    condition     = can(regex("\\b[0-9a-f]{8}\\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\\b[0-9a-f]{12}\\b", var.subscription_id))
+    error_message = "Must be a valid subscription id. Ex: 9e4e50cf-5a4a-4deb-a466-9086cd9e365b."
+  }
+  default = "59bab8f2-1319-472b-bb69-314d1b034ec0"
+}
