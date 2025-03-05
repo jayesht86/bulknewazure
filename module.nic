@@ -1,0 +1,23 @@
+module "nic" {
+  source = "git::https://dev.azure.com/msci-otw/tech-iac/_git/terraform-azurerm-msci-network-nic?ref=0.7"
+
+  #for_each = { for obj in var.vm_config : obj.linux_vm_name => obj }
+   for_each = { for obj in local.vm_list : obj.name => obj }
+
+  #Subscription
+  subscription_id = var.subscription_id
+
+  #Resource Group
+  #resource_group_object = var.resource_group_object
+  resource_group_object = data.azurerm_resource_group.existing_rg
+  #Tags
+  tags = local.tags
+  #Global Variables
+  #nic_subnet_id = var.linux_vm_nic_subnet_id
+  #Variables
+
+  nic_default_interface = var.vm_config[0].linux_vm_default_nic
+
+  nic_additional_interface = var.vm_config[0].linux_vm_additional_nic
+} 
+
