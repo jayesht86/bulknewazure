@@ -1,18 +1,10 @@
-resource "azurerm_managed_disk" "disk" {
-  for_each = { for disk in var.disks : disk.name => disk }
+resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment" {
+  for_each = local.disk_attachments2
 
-  name                 = each.value.name
-  resource_group_name  = var.resource_group_name
-  location             = var.location
-  storage_account_type = "Standard_LRS"
-  disk_size_gb         = each.value.size
-  create_option        = "Empty"
-  zone                 = var.zone
-/*   disks = [
-     { name = "${each.value.name}-data-disk-${each.key}", size = 64 },
-
-   ] */
-  tags = {
-    environment = "Dev"
-  }
+  managed_disk_id           = module.compute-managed_disk.managed_disk_list[each.value.disk].id
+  virtual_machine_id        = azurerm_linux_virtual_machine.vm[each.key]
+  lun                       = each.value.lun
+  caching                   = each.value.cache
+  create_option             = each.value.create_option
+  write_accelerator_enabled = each.value.write_accelerator
 }
