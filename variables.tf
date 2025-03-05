@@ -63,6 +63,7 @@ variable "sequence_start" {
 
 variable "vm_config" {
   type = list(object({
+    linux_vm_name     = string
     size              = string
     zone_list         = list(string)
     #vm_count_per_zone = number
@@ -82,8 +83,8 @@ variable "vm_config" {
     #Zones
     linux_vm_zone = optional(string)
     #Default NIC
-    linux_vm_default_nic = object({
-      #name                           = string
+    linux_vm_default_nic = optional(object({
+      nic_name                           = string
       nic_subnet_id                      = optional(string)
       nic_dns_servers                    = optional(list(string))
       nic_edge_zone                      = optional(string)
@@ -91,7 +92,7 @@ variable "vm_config" {
       accelerated_networking_enabled = optional(bool, false)
       nic_internal_dns_name_label        = optional(bool)
       nic_ip_config = optional(list(object({
-        name                  = string
+        nic_ip_config_name                  = string
         nic_ip_config_private_ip_allocation = optional(string, "Dynamic")
         nic_ip_config_private_ip_address    = optional(string)
         nic_ip_config_public_ip_id          = optional(string)
@@ -102,10 +103,10 @@ variable "vm_config" {
       })))
       #nic_association_asg_id = optional(string)
       #nic_association_nsg_id = optional(string)
-    })
+    }))
     #Additional NICs
-    linux_vm_additional_nic = object({
-      #name                           = string
+    linux_vm_additional_nic = optional(list(object({
+      nic_name                           = string
       nic_subnet_id                      = optional(string)
       nic_dns_servers                    = optional(list(string))
       nic_edge_zone                      = optional(string)
@@ -113,13 +114,13 @@ variable "vm_config" {
       accelerated_networking_enabled = optional(bool, false)
       nic_internal_dns_name_label        = optional(bool)
        nic_ip_config = optional(list(object({
-        name                  = string
+        nic_ip_config_name                  = string
         nic_ip_config_private_ip_allocation = optional(string, "Dynamic")
         nic_ip_config_private_ip_address    = optional(string)
         nic_ip_config_public_ip_id          = optional(string)
         nic_ip_config_primary               = optional(bool)
       })) )
-    })
+    })))
     #Image
     linux_vm_marketplace_image = optional(bool)
     linux_vm_image_id          = optional(string)
