@@ -1,9 +1,7 @@
- Error: Attempt to get attribute from null value
+│ Error: Missing required argument
 │
-│   on main-disk-attachment.tf line 16, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
-│   16:   managed_disk_id           = lookup(module.compute-managed_disk.managed_disk_list, each.value.disk, null).id
-│     ├────────────────
-│     │ each.value.disk is "ddsk-01-eu1pcd207"
-│     │ module.compute-managed_disk.managed_disk_list is object with 6 attributes
+│   with azurerm_virtual_machine_data_disk_attachment.disk_attachment["eu1pcd207 + ddsk-01-eu1pcd207"],
+│   on main-disk-attachment.tf line 17, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
+│   17:   virtual_machine_id        = one([for vm in azurerm_linux_virtual_machine.vm : vm.id if vm.name == each.value.vm])
 │
-│ This value is null, so it does not have any attributes.
+│ The argument "virtual_machine_id" is required, but no definition was found.
