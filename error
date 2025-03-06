@@ -1,8 +1,21 @@
- Error: Error in function call
+Error: Invalid index
 │
-│   on locals.tf line 78, in locals:
-│   78:     disk = format("ddsk-%02d-%s", index(var.managed_disk.managed_disks_list, v) + 1, v) # FIXED
+│   on main-disk-attachment.tf line 16, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
+│   16:   managed_disk_id           = module.compute-managed_disk.managed_disk_list[each.value.disk].id
 │     ├────────────────
-│     │ var.managed_disk.managed_disks_list is list of number with 3 elements
+│     │ each.value.disk is "ddsk-02-disk-data"
+│     │ module.compute-managed_disk.managed_disk_list is object with 6 attributes
 │
-│ Call to function "index" failed: item not found.
+│ The given key does not identify an element in this collection value.
+╵
+╷
+│ Error: Invalid index
+│
+│   on main-disk-attachment.tf line 16, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
+│   16:   managed_disk_id           = module.compute-managed_disk.managed_disk_list[each.value.disk].id
+│     ├────────────────
+│     │ each.value.disk is "ddsk-01-disk-data"
+│     │ module.compute-managed_disk.managed_disk_list is object with 6 attributes
+│
+│ The given key does not identify an element in this collection value.
+╵
