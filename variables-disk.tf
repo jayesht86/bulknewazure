@@ -1,5 +1,5 @@
 variable "managed_disk" {
-    type = list(object({
+    type = object({
     managed_disk_name         = string
     managed_disk_storage_type = string
     #Create Options
@@ -14,6 +14,7 @@ variable "managed_disk" {
     managed_disk_upload_size_bytes        = optional(number)
     #Disk Options
     managed_disk_size_gb     = optional(number)
+    managed_disks_list       = optional(list(number))
     managed_disk_sector_size = optional(number)
     managed_disk_tier        = optional(string)
     managed_disk_max_shares  = optional(number)
@@ -40,8 +41,8 @@ variable "managed_disk" {
     managed_disk_attachment_cache                     = optional(string)
     managed_disk_attachment_create_option             = optional(string)
     managed_disk_attachment_write_accelerator_enabled = optional(bool)
-  }))
-  default = null
+  })
+  
 }
 
 #Global Vars
@@ -68,8 +69,8 @@ variable "managed_disk" {
 # }
 
 #Encryption
-variable "managed_disk_encryption_set_id" {
-  description = "(Optional) The ID of a Disk Encryption Set which should be used to encrypt this Managed Disk."
-  type        = string
-  default     = null
-}
+# variable "managed_disk_encryption_set_id" {
+#   description = "(Optional) The ID of a Disk Encryption Set which should be used to encrypt this Managed Disk."
+#   type        = string
+#   default     = null
+# }
