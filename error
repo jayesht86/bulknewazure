@@ -5,3 +5,7 @@
 │   17:   virtual_machine_id        = one([for vm in azurerm_linux_virtual_machine.vm : vm.id if vm.name == each.value.vm])
 │
 │ The argument "virtual_machine_id" is required, but no definition was found.
+
+Error: creating Linux Virtual Machine (Subscription: "59bab8f2-1319-472b-bb69-314d1b034ec0"
+│ Resource Group Name: "demorg1"
+│ Virtual Machine Name: "eu1pcd107"): performing CreateOrUpdate: unexpected status 409 (409 Conflict) with error: OperationNotAllowed: The specified disk size 20 GB is smaller than the size of the corresponding disk in the V│ Virtual Machine Name: "eu1pcd107"): performing CreateOrUpdate: unexpected status 409 (409 Conflict) with error: OperationNotAllowed: The specified disk size 20 GB is smaller than the size of the corresponding disk in the V: OperationNotAllowed: The specified disk size 20 GB is smaller than the size of the corresponding disk in the VM image: 30 GB. This is not allowed. Please choose equal or greater size or do not specify an explicit size.
