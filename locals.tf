@@ -72,20 +72,16 @@ locals {
 
 
   ])
-  disk_attachments = var.managed_disk != null ? flatten(
-    [
-      for d in var.managed_disk : [
-        for v in d.managed_disk_attachment_vm_name : {
-          vm : v,
-          disk : d.managed_disk_name,
-          lun : d.managed_disk_attachment_lun,
-          cache : coalesce(d.managed_disk_attachment_cache, "None"),
-          create_option : coalesce(d.managed_disk_attachment_create_option, "Attach"),
-          write_accelerator : coalesce(d.managed_disk_attachment_write_accelerator_enabled, false)
-        }
-      ]
-    ]
-  ) : null
+disk_attachments = var.managed_disk != null ? flatten([
+  for v in coalesce(var.managed_disk.managed_disk_attachment_vm_name, []) : {
+    vm   = v
+    disk = format("ddsk-%02d-%s", index(var.managed_disk.managed_disks_list, v) + 1, v) # FIXED
+    lun  = var.managed_disk.managed_disk_attachment_lun
+    cache = coalesce(var.managed_disk.managed_disk_attachment_cache, "None")
+    create_option = coalesce(var.managed_disk.managed_disk_attachment_create_option, "Attach")
+    write_accelerator = coalesce(var.managed_disk.managed_disk_attachment_write_accelerator_enabled, false)
+  }
+]) : []
   disk_attachments2 = var.managed_disk != null ? { for o in local.disk_attachments : "${o.vm} + ${o.disk}" => o }  : {}
 
 }
