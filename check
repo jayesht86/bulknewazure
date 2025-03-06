@@ -1,0 +1,16 @@
+  # Fetch VM names dynamically from the created VMs
+  vm_names = [for vm in local.vm_list : vm.name]
+
+  # Automatically generate disk attachments per VM
+  disk_attachments = var.managed_disk != null ? flatten([
+    for idx, vm in local.vm_names : [
+      for disk_idx, disk_size in var.managed_disk.managed_disks_list : {
+        vm   = vm
+        disk = format("ddsk-%02d-%s", disk_idx + 1, vm) # Ensure disk names match Terraform's disk creation
+        lun  = disk_idx # Assign LUN based on index
+        cache = coalesce(var.managed_disk.managed_disk_attachment_cache, "None")
+        create_option = coalesce(var.managed_disk.managed_disk_attachment_create_option, "Attach")
+        write_accelerator = coalesce(var.managed_disk.managed_disk_attachment_write_accelerator_enabled, false)
+      }
+    ]
+  ]) : []
