@@ -53,12 +53,7 @@ product_code     = "pc"  # product code
 
 # VM Sequence Starting Number
 sequence_start = 6
-# managed_disk = [ {
-# # managed_disk_name = "demo1"
-# # managed_disk_storage_type = "Standard_LRS"
-# # managed_disk_attachment_vm_name = [ "v1", "v2" ]
-# 
-# } ]
+
 managed_disk = {
     managed_disk_name         = "disk-data"
     managed_disk_storage_type = "Standard_LRS"   
@@ -68,7 +63,7 @@ managed_disk = {
     managed_disk_timeout_update = "15m"
     managed_disk_timeout_read   = "15m"
     managed_disk_timeout_delete = "15m"
-    managed_disk_attachment_vm_name = ["attachment1", "attachment2"]
+    managed_disk_attachment_vm_name = ["eu1pcd207", "eu1pcd208"]
 
  
 
