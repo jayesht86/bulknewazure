@@ -75,7 +75,7 @@ locals {
 disk_attachments = var.managed_disk != null ? flatten([
   for idx, v in coalesce(var.managed_disk.managed_disk_attachment_vm_name, []) : {
     vm   = v
-    disk = format("ddsk-%02d-%s", idx + 1, v) # Ensuring correct name format
+    disk = format("ddsk-%02d-%s", idx + 1, v) # Ensuring exact match
     lun  = idx # Assigning LUN based on index
     cache = coalesce(var.managed_disk.managed_disk_attachment_cache, "None")
     create_option = coalesce(var.managed_disk.managed_disk_attachment_create_option, "Attach")
