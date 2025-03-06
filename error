@@ -1,7 +1,7 @@
 Error: Invalid index
 │
-│   on main-disk-attachment.tf line 5, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
-│    5:   managed_disk_id           = module.compute-managed_disk.managed_disk_list[each.value.disk].id
+│   on main-disk-attachment.tf line 16, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
+│   16:   managed_disk_id           = module.compute-managed_disk.managed_disk_list[each.value.disk].id
 │     ├────────────────
 │     │ each.value.disk is "disk-data"
 │     │ module.compute-managed_disk.managed_disk_list is object with 6 attributes
@@ -11,21 +11,10 @@ Error: Invalid index
 ╷
 │ Error: Invalid index
 │
-│   on main-disk-attachment.tf line 5, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
-│    5:   managed_disk_id           = module.compute-managed_disk.managed_disk_list[each.value.disk].id
+│   on main-disk-attachment.tf line 16, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
+│   16:   managed_disk_id           = module.compute-managed_disk.managed_disk_list[each.value.disk].id
 │     ├────────────────
 │     │ each.value.disk is "disk-data"
 │     │ module.compute-managed_disk.managed_disk_list is object with 6 attributes
-│
-│ The given key does not identify an element in this collection value.
-╵
-╷
-│ Error: Invalid index
-│
-│   on main-disk-attachment.tf line 6, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
-│    6:   virtual_machine_id        = azurerm_linux_virtual_machine.vm[each.value.vm].id
-│     ├────────────────
-│     │ azurerm_linux_virtual_machine.vm is object with 2 attributes
-│     │ each.value.vm is "eu1pcd207"
 │
 │ The given key does not identify an element in this collection value.
