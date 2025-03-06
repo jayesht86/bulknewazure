@@ -1,0 +1,457 @@
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated
+with the following symbols:
+  + create
+
+Terraform planned the following actions, but then encountered a problem:
+
+  # azurerm_linux_virtual_machine.vm["eu1pcd107"] will be created
+  + resource "azurerm_linux_virtual_machine" "vm" {
+      + admin_password                                         = (sensitive value)
+      + admin_username                                         = "adminuser"
+      + allow_extension_operations                             = true
+      + bypass_platform_safety_checks_on_user_schedule_enabled = false
+      + computer_name                                          = (known after apply)
+      + disable_password_authentication                        = false
+      + disk_controller_type                                   = (known after apply)
+      + encryption_at_host_enabled                             = false
+      + extensions_time_budget                                 = "PT1H30M"
+      + id                                                     = (known after apply)
+      + location                                               = "eastus"
+      + max_bid_price                                          = -1
+      + name                                                   = "eu1pcd107"
+      + network_interface_ids                                  = (known after apply)
+      + patch_assessment_mode                                  = "ImageDefault"
+      + patch_mode                                             = "ImageDefault"
+      + platform_fault_domain                                  = -1
+      + priority                                               = "Regular"
+      + private_ip_address                                     = (known after apply)
+      + private_ip_addresses                                   = (known after apply)
+      + provision_vm_agent                                     = true
+      + public_ip_address                                      = (known after apply)
+      + public_ip_addresses                                    = (known after apply)
+      + resource_group_name                                    = "demorg1"
+      + secure_boot_enabled                                    = false
+      + size                                                   = "Standard_D2s_v3"
+      + tags                                                   = {
+          + "env" = "local-dev"
+        }
+      + virtual_machine_id                                     = (known after apply)
+      + vm_agent_platform_updates_enabled                      = false
+      + vtpm_enabled                                           = false
+      + zone                                                   = "1"
+
+      + additional_capabilities {
+          + hibernation_enabled = false
+          + ultra_ssd_enabled   = false
+        }
+
+      + boot_diagnostics {}
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = 20
+          + name                      = "1wee-osdisk"
+          + storage_account_type      = "Standard_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "0001-com-ubuntu-server-focal"
+          + publisher = "Canonical"
+          + sku       = "20_04-lts-gen2"
+          + version   = "latest"
+        }
+    }
+
+  # azurerm_linux_virtual_machine.vm["eu1pcd208"] will be created
+  + resource "azurerm_linux_virtual_machine" "vm" {
+      + admin_password                                         = (sensitive value)
+      + admin_username                                         = "adminuser"
+      + allow_extension_operations                             = true
+      + bypass_platform_safety_checks_on_user_schedule_enabled = false
+      + computer_name                                          = (known after apply)
+      + disable_password_authentication                        = false
+      + disk_controller_type                                   = (known after apply)
+      + encryption_at_host_enabled                             = false
+      + extensions_time_budget                                 = "PT1H30M"
+      + id                                                     = (known after apply)
+      + location                                               = "eastus"
+      + max_bid_price                                          = -1
+      + name                                                   = "eu1pcd208"
+      + network_interface_ids                                  = (known after apply)
+      + patch_assessment_mode                                  = "ImageDefault"
+      + patch_mode                                             = "ImageDefault"
+      + platform_fault_domain                                  = -1
+      + priority                                               = "Regular"
+      + private_ip_address                                     = (known after apply)
+      + private_ip_addresses                                   = (known after apply)
+      + provision_vm_agent                                     = true
+      + public_ip_address                                      = (known after apply)
+      + public_ip_addresses                                    = (known after apply)
+      + resource_group_name                                    = "demorg1"
+      + secure_boot_enabled                                    = false
+      + size                                                   = "Standard_D2s_v3"
+      + tags                                                   = {
+          + "env" = "local-dev"
+        }
+      + virtual_machine_id                                     = (known after apply)
+      + vm_agent_platform_updates_enabled                      = false
+      + vtpm_enabled                                           = false
+      + zone                                                   = "1"
+
+      + additional_capabilities {
+          + hibernation_enabled = false
+          + ultra_ssd_enabled   = false
+        }
+
+      + boot_diagnostics {}
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = 20
+          + name                      = "1wee-osdisk"
+          + storage_account_type      = "Standard_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "0001-com-ubuntu-server-focal"
+          + publisher = "Canonical"
+          + sku       = "20_04-lts-gen2"
+          + version   = "latest"
+        }
+    }
+
+  # module.compute-managed_disk.azurerm_managed_disk.managed_disk["ddsk-01-eu1pcd107"] will be created
+  + resource "azurerm_managed_disk" "managed_disk" {
+      + create_option                     = "Empty"
+      + disk_iops_read_only               = (known after apply)
+      + disk_iops_read_write              = (known after apply)
+      + disk_mbps_read_only               = (known after apply)
+      + disk_mbps_read_write              = (known after apply)
+      + disk_size_gb                      = 20
+      + id                                = (known after apply)
+      + location                          = "eastus"
+      + logical_sector_size               = (known after apply)
+      + max_shares                        = (known after apply)
+      + name                              = "ddsk-01-eu1pcd107"
+      + network_access_policy             = "AllowAll"
+      + optimized_frequent_attach_enabled = false
+      + performance_plus_enabled          = false
+      + public_network_access_enabled     = true
+      + resource_group_name               = "demorg1"
+      + source_uri                        = (known after apply)
+      + storage_account_type              = "Standard_LRS"
+      + tags                              = {
+          + "creation_mode"                               = "terraform"
+          + "env"                                         = "local-dev"
+          + "terraform-azurerm-msci-compute-linux_vm"     = "True"
+          + "terraform-azurerm-msci-compute-managed_disk" = "True"
+        }
+      + tier                              = (known after apply)
+
+      + timeouts {
+          + create = "15m"
+          + delete = "15m"
+          + read   = "15m"
+          + update = "15m"
+        }
+    }
+
+  # module.compute-managed_disk.azurerm_managed_disk.managed_disk["ddsk-01-eu1pcd208"] will be created
+  + resource "azurerm_managed_disk" "managed_disk" {
+      + create_option                     = "Empty"
+      + disk_iops_read_only               = (known after apply)
+      + disk_iops_read_write              = (known after apply)
+      + disk_mbps_read_only               = (known after apply)
+      + disk_mbps_read_write              = (known after apply)
+      + disk_size_gb                      = 20
+      + id                                = (known after apply)
+      + location                          = "eastus"
+      + logical_sector_size               = (known after apply)
+      + max_shares                        = (known after apply)
+      + name                              = "ddsk-01-eu1pcd208"
+      + network_access_policy             = "AllowAll"
+      + optimized_frequent_attach_enabled = false
+      + performance_plus_enabled          = false
+      + public_network_access_enabled     = true
+      + resource_group_name               = "demorg1"
+      + source_uri                        = (known after apply)
+      + storage_account_type              = "Standard_LRS"
+      + tags                              = {
+          + "creation_mode"                               = "terraform"
+          + "env"                                         = "local-dev"
+          + "terraform-azurerm-msci-compute-linux_vm"     = "True"
+          + "terraform-azurerm-msci-compute-managed_disk" = "True"
+        }
+      + tier                              = (known after apply)
+
+      + timeouts {
+          + create = "15m"
+          + delete = "15m"
+          + read   = "15m"
+          + update = "15m"
+        }
+    }
+
+  # module.compute-managed_disk.azurerm_managed_disk.managed_disk["ddsk-02-eu1pcd107"] will be created
+  + resource "azurerm_managed_disk" "managed_disk" {
+      + create_option                     = "Empty"
+      + disk_iops_read_only               = (known after apply)
+      + disk_iops_read_write              = (known after apply)
+      + disk_mbps_read_only               = (known after apply)
+      + disk_mbps_read_write              = (known after apply)
+      + disk_size_gb                      = 30
+      + id                                = (known after apply)
+      + location                          = "eastus"
+      + logical_sector_size               = (known after apply)
+      + max_shares                        = (known after apply)
+      + name                              = "ddsk-02-eu1pcd107"
+      + network_access_policy             = "AllowAll"
+      + optimized_frequent_attach_enabled = false
+      + performance_plus_enabled          = false
+      + public_network_access_enabled     = true
+      + resource_group_name               = "demorg1"
+      + source_uri                        = (known after apply)
+      + storage_account_type              = "Standard_LRS"
+      + tags                              = {
+          + "creation_mode"                               = "terraform"
+          + "env"                                         = "local-dev"
+          + "terraform-azurerm-msci-compute-linux_vm"     = "True"
+          + "terraform-azurerm-msci-compute-managed_disk" = "True"
+        }
+      + tier                              = (known after apply)
+
+      + timeouts {
+          + create = "15m"
+          + delete = "15m"
+          + read   = "15m"
+          + update = "15m"
+        }
+    }
+
+  # module.compute-managed_disk.azurerm_managed_disk.managed_disk["ddsk-02-eu1pcd208"] will be created
+  + resource "azurerm_managed_disk" "managed_disk" {
+      + create_option                     = "Empty"
+      + disk_iops_read_only               = (known after apply)
+      + disk_iops_read_write              = (known after apply)
+      + disk_mbps_read_only               = (known after apply)
+      + disk_mbps_read_write              = (known after apply)
+      + disk_size_gb                      = 30
+      + id                                = (known after apply)
+      + location                          = "eastus"
+      + logical_sector_size               = (known after apply)
+      + max_shares                        = (known after apply)
+      + name                              = "ddsk-02-eu1pcd208"
+      + network_access_policy             = "AllowAll"
+      + optimized_frequent_attach_enabled = false
+      + performance_plus_enabled          = false
+      + public_network_access_enabled     = true
+      + resource_group_name               = "demorg1"
+      + source_uri                        = (known after apply)
+      + storage_account_type              = "Standard_LRS"
+      + tags                              = {
+          + "creation_mode"                               = "terraform"
+          + "env"                                         = "local-dev"
+          + "terraform-azurerm-msci-compute-linux_vm"     = "True"
+          + "terraform-azurerm-msci-compute-managed_disk" = "True"
+        }
+      + tier                              = (known after apply)
+
+      + timeouts {
+          + create = "15m"
+          + delete = "15m"
+          + read   = "15m"
+          + update = "15m"
+        }
+    }
+
+  # module.compute-managed_disk.azurerm_managed_disk.managed_disk["ddsk-03-eu1pcd107"] will be created
+  + resource "azurerm_managed_disk" "managed_disk" {
+      + create_option                     = "Empty"
+      + disk_iops_read_only               = (known after apply)
+      + disk_iops_read_write              = (known after apply)
+      + disk_mbps_read_only               = (known after apply)
+      + disk_mbps_read_write              = (known after apply)
+      + disk_size_gb                      = 40
+      + id                                = (known after apply)
+      + location                          = "eastus"
+      + logical_sector_size               = (known after apply)
+      + max_shares                        = (known after apply)
+      + name                              = "ddsk-03-eu1pcd107"
+      + network_access_policy             = "AllowAll"
+      + optimized_frequent_attach_enabled = false
+      + performance_plus_enabled          = false
+      + public_network_access_enabled     = true
+      + resource_group_name               = "demorg1"
+      + source_uri                        = (known after apply)
+      + storage_account_type              = "Standard_LRS"
+      + tags                              = {
+          + "creation_mode"                               = "terraform"
+          + "env"                                         = "local-dev"
+          + "terraform-azurerm-msci-compute-linux_vm"     = "True"
+          + "terraform-azurerm-msci-compute-managed_disk" = "True"
+        }
+      + tier                              = (known after apply)
+
+      + timeouts {
+          + create = "15m"
+          + delete = "15m"
+          + read   = "15m"
+          + update = "15m"
+        }
+    }
+
+  # module.compute-managed_disk.azurerm_managed_disk.managed_disk["ddsk-03-eu1pcd208"] will be created
+  + resource "azurerm_managed_disk" "managed_disk" {
+      + create_option                     = "Empty"
+      + disk_iops_read_only               = (known after apply)
+      + disk_iops_read_write              = (known after apply)
+      + disk_mbps_read_only               = (known after apply)
+      + disk_mbps_read_write              = (known after apply)
+      + disk_size_gb                      = 40
+      + id                                = (known after apply)
+      + location                          = "eastus"
+      + logical_sector_size               = (known after apply)
+      + max_shares                        = (known after apply)
+      + name                              = "ddsk-03-eu1pcd208"
+      + network_access_policy             = "AllowAll"
+      + optimized_frequent_attach_enabled = false
+      + performance_plus_enabled          = false
+      + public_network_access_enabled     = true
+      + resource_group_name               = "demorg1"
+      + source_uri                        = (known after apply)
+      + storage_account_type              = "Standard_LRS"
+      + tags                              = {
+          + "creation_mode"                               = "terraform"
+          + "env"                                         = "local-dev"
+          + "terraform-azurerm-msci-compute-linux_vm"     = "True"
+          + "terraform-azurerm-msci-compute-managed_disk" = "True"
+        }
+      + tier                              = (known after apply)
+
+      + timeouts {
+          + create = "15m"
+          + delete = "15m"
+          + read   = "15m"
+          + update = "15m"
+        }
+    }
+
+  # module.nic["eu1pcd107"].azurerm_network_interface.additional_interface["secondary-nic"] will be created     
+  + resource "azurerm_network_interface" "additional_interface" {
+      + accelerated_networking_enabled = (known after apply)
+      + applied_dns_servers            = (known after apply)
+      + dns_servers                    = (known after apply)
+      + enable_accelerated_networking  = (known after apply)
+      + enable_ip_forwarding           = (known after apply)
+      + id                             = (known after apply)
+      + internal_domain_name_suffix    = (known after apply)
+      + ip_forwarding_enabled          = (known after apply)
+      + location                       = "eastus"
+      + mac_address                    = (known after apply)
+      + name                           = "secondary-nic"
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "demorg1"
+      + virtual_machine_id             = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "primary"
+          + primary                                            = true
+          + private_ip_address                                 = (known after apply)
+          + private_ip_address_allocation                      = "Dynamic"
+          + private_ip_address_version                         = "IPv4"
+          + subnet_id                                          = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/virtualNetworks/demovnet1/subnets/demosubnet1"
+        }
+    }
+
+  # module.nic["eu1pcd107"].azurerm_network_interface.default_interface will be created
+  + resource "azurerm_network_interface" "default_interface" {
+      + accelerated_networking_enabled = (known after apply)
+      + applied_dns_servers            = (known after apply)
+      + dns_servers                    = (known after apply)
+      + enable_accelerated_networking  = (known after apply)
+      + enable_ip_forwarding           = (known after apply)
+      + id                             = (known after apply)
+      + internal_domain_name_suffix    = (known after apply)
+      + ip_forwarding_enabled          = (known after apply)
+      + location                       = "eastus"
+      + mac_address                    = (known after apply)
+      + name                           = "primary-nic"
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "demorg1"
+      + virtual_machine_id             = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "primary"
+          + primary                                            = true
+          + private_ip_address                                 = (known after apply)
+          + private_ip_address_allocation                      = "Dynamic"
+          + private_ip_address_version                         = "IPv4"
+          + subnet_id                                          = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/virtualNetworks/demovnet1/subnets/demosubnet1"
+        }
+    }
+
+  # module.nic["eu1pcd208"].azurerm_network_interface.additional_interface["secondary-nic"] will be created     
+  + resource "azurerm_network_interface" "additional_interface" {
+      + accelerated_networking_enabled = (known after apply)
+      + applied_dns_servers            = (known after apply)
+      + dns_servers                    = (known after apply)
+      + enable_accelerated_networking  = (known after apply)
+      + enable_ip_forwarding           = (known after apply)
+      + id                             = (known after apply)
+      + internal_domain_name_suffix    = (known after apply)
+      + ip_forwarding_enabled          = (known after apply)
+      + location                       = "eastus"
+      + mac_address                    = (known after apply)
+      + name                           = "secondary-nic"
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "demorg1"
+      + virtual_machine_id             = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "primary"
+          + primary                                            = true
+          + private_ip_address                                 = (known after apply)
+          + private_ip_address_allocation                      = "Dynamic"
+          + private_ip_address_version                         = "IPv4"
+          + subnet_id                                          = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/virtualNetworks/demovnet1/subnets/demosubnet1"
+        }
+    }
+
+  # module.nic["eu1pcd208"].azurerm_network_interface.default_interface will be created
+  + resource "azurerm_network_interface" "default_interface" {
+      + accelerated_networking_enabled = (known after apply)
+      + applied_dns_servers            = (known after apply)
+      + dns_servers                    = (known after apply)
+      + enable_accelerated_networking  = (known after apply)
+      + enable_ip_forwarding           = (known after apply)
+      + id                             = (known after apply)
+      + internal_domain_name_suffix    = (known after apply)
+      + ip_forwarding_enabled          = (known after apply)
+      + location                       = "eastus"
+      + mac_address                    = (known after apply)
+      + name                           = "primary-nic"
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "demorg1"
+      + virtual_machine_id             = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "primary"
+          + primary                                            = true
+          + private_ip_address                                 = (known after apply)
+          + private_ip_address_allocation                      = "Dynamic"
+          + private_ip_address_version                         = "IPv4"
+          + subnet_id                                          = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/virtualNetworks/demovnet1/subnets/demosubnet1"
+        }
+    }
+
+Plan: 12 to add, 0 to change, 0 to destroy.
