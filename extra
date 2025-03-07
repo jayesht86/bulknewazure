@@ -1,0 +1,52 @@
+ Module Structure
+Keep modules small and focused (single responsibility principle).
+Use clear file naming (main.tf, variables.tf, outputs.tf).
+2️⃣ Naming Conventions
+Module Names: Follow a standard (terraform-<provider>-<module>).
+Resource Naming: Prefix with environment (dev-vm-01, prod-vm-db).
+3️⃣ Inputs and Outputs
+Define input variables (variables.tf) to customize behavior.
+Use outputs (outputs.tf) to expose key resource attributes.
+
+Version Control
+Store modules in Git (Azure Repos/GitHub/GitLab).
+Use semantic versioning (v1.2.3).
+2️⃣ Versioning Strategy
+Major (1.x.x): Breaking changes.
+Minor (1.1.x): New features, backward compatible.
+Patch (1.1.1): Bug fixes.
+3️⃣ Module Upgrade Process
+Use Terraform Registry or Azure Repo with versioned releases.
+Module Lifecycle Stages
+Stage	Description
+Planning	Define module scope, resources, dependencies
+Development	Write Terraform module, define variables/outputs
+Testing	Validate syntax, run terraform validate and terraform plan
+Deployment	Deploy module in staging before production
+Monitoring	Track module usage, errors, and upgrades
+Decommissioning	Archive unused modules, clean-up old versions
+Ensuring Backward Compatibility
+Deprecate old variables instead of removing immediately.
+Add default values for new variables to prevent breaking changes.
+Use terraform state mv to migrate resources safely.
+Static Code Analysis
+ype	Purpose	Example Tool
+Syntax Testing	Check for syntax errors	terraform validate
+Unit Testing	Test individual modules	terratest, checkov
+Integration Testing	Validate module with dependencies	Kitchen-Terraform
+Security Testing	Scan for misconfigurations	terrascan
+Standardization & Module Review Process
+1️⃣ Standardization Guidelines
+Follow modular design patterns (DRY principle).
+Use GitHub Actions/Azure Pipelines for CI/CD.
+Provide clear README.md with:
+Module description.
+Input/output variables.
+Usage examples.
+2️⃣ Code Review Process
+Step	Reviewer	Tool
+Pull Request (PR)	Developer	GitHub/GitLab/Azure DevOps
+Automated Checks	CI/CD Pipeline	Terraform Linter, Checkov
+Peer Review	Senior DevOps	Manual Review
+Approval & Merge	Lead Engineer	Git Merge
+✅ Use PR templates to ensure consistent reviews.
