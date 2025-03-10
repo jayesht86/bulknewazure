@@ -29,10 +29,11 @@ variable "vm_extension" {
     `vm_extension_failure_suppression_enabled` - (Optional) Should failures from the extension be suppressed? Possible values are true or false. Defaults to false.
 
   EOT
-  type = list(object({
+  type = object({
     #Required
     vm_extension_name = string
-    vm_extension_vm_id = string
+    #vm_extension_vm_id = string
+    vm_name = string
     vm_extension_publisher = string
     vm_extension_type = string
     vm_extension_version = string
@@ -80,7 +81,18 @@ variable "vm_extension" {
     linux_vm_extension_ado_agent_pat_token         = optional(string)
     linux_vm_extension_ado_agent_tags              = optional(string)
     linux_vm_extension_ado_agent_failure_suppression_enabled = optional(bool,false)
-  }))
+    ##AAD SSH Extension
+    linux_vm_extension_aad_ssh_enabled             = optional(bool)
+    linux_vm_extension_aadssh_failure_suppression_enabled = optional(bool,false)
+  })
+  default = {
+    vm_extension_name = "MonitoringAgentExtension"
+    #vm_extension_vm_id = "default_id"
+    vm_name = "eu1pcd109"
+    vm_extension_publisher = "Microsoft.EnterpriseCloud.Monitoring"
+    vm_extension_type = "OmsAgentForLinux"
+    vm_extension_version = "1.14"
+  }
 }
 
 #Global Variables
