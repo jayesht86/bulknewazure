@@ -1,23 +1,7 @@
-linux_vm_extension_monitoring_workspace_id
-linux_vm_extension_monitoring_workspace_key
-linux_vm_extension_custom_script_enabled
-linux_vm_extension_custom_script_enabled
-linux_vm_extension_custom_script_blob_storage_container_name
-linux_vm_extension_custom_script_blob_storage_blob_name
-linux_vm_extension_custom_script_blob_storage_account_name
-linux_vm_extension_custom_script_blob_storage_account_key
-linux_vm_extension_encryption_enabled
-linux_vm_extension_encryption_operation
-linux_vm_extension_encryption_key_vault_name
-linux_vm_extension_encryption_key_vault_resource_group
-linux_vm_extension_encryption_encrypt_all_disks
-linux_vm_extension_encryption_key_vault_resource_group
-linux_vm_extension_encryption_key_vault_name
-linux_vm_extension_ado_agent_enabled
-linux_vm_extension_ado_agent_vsts_account_name
-linux_vm_extension_ado_agent_team_project
-linux_vm_extension_ado_agent_deployment_group
-linux_vm_extension_ado_agent_name
-linux_vm_extension_ado_agent_tags
-linux_vm_extension_ado_agent_pat_token
-linux_vm_extension_aad_ssh_enabled
+Error: Attempt to get attribute from null value
+│
+│   on module-extension.tf line 8, in module "compute-vm_extension":
+│    8:   for_each = { for obj in var.vm_extension  : obj.vm_extension_name => obj }
+│
+│ This value is null, so it does not have any attributes.
+╵
