@@ -1,14 +1,33 @@
-│ Error: Unsupported attribute
+Error: Invalid index
 │
-│   on locals.tf line 8, in locals:
-│    8:       for idx, zone in config.zone_list : {
+│   on module-nic.tf line 20, in module "nic":
+│   20:   nic_additional_interface = var.vm_config[0].linux_vm_additional_nic
+│     ├────────────────
+│     │ var.vm_config is object with 79 attributes
 │
-│ Can't access attributes on a primitive-typed value (bool).
 ╵
 ╷
-│ Error: Unsupported attribute
+│ Error: Invalid index
 │
-│   on locals.tf line 8, in locals:
-│    8:       for idx, zone in config.zone_list : {
+│   on module-nic.tf line 20, in module "nic":
+│   20:   nic_additional_interface = var.vm_config[0].linux_vm_additional_nic
+│     ├────────────────
+│     │ var.vm_config is object with 79 attributes
 │
-│ This value does not have any attributes.
+│
+│   on module-nic.tf line 20, in module "nic":
+│   20:   nic_additional_interface = var.vm_config[0].linux_vm_additional_nic
+│     ├────────────────
+│     │ var.vm_config is object with 79 attributes
+│
+│   on module-nic.tf line 20, in module "nic":
+│   20:   nic_additional_interface = var.vm_config[0].linux_vm_additional_nic
+│     ├────────────────
+│     │ var.vm_config is object with 79 attributes
+│
+│     │ var.vm_config is object with 79 attributes
+│
+│
+│ The given key does not identify an element in this collection value. An object only supports looking up       
+│ attributes by name, not by numeric index.
+╵
