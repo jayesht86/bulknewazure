@@ -1,7 +1,14 @@
-Error: Attempt to get attribute from null value
+│ Error: Unsupported attribute
 │
-│   on module-extension.tf line 8, in module "compute-vm_extension":
-│    8:   for_each = { for obj in var.vm_extension  : obj.vm_extension_name => obj }
+│   on locals.tf line 8, in locals:
+│    8:       for idx, zone in config.zone_list : {
 │
-│ This value is null, so it does not have any attributes.
+│ Can't access attributes on a primitive-typed value (bool).
 ╵
+╷
+│ Error: Unsupported attribute
+│
+│   on locals.tf line 8, in locals:
+│    8:       for idx, zone in config.zone_list : {
+│
+│ This value does not have any attributes.
