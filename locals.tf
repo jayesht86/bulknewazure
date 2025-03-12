@@ -168,6 +168,19 @@ locals {
   disk_attachments2 = var.managed_disk != null ? { for o in local.disk_attachments : "${o.vm} + ${o.disk}" => o } : {}
 
   vm_lists = azurerm_linux_virtual_machine.vm
+#ASG Association
+  asg_attachment = var.asg != null ? flatten(
+    [
+      for d in var.asg : [
+        for v in d.asg_association_nic_names : {
+          nic : v,
+          asg : d.asg_name
+        }
+      ]
+    ]
+  ) : null
+  asg_attachment2 = local.asg_attachment != null ? { for o in local.asg_attachment : "${o.asg} + ${o.nic}" => o } : {}
+
 
 }
 
