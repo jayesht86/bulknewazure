@@ -8,10 +8,10 @@ vnet_name   = "demovnet1"
 subnet_name = "demosubnet1"
 
 # VM Configuration - List of VM Details
+# VM Configuration (Using a Single Object with Zone List)
 vm_config = {
-  #linux_vm_name                                                = "machine1"
   size                                                         = "Standard_D2s_v3"
-  zone_list                                                    = ["3", "2"] #, "2"] # "1", "2", "2","2", "3"]
+  zone_list                                                    = ["3", "2"]
   linux_vm_admin_username                                      = "adminuser"
   linux_vm_admin_password                                      = "Password123!"
   os_disk_size_gb                                              = 64
@@ -33,29 +33,27 @@ vm_config = {
   linux_vm_image_sku                                           = "20_04-lts-gen2"
   linux_vm_image_version                                       = "latest"
 
+  # Default NIC - Unique NIC Name per Zone
   linux_vm_default_nic = {
-
-    nic_name      = "primary-nic"
+    nic_name      = "nic-${region_code}${product_code}${environment_code}-primary"
     nic_subnet_id = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/virtualNetworks/demovnet1/subnets/demosubnet1"
-    #accelerated_networking_enabled = true
     nic_ip_config = [{
       nic_ip_config_name = "primary"
-      #private_ip_address_allocation = "Dynamic"
       nic_ip_config_primary = true
     }]
   }
 
+  # Additional NIC - Unique NIC Name per Zone
   linux_vm_additional_nic = [{
-    nic_name      = "secondary-nic"
+    nic_name      = "nic-${region_code}${product_code}${environment_code}-secondary"
     nic_subnet_id = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/virtualNetworks/demovnet1/subnets/demosubnet1"
-    #accelerated_networking_enabled = false
     nic_ip_config = [{
-      nic_ip_config_name = "primary"
-      #private_ip_address_allocation = "Dynamic"
-      nic_ip_config_primary = true
+      nic_ip_config_name = "secondary"
+      nic_ip_config_primary = false
     }]
   }]
 }
+
 
 
 # Environment, Region, and Product Codes
