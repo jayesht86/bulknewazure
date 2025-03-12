@@ -23,6 +23,19 @@ locals {
         # NIC Details
         linux_vm_default_nic    = lookup(config, "linux_vm_default_nic", null)
         linux_vm_additional_nic = lookup(config, "linux_vm_additional_nic", [])
+        # Default NIC (Ensuring Unique Naming)
+        linux_vm_default_nic = {
+          nic_name      = format("%s-%s-primary", lookup(config.linux_vm_default_nic, "nic_name", "default-nic"), zone)
+          nic_subnet_id = lookup(config.linux_vm_default_nic, "nic_subnet_id", null)
+          nic_ip_config = lookup(config.linux_vm_default_nic, "nic_ip_config", [])
+        }
+
+        # Additional NICs (Ensuring Unique Naming)
+        linux_vm_additional_nic = [
+          for nic_idx, nic in lookup(config, "linux_vm_additional_nic", []) : {
+            nic_name      = format("%s-%s-additional-%02d", lookup(nic, "nic_name", "additional-nic"), zone, nic_idx + 1)
+            nic_subnet_id = lookup(nic, "nic_subnet_id", null)
+            nic_ip_config = lookup(nic, "nic_ip_config", [])
         #OMS Agent Extension		
         vm_extension_failure_suppression_enabled = config.vm_extension_failure_suppression_enabled
         #Extension_Custom_Scripts
