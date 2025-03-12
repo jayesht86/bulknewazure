@@ -50,6 +50,31 @@ locals {
     ]
   ]
   )
+
+  # Default NIC Mapping
+  linux_vm_default_nic = {
+    for vm in local.vm_list : vm.name => {
+      nic_name      = format("nic-%s", vm.name)
+      subnet_id     = lookup(vm, "linux_vm_default_nic", null) != null ? vm.linux_vm_default_nic.nic_subnet_id : null
+      dns_servers   = lookup(vm, "linux_vm_default_nic", null) != null ? vm.linux_vm_default_nic.nic_dns_servers : null
+      accelerated_networking = lookup(vm, "linux_vm_default_nic", null) != null ? vm.linux_vm_default_nic.accelerated_networking_enabled : false
+      ip_configs    = lookup(vm, "linux_vm_default_nic", null) != null ? vm.linux_vm_default_nic.nic_ip_config : []
+    }
+  }
+
+  # Additional NICs Mapping
+  linux_vm_additional_nic = flatten([
+    for vm in local.vm_list : [
+      for nic in lookup(vm, "linux_vm_additional_nic", []) : {
+        vm_name       = vm.name
+        nic_name      = format("nic-%s-%s", vm.name, nic.nic_name)
+        subnet_id     = nic.nic_subnet_id
+        dns_servers   = nic.nic_dns_servers
+        accelerated_networking = nic.accelerated_networking_enabled
+        ip_configs    = nic.nic_ip_config
+      }
+    ]
+  ])
   effective_disk_count = var.managed_disk != null ? length(var.managed_disk.managed_disks_list) : 0
 
   vm_managed_disk_extended_list = flatten([
