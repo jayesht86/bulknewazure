@@ -13,6 +13,8 @@ locals {
         admin_password  = config.admin_password
         os_disk_size_gb = config.os_disk_size_gb
         zone            = zone
+                linux_vm_default_nic    = lookup(config, "linux_vm_default_nic", null)
+        linux_vm_additional_nic = lookup(config, "linux_vm_additional_nic", [])
         linux_vm_extension_monitoring_enabled = config.linux_vm_extension_monitoring_enabled
         vm_extension_failure_suppression_enabled = config.vm_extension_failure_suppression_enabled
         linux_vm_extension_custom_script_failure_suppression_enabled = config.linux_vm_extension_custom_script_failure_suppression_enabled
