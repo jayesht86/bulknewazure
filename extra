@@ -1,52 +1,246 @@
- Module Structure
-Keep modules small and focused (single responsibility principle).
-Use clear file naming (main.tf, variables.tf, outputs.tf).
-2️⃣ Naming Conventions
-Module Names: Follow a standard (terraform-<provider>-<module>).
-Resource Naming: Prefix with environment (dev-vm-01, prod-vm-db).
-3️⃣ Inputs and Outputs
-Define input variables (variables.tf) to customize behavior.
-Use outputs (outputs.tf) to expose key resource attributes.
+Contents
+1. Introduction	1
+1.1 Purpose of the Document	1
+1.2 Scope	2
+2. Module Structure	2
+2.1 Repository Layout	2
+2.2 Guidance on Modular Design	3
+2.3 File Organization	3
+3. Naming Conventions	4
+4. Versioning and Dependency Management	5
+5. Input Variables	6
+6. Outputs	7
+7. Locals	8
+8. Security and Compliance	8
+9. Testing and Validation	8
+10. Documentation	9
+12. Module Lifecycle Management	9
+13. Governance and Approval	9
 
-Version Control
-Store modules in Git (Azure Repos/GitHub/GitLab).
-Use semantic versioning (v1.2.3).
-2️⃣ Versioning Strategy
-Major (1.x.x): Breaking changes.
-Minor (1.1.x): New features, backward compatible.
-Patch (1.1.1): Bug fixes.
-3️⃣ Module Upgrade Process
-Use Terraform Registry or Azure Repo with versioned releases.
-Module Lifecycle Stages
-Stage	Description
-Planning	Define module scope, resources, dependencies
-Development	Write Terraform module, define variables/outputs
-Testing	Validate syntax, run terraform validate and terraform plan
-Deployment	Deploy module in staging before production
-Monitoring	Track module usage, errors, and upgrades
-Decommissioning	Archive unused modules, clean-up old versions
-Ensuring Backward Compatibility
-Deprecate old variables instead of removing immediately.
-Add default values for new variables to prevent breaking changes.
-Use terraform state mv to migrate resources safely.
-Static Code Analysis
-ype	Purpose	Example Tool
-Syntax Testing	Check for syntax errors	terraform validate
-Unit Testing	Test individual modules	terratest, checkov
-Integration Testing	Validate module with dependencies	Kitchen-Terraform
-Security Testing	Scan for misconfigurations	terrascan
-Standardization & Module Review Process
-1️⃣ Standardization Guidelines
-Follow modular design patterns (DRY principle).
-Use GitHub Actions/Azure Pipelines for CI/CD.
-Provide clear README.md with:
-Module description.
-Input/output variables.
-Usage examples.
-2️⃣ Code Review Process
-Step	Reviewer	Tool
-Pull Request (PR)	Developer	GitHub/GitLab/Azure DevOps
-Automated Checks	CI/CD Pipeline	Terraform Linter, Checkov
-Peer Review	Senior DevOps	Manual Review
-Approval & Merge	Lead Engineer	Git Merge
-✅ Use PR templates to ensure consistent reviews.
+
+1. Introduction
+Terraform is a widely used Infrastructure as Code (IaC) tool that enables organizations to provision and manage cloud infrastructure in a declarative manner. While Terraform provides flexibility and power, without standardized practices, it can lead to inconsistent module design, poor maintainability, security risks, and operational inefficiencies.
+This document establishes a set of Terraform Module Standards that align with industry best practices to ensure that Terraform modules are reusable, scalable, secure, and maintainable. By adhering to these guidelines, teams can create a robust and efficient infrastructure automation framework.
+1.1 Purpose of the Document
+The purpose of this document is to:
+•	Establish Consistency: Define a structured approach for developing, organizing, and maintaining Terraform modules.
+•	Enhance Reusability: Encourage modularization of infrastructure components to promote reuse and reduce duplication of code.
+•	Improve Maintainability: Provide clear guidelines that simplify troubleshooting, version control, and future enhancements.
+•	Ensure Compliance: Incorporate best practices to ensure compliance.
+•	Optimize Performance & Scalability: Guide teams in writing efficient Terraform configurations that scale effectively with growing infrastructure needs.
+•	Streamline Collaboration: Enable multiple teams to work on infrastructure modules efficiently by following a shared set of standards and best practices.
+By following these standards, end goal is to reduce operational risks, improve automation efficiency, and ensure compliance with cloud governance policies.
+1.2 Scope
+This document applies to:
+•	Terraform Modules: Any Terraform module developed for provisioning cloud resources (e.g.Azure, GCP).
+•	Compliance Considerations: Recommended strategies to manage secrets, enforce identity and access control policies, and comply with internal and external security frameworks.
+•	Module Development Lifecycle: Standards for module structure, variable usage, naming conventions, error handling, and deprecation strategies.
+2. Module Structure
+2.1 Repository Layout
+A clean, consistent repository structure ensures Terraform modules are reusable, version-controlled, and easy to maintain across projects.
+Recommended Folder Structure
+A typical Terraform module repository should follow this structure:
+Tech-iac/_git/
+│── terraform-<provider>-msci-<resource type>-<resource>/
+│   ├── .gitignore          # exclude files from version control
+│   ├── main.tf          # Main resources
+│   ├── variables.tf     # Input variables
+│   ├── outputs.tf       # Outputs
+│   ├── terraform.tf      # Provider & Terraform version constraints
+│   ├── data.tf      # fetches existing resources in infrastructure
+│   ├── locals.tf      # local values/ computed values
+│   ├── README.md        # Documentation auto generated
+│   ├── examples/
+│   │   ├── complete/    # Example usage
+│   │   ├── minimal/     # Minimal configuration
+│   ├── module-<submodule name>/         # Submodules (if applicable)
+│   ├── .test/           # Automated tests 
+│   │   ├── test.tf     # test case
+│   ├── CHANGELOG.md     # Module version history 
+│   ├── azure-pipelines.yaml     # Azure DevOps pipeline definition
+│   ├── .pre-commit-config.yaml    # pre-commit hooks to enforce terraform fmt etc
+
+2.2 Guidance on Modular Design
+Modular design allows you to break your Terraform config into reusable, composable blocks called modules. Modules should encapsulate meaningful architectural concepts rather than simply wrapping individual resources.
+1.	Avoid Large, All-in-one modules
+-	Modularize wherever possible
+2.	Promote Module Composition
+-	Instead of duplicating logic, compose modules together
+3.	Encapsulate Business Logic in Modules
+
+2.3 File Organization
+To ensure Terraform modules are readable and follow best practices, files should be structured logically.
+
+Standard File Naming Conventions
+Each module should contain the following files
+File Name	Purpose
+main.tf	Defines core resources
+Data.tf	Defines current config
+Locals.tf	Defines Locally used / computed values
+Variables.tf	Declares input variables with descriptions and types.
+Outputs.tf	Defines outputs for module consumers.
+Terraform.tf	Specifies required Terraform and provider versions.
+README.md	Documents the module usage
+Examples/	Provides sample configurations demonstrating module usage.
+.test/	Contains terraform test cases
+
+Handling Resource-Specific Files for Larger Modules
+For complex modules that include multiple resource types, it’s best to split resources into separate files:
+For eg. If VMSS has autoscaling resource too, then we are better off having an autoscaling.tf separated for the same
+Benefits of Splitting Resource Files:
+•	Improves readability: Each file focuses on a single aspect of the module.
+•	Easier maintenance: Updating IAM policies doesn’t require modifying unrelated resources.
+•	Enhances collaboration: Multiple developers can work on different parts of the module independently.
+
+3. Naming Conventions
+	Module Name
+	Start the module name with terraform-<provider>-msci-<resource_type>-<resourcename> in case of base module.
+	Terraform - Code of the module
+	Provider – azurerm, google
+	msci – positioning of this to be third always
+	Resource type – compute / container / storage etc. If that is more than 2 word eg. Logic App, the do not use any delimiters, write in a single word, eg. logicapp.
+	Resource name – vm, vmss etc
+	Start the module name with terraform-<provider>-msci-wrapper-<resource_type> in case of wrapper  module.
+	Use lowercase with hyphens (-)
+✅ terraform-azurem-msci-container-aks-cluster
+❌ NetworkSecurityGroup (PascalCase)
+❌ network_security_group (snake_case)
+	Mention linux/ windows if applicable
+✅ terraform-azurerm-msci-compute-windows-vmss
+✅ terraform-google-msci-compute-vm
+
+	Variable and Output Names 
+	Consistent naming style for variables and outputs (e.g., snake_case).
+	Standard prefixes or suffixes for resources to avoid naming collisions.
+	For Boolean variables use prefixes like is_ / disable_ / enable_ etc to signify intent
+           ✅ enable_autoscaling
+	List/Map naming – use plural form
+✅subnet_ids
+
+4. Versioning and Dependency Management
+•	Terraform Version 
+o	Minimum and tested Terraform versions.
+	Defining min and max versions in terraform
+	Versions will correspond to the features they support, and a particular module version may have to be extended to a particular max version to support a specific feature
+	The extension of version can be done after thorough testing of the module
+	Need a systematic and organised approach to managing upgrades.
+•	Provider Versions Providers in Terraform serve as a bridge between Terraform and the various services it manages. Each provider offers a set of resource types and data sources that Terraform can manage.
+o	Always use official Cloud providers e.g.  azurerm, gcp
+o	Always configure provider version in each module in terraform.tf
+o	Version Pinning: Always pin to a specific version of a provider to ensure your configurations are stable and predictable over time.
+ 
+By doing this:
+-	You prevent unexpected changes when running Terraform commands.
+-	Your infrastructure remains stable across deployments.
+Some ways of version pinning
+Ref - Manage Terraform versions | Terraform | HashiCorp Developer
+ 
+o	Using required_providers in Terraform 0.13+.
+•	Module Versioning 
+o	Follow Semantic Versioning (MAJOR.MINOR.PATCH)  for module updates
+
+Version Type	When to use	Example	Merge Commit message
+Major	Breaking change	1.0.0 → 2.0.0	+semver: major
+Minor	New features, backward compatible	1.0.0 → 1.1.0	+semver: minor
+Patch	Bug fixes, no breaking changes	1.0.0 → 1.0.1	+semver: patch
+No versioning	Omit any version change	NA	+semver: skip
+
+o	Handling breaking changes (major versions).
+5. Input Variables
+•	Naming and Descriptions 
+o	Clear, descriptive names and docstring-like descriptions. The description should be written from the perspective of the user of the module rather than its maintainer.
+o	Use of type constraints (e.g., string, list, map) for clarity.
+o	Prefix variables with module name e.g windows_vmss_ if it’s a windows_vmss module
+o	Each input variable must be unique among all variables in the same module.
+o	Use nouns for resource names and do not include the resource type in the name.
+•	Default Values 
+o	Guidelines on when to use defaults vs. requiring explicit inputs.
+	Use defaults for non-critical, commonly used values to improve usability and reduce configuration overhead.
+	Avoid hidden dependencies by choosing safe defaults. Hidden dependencies arise when a variable defaults to a value that assumes presence of a specific resource / configuration.
+	Instead of hardcoding dependencies, use data sources to retrieve existing values.
+	Require explicit inputs for critical, sensitive, or unique values to avoid unintended consequences.
+	Modules should require explicit inputs for values that differ per environment.
+•	Validation Rules 
+o	Use of validation blocks in Terraform 0.13+ for critical checks (e.g., ensuring valid IP addresses).
+o	Refer Custom Conditions - Configuration Language | Terraform | HashiCorp Developer in order to validate custom conditions.
+
+6. Outputs
+Output values are similar to return values in programming languages. Output values are a way to expose some of that information to the user of your module. In a root module, this name is displayed to the user; in a child module, it can be used to access the output's value.
+•	Naming Conventions 
+o	Clear, descriptive output names aligned with the resource or logic.
+o	Consistency in naming across modules.
+•	Sensitive Data 
+o	Mark sensitive outputs to prevent them from being displayed in logs or the state file. Always protect sensitive data with sensitive = true.
+o	Limit unnecessary outputs
+7. Locals
+The locals.tf file is used to define local values in Terraform. Instead of repeating values across configurations, locals allow you to store computed values in a single place.
+o	Use for merging tags from variable and add module specific tag. E.g. tag added for windows_vmss module
+ 
+o	Use for computed values (list of VMs) or nested objects E.g.
+ 
+8. Security and Compliance
+Terraform compliance refers to enforcing security, governance, and best practices when deploying infrastructure using Terraform. Compliance ensures that all infrastructure follows organizational policies, security standards, and regulatory requirements.
+Method	Proposed Tool / hook	Purpose
+Static Code Analysis	TFLint, Checkov, tfsec	Detect misconfigurations before deployment
+Policy as Code (PAC)	Sentinel, OPA (Open Policy Agent), Regula	Enforce security policies automatically
+Compliance Scanning	GCP Policy Validator	Audit deployed resources for compliance
+
+9. Testing and Validation
+•	Automated Testing 
+o	Recommended tools (e.g., Terratest, kitchen-terraform).
+o	Continuous Integration (CI) integration for syntax checking, validation, and unit testing.
+•	Integration or End-to-End Testing 
+o	Approach to test end-to-end deployments in a test environment.
+10. Documentation
+	Module README Structure 
+	Overview of module functionality.
+	Usage examples and code snippets.
+	Inputs and outputs reference table (auto-generated or manually updated).
+	Change Logs 
+	Format for release notes and change logs (e.g., CHANGELOG.md).
+	Examples 
+	Best practice for providing reference configurations in an examples/ directory.
+12. Module Lifecycle Management
+•	Release Process 
+o	Steps and criteria for releasing a new module version.
+o	Integration with CI/CD pipelines for publishing modules (e.g., Terraform Registry).
+•	Deprecation Policy 
+o	Strategy for deprecating older resources or features within a module.
+o	Communication and transition guidelines for users.
+13. Governance and Approval
+•	Review Process 
+o	Code reviews and pull request guidelines.
+o	Approvers and decision-makers for changes.
+•	Compliance Checks 
+o	Automated policy enforcement (e.g., using Terraform Cloud policy sets, Sentinel, or OPA).
+o	Handling and tracking exceptions.
+14. Conclusion and References
+•	Summary of Key Takeaways 
+o	Recap of why these standards are critical for reliability and scalability.
+•	Additional Resources 
+o	Links to official Terraform documentation.
+o	Links to open-source style guides or tool repositories.
+o	Internal references (e.g., corporate best practices, security guidelines).
+
+
+Category	Best Practice	Significance
+Structure	Follow a structured module format	Increases readability and maintainability
+Naming	Use meaningful names	Improves clarity
+Module versioning	Lock Terraform versions, Follow semantic versioning	•	locks the module to a stable version to avoid unexpected behaviour
+•	controlled updates
+•	improves collaboration as all team members use same module version
+•	avoids breaking changes that can impact production
+Terraform & Provider versioning	Locks down versions of Terraform and providers	Locks provider versions to prevent API changes from affecting Terraform, preventing accidental upgrades that could break infra.	
+Input Variables	Parameterize with variables	Makes modules reusable
+Output variables	Expose necessary variables	Mark sensitive outputs
+Local variables	Use for computed values	Avoid duplication
+Testing	Implement automated testing (Terratest)	Ensures infrastructure stability
+Reusability	Abstract High-level concepts	Avoid thin wrappers
+Documentation	README.md, inputs & outputs, Usage examples	Improves usability, maintainability, and collaboration
+State reuse	Store state remotely	Enables collaboration
+DevOps	Use CI/CD pipelines correctly	Automates validation and deployment
+
+
+References
+Manage Terraform versions | Terraform | HashiCorp Developer
+
