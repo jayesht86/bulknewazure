@@ -1,7 +1,65 @@
- Error: creating Linux Virtual Machine (Subscription: "59bab8f2-1319-472b-bb69-314d1b034ec0"
-│ Resource Group Name: "demorg1"
-│ Virtual Machine Name: "eu1pcd212"): performing CreateOrUpdate: unexpected status 400 (400 Bad Request) with error: NicReservedForAnotherVm: Nic(s) in request is reserved for another Virtual Machine for 180 seconds. Please provide another nic(s) or retry after 180 seconds. Reserved VM: Nic: /subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/primary-nic Vm: /subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Compute/virtualMachines/eu1pcd311,Nic: /subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic Vm: /subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Compute/virtualMachines/eu1pcd311
+Error: Invalid index
 │
-│   with azurerm_linux_virtual_machine.vm["eu1pcd212"],
-│   on main-vm.tf line 1, in resource "azurerm_linux_virtual_machine" "vm":
-│    1: resource "azurerm_linux_virtual_machine" "vm" {
+│   on nic-asg-association.tf line 4, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
+│    4:   network_interface_id          = module.nic[each.value.nic].id #module.compute-linux_vm.linux_vm_list[regex(".*-(.*)",each.value.nic)[0]].nic[each.value.nic].id
+│     ├────────────────
+│     │ each.value.nic is "primary-nic"
+│     │ module.nic is object with 2 attributes
+│
+│ The given key does not identify an element in this collection value.
+╵
+╷
+│ Error: Invalid index
+│
+│   on nic-asg-association.tf line 4, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
+│    4:   network_interface_id          = module.nic[each.value.nic].id #module.compute-linux_vm.linux_vm_list[regex(".*-(.*)",each.value.nic)[0]].nic[each.value.nic].id
+│     ├────────────────
+│     │ each.value.nic is "primary-nic"
+│     │ module.nic is object with 2 attributes
+│
+│ The given key does not identify an element in this collection value.
+╵
+╷
+│ Error: Invalid index
+│
+│   on nic-asg-association.tf line 4, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
+│    4:   network_interface_id          = module.nic[each.value.nic].id #module.compute-linux_vm.linux_vm_list[regex(".*-(.*)",each.value.nic)[0]].nic[each.value.nic].id
+│     ├────────────────
+│     │ each.value.nic is "secondary-nic"
+│     │ module.nic is object with 2 attributes
+│
+│ The given key does not identify an element in this collection value.
+╵
+╷
+│ Error: Invalid index
+│
+│   on nic-asg-association.tf line 5, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
+│    5:   application_security_group_id = module.network-asg[each.value.asg].id
+│     ├────────────────
+│     │ each.value.asg is "asg1"
+│     │ module.network-asg is object with 2 attributes
+│
+│ The given key does not identify an element in this collection value.
+╵
+╷
+│ Error: Invalid index
+│
+│   on nic-asg-association.tf line 5, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
+│    5:   application_security_group_id = module.network-asg[each.value.asg].id
+│     ├────────────────
+│     │ each.value.asg is "asg2"
+│     │ module.network-asg is object with 2 attributes
+│
+│ The given key does not identify an element in this collection value.
+╵
+╷
+│ Error: Invalid index
+│
+│   on nic-asg-association.tf line 5, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
+│    5:   application_security_group_id = module.network-asg[each.value.asg].id
+│     ├────────────────
+│     │ each.value.asg is "asg1"
+│     │ module.network-asg is object with 2 attributes
+│
+│ The given key does not identify an element in this collection value.
+╵
