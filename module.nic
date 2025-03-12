@@ -16,8 +16,8 @@ module "nic" {
   #nic_subnet_id = var.linux_vm_nic_subnet_id
   #Variables
 
-  nic_default_interface = var.vm_config[0].linux_vm_default_nic
+  nic_default_interface = var.vm_config.linux_vm_default_nic
 
-  nic_additional_interface = var.vm_config[0].linux_vm_additional_nic
+  nic_additional_interface = var.vm_config.linux_vm_additional_nic
 } 
 
