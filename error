@@ -1,6 +1,4 @@
-zurerm_linux_virtual_machine.vm["eu1pcd311"]: Creation complete after 1m1s [id=/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Compute/virtualMachines/eu1pcd311]
-╷
-│ Error: creating Linux Virtual Machine (Subscription: "59bab8f2-1319-472b-bb69-314d1b034ec0"
+ Error: creating Linux Virtual Machine (Subscription: "59bab8f2-1319-472b-bb69-314d1b034ec0"
 │ Resource Group Name: "demorg1"
 │ Virtual Machine Name: "eu1pcd212"): performing CreateOrUpdate: unexpected status 400 (400 Bad Request) with error: NicReservedForAnotherVm: Nic(s) in request is reserved for another Virtual Machine for 180 seconds. Please provide another nic(s) or retry after 180 seconds. Reserved VM: Nic: /subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/primary-nic Vm: /subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Compute/virtualMachines/eu1pcd311,Nic: /subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic Vm: /subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Compute/virtualMachines/eu1pcd311
 │
