@@ -1,33 +1,18 @@
-Error: Invalid index
+Error: creating Linux Virtual Machine (Subscription: "59bab8f2-1319-472b-bb69-314d1b034ec0"
+│ Resource Group Name: "demorg1"
+│ Virtual Machine Name: "eu1pcd311"): performing CreateOrUpdate: unexpected status 400 (400 Bad Request) with error: NicReservedForAnotherVm: Nic(s)
+ in request is reserved for another Virtual Machine for 180 seconds. Please provide another nic(s) or retry after 180 seconds. 
+ Reserved VM: Nic: /subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/primary-nic 
+ Vm: /subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Compute/virtualMachines/eu1pcd212,
+ Nic: /subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic 
+ Vm: /subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Compute/virtualMachines/eu1pcd212
 │
-│   on module-nic.tf line 20, in module "nic":
-│   20:   nic_additional_interface = var.vm_config[0].linux_vm_additional_nic
-│     ├────────────────
-│     │ var.vm_config is object with 79 attributes
+│   with azurerm_linux_virtual_machine.vm["eu1pcd311"],
+s/demorg1/providers/Microsoft.Compute/virtualMachines/eu1pcd212
 │
-╵
-╷
-│ Error: Invalid index
+│   with azurerm_linux_virtual_machine.vm["eu1pcd311"],
 │
-│   on module-nic.tf line 20, in module "nic":
-│   20:   nic_additional_interface = var.vm_config[0].linux_vm_additional_nic
-│     ├────────────────
-│     │ var.vm_config is object with 79 attributes
-│
-│
-│   on module-nic.tf line 20, in module "nic":
-│   20:   nic_additional_interface = var.vm_config[0].linux_vm_additional_nic
-│     ├────────────────
-│     │ var.vm_config is object with 79 attributes
-│
-│   on module-nic.tf line 20, in module "nic":
-│   20:   nic_additional_interface = var.vm_config[0].linux_vm_additional_nic
-│     ├────────────────
-│     │ var.vm_config is object with 79 attributes
-│
-│     │ var.vm_config is object with 79 attributes
-│
-│
-│ The given key does not identify an element in this collection value. An object only supports looking up       
-│ attributes by name, not by numeric index.
-╵
+│   with azurerm_linux_virtual_machine.vm["eu1pcd311"],
+│   with azurerm_linux_virtual_machine.vm["eu1pcd311"],
+│   on main-vm.tf line 1, in resource "azurerm_linux_virtual_machine" "vm":
+│    1: resource "azurerm_linux_virtual_machine" "vm" {
