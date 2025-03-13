@@ -64,3 +64,4 @@ asg_config = [
     asg_association_nic_names = ["vm3-primary-nic"]
   }
 ]
+tags                  = merge(each.value.asg_custom_tags != null ? each.value.asg_custom_tags : {}, var.tags)
