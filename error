@@ -1,65 +1,18 @@
-Error: Invalid index
+Error: each.value cannot be used in this context
 │
-│   on nic-asg-association.tf line 4, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    4:   network_interface_id          = module.nic[each.value.nic].id #module.compute-linux_vm.linux_vm_list[regex(".*-(.*)",each.value.nic)[0]].nic[each.value.nic].id
-│     ├────────────────
-│     │ each.value.nic is "primary-nic"
-│     │ module.nic is object with 2 attributes
+│   on module-asg.tf line 14, in module "network-asg":
+│   14:   tags                  = merge(each.value.asg_custom_tags, var.tags)
 │
-│ The given key does not identify an element in this collection value.
+│ A reference to "each.value" has been used in a context in which it is unavailable, such as when the configuration no longer   
+│ contains the value in its "for_each" expression. Remove this reference to each.value in your configuration to work around     
+│ this error.
 ╵
 ╷
-│ Error: Invalid index
+│ Error: each.value cannot be used in this context
 │
-│   on nic-asg-association.tf line 4, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    4:   network_interface_id          = module.nic[each.value.nic].id #module.compute-linux_vm.linux_vm_list[regex(".*-(.*)",each.value.nic)[0]].nic[each.value.nic].id
-│     ├────────────────
-│     │ each.value.nic is "primary-nic"
-│     │ module.nic is object with 2 attributes
+│   on module-asg.tf line 17, in module "network-asg":
+│   17:   asg              = each.value.asg_name
 │
-│ The given key does not identify an element in this collection value.
-╵
-╷
-│ Error: Invalid index
-│
-│   on nic-asg-association.tf line 4, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    4:   network_interface_id          = module.nic[each.value.nic].id #module.compute-linux_vm.linux_vm_list[regex(".*-(.*)",each.value.nic)[0]].nic[each.value.nic].id
-│     ├────────────────
-│     │ each.value.nic is "secondary-nic"
-│     │ module.nic is object with 2 attributes
-│
-│ The given key does not identify an element in this collection value.
-╵
-╷
-│ Error: Invalid index
-│
-│   on nic-asg-association.tf line 5, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    5:   application_security_group_id = module.network-asg[each.value.asg].id
-│     ├────────────────
-│     │ each.value.asg is "asg1"
-│     │ module.network-asg is object with 2 attributes
-│
-│ The given key does not identify an element in this collection value.
-╵
-╷
-│ Error: Invalid index
-│
-│   on nic-asg-association.tf line 5, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    5:   application_security_group_id = module.network-asg[each.value.asg].id
-│     ├────────────────
-│     │ each.value.asg is "asg2"
-│     │ module.network-asg is object with 2 attributes
-│
-│ The given key does not identify an element in this collection value.
-╵
-╷
-│ Error: Invalid index
-│
-│   on nic-asg-association.tf line 5, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    5:   application_security_group_id = module.network-asg[each.value.asg].id
-│     ├────────────────
-│     │ each.value.asg is "asg1"
-│     │ module.network-asg is object with 2 attributes
-│
-│ The given key does not identify an element in this collection value.
-╵
+│ A reference to "each.value" has been used in a context in which it is unavailable, such as when the configuration no longer   
+│ contains the value in its "for_each" expression. Remove this reference to each.value in your configuration to work around     
+│ this error.
