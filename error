@@ -1,7 +1,7 @@
-Error: each.value cannot be used in this context
+ Error: each.value cannot be used in this context
 │
 │   on module-asg.tf line 14, in module "network-asg":
-│   14:   tags                  = merge(each.value.asg_custom_tags, var.tags)
+│   14:   tags = merge(each.value.asg_custom_tags, var.tags)
 │
 │ A reference to "each.value" has been used in a context in which it is unavailable, such as when the configuration no longer   
 │ contains the value in its "for_each" expression. Remove this reference to each.value in your configuration to work around     
@@ -11,8 +11,9 @@ Error: each.value cannot be used in this context
 │ Error: each.value cannot be used in this context
 │
 │   on module-asg.tf line 17, in module "network-asg":
-│   17:   asg              = each.value.asg_name
+│   17:   asg = each.value.asg_name
 │
 │ A reference to "each.value" has been used in a context in which it is unavailable, such as when the configuration no longer   
 │ contains the value in its "for_each" expression. Remove this reference to each.value in your configuration to work around     
 │ this error.
+╵
