@@ -21,3 +21,39 @@ locals {
   # Convert ASG associations into a key-value map
   asg_attachment_map = { for attachment in local.asg_attachment : "${attachment.nic_name}-${attachment.asg_name}" => attachment }
 }
+
+
+
+module "network_asg" {
+  source = "git::https://dev.azure.com/msci-otw/tech-iac/_git/terraform-azurerm-msci-network-asg?ref=0.3"
+
+  for_each = local.asg_mapped
+
+  asg_name              = each.value.asg_name
+  subscription_id       = var.subscription_id
+  resource_group_object = data.azurerm_resource_group.existing_rg
+  tags                  = merge(each.value.asg_custom_tags, var.tags)
+}
+
+
+
+resource "azurerm_network_interface_application_security_group_association" "asg_association" {
+  for_each = local.asg_attachment_map
+
+  network_interface_id          = module.nic.nic_list[each.value.nic_name] # ✅ Ensures correct NIC mapping
+  application_security_group_id = module.network_asg[each.value.asg_name].id
+}
+
+
+asg_config = [
+  {
+    asg_name                = "web-tier-asg"
+    asg_custom_tags         = { "Environment" = "dev", "Owner" = "team-a" }
+    asg_association_nic_names = ["vm1-primary-nic", "vm2-primary-nic"]
+  },
+  {
+    asg_name                = "db-tier-asg"
+    asg_custom_tags         = { "Environment" = "prod", "Owner" = "team-b" }
+    asg_association_nic_names = ["vm3-primary-nic"]
+  }
+]
