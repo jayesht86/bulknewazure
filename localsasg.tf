@@ -25,3 +25,15 @@ locals {
   # Convert to a map for easier lookup
   asg_attachment_map = { for attachment in local.asg_attachment : "${attachment.nic_name}-${attachment.asg_name}" => attachment }
 }
+
+
+locals {
+  # Ensure ASG names are correctly mapped
+  asg_mapped = {
+    for asg in var.asg_config : asg.asg_name => {
+      asg_name        = asg.asg_name
+      asg_custom_tags = lookup(asg, "asg_custom_tags", {})
+      asg_association_nic_names = lookup(asg, "asg_association_nic_names", [])
+    }
+  }
+}
