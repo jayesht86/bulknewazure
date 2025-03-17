@@ -26,4 +26,22 @@ Error: each.value cannot be used in this context
 │ A reference to "each.value" has been used in a context in which it is unavailable, such as when the configuration no longer   
 │ contains the value in its "for_each" expression. Remove this reference to each.value in your configuration to work around     
 │ this error.
+
+Error: Invalid value for input variable
+│
+│   on module-asg.tf line 18, in module "network-asg":
+│   18:   asg              = each.value.asg_name
+│
+│ The given value is not suitable for module.network-asg["asg1"].var.asg declared at
+│ .terraform\modules\network-asg\variables-asg.tf:1,1-15: set of object required.
+╵
+╷
+│ Error: Invalid value for input variable
+│
+│   on module-asg.tf line 18, in module "network-asg":
+│   18:   asg              = each.value.asg_name
+│
+│ The given value is not suitable for module.network-asg["asg2"].var.asg declared at
+│ .terraform\modules\network-asg\variables-asg.tf:1,1-15: set of object required.
+╵
 ╵
