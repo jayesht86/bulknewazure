@@ -29,11 +29,25 @@ locals {
 
 locals {
   # Ensure ASG names are correctly mapped
-  asg_mapped = {
+ asg_mapped = {
     for asg in var.asg_config : asg.asg_name => {
-      asg_name        = asg.asg_name
-      asg_custom_tags = lookup(asg, "asg_custom_tags", {})
+      asg_name                  = asg.asg_name
+      asg_custom_tags           = lookup(asg, "asg_custom_tags", {})
       asg_association_nic_names = lookup(asg, "asg_association_nic_names", [])
     }
   }
-}
+
+  # Flatten ASG-to-NIC associations for Terraform `for_each`
+  asg_attachment_list = flatten([
+    for asg in local.asg_mapped : [
+      for nic in asg.asg_association_nic_names : {
+        nic_name = nic
+        asg_name = asg.asg_name
+      }
+    ]
+  ])
+
+  # Convert ASG associations into a key-value map for Terraform `for_each`
+  asg_attachment_map = {
+    for attachment in local.asg_attachment_list : "${attachment.nic_name}-${attachment.asg_name}" => attachment
+  }
