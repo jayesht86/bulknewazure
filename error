@@ -1,62 +1,39 @@
-Error: Unsupported attribute
+Error: Error: Network Interface (Subscription: "59bab8f2-1319-472b-bb69-314d1b034ec0"
+│ Resource Group Name: "demorg1"
+│ Network Interface Name: "primary-nic-3-primary") was not found
 │
-│   on nic-asg-association.tf line 4, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    4:   network_interface_id          = module.nic.nic_list[each.value.nic_name] # ✅ Ensures correct NIC mapping
-│     ├────────────────
-│     │ module.nic is object with no attributes
+│   with data.azurerm_network_interface.existing_nics["primary-nic-3-primary"],
+│   on data.tf line 16, in data "azurerm_network_interface" "existing_nics":
+│   16: data "azurerm_network_interface" "existing_nics" {
 │
-│ This object does not have an attribute named "nic_list".
 ╵
 ╷
-│ Error: Unsupported attribute
+│ Error: Error: Network Interface (Subscription: "59bab8f2-1319-472b-bb69-314d1b034ec0"
+│ Resource Group Name: "demorg1"
+│ Network Interface Name: "primary-nic-2-primary") was not found
 │
-│   on nic-asg-association.tf line 4, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    4:   network_interface_id          = module.nic.nic_list[each.value.nic_name] # ✅ Ensures correct NIC mapping
-│     ├────────────────
-│     │ module.nic is object with no attributes
+│   with data.azurerm_network_interface.existing_nics["primary-nic-2-primary"],
+│   on data.tf line 16, in data "azurerm_network_interface" "existing_nics":
+│   16: data "azurerm_network_interface" "existing_nics" {
 │
-│ This object does not have an attribute named "nic_list".
 ╵
 ╷
-│ Error: Unsupported attribute
+│ Error: Error: Network Interface (Subscription: "59bab8f2-1319-472b-bb69-314d1b034ec0"
+│ Resource Group Name: "demorg1"
+│ Network Interface Name: "secondary-nic-2-additional-01") was not found
 │
-│   on nic-asg-association.tf line 4, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    4:   network_interface_id          = module.nic.nic_list[each.value.nic_name] # ✅ Ensures correct NIC mapping
-│     ├────────────────
-│     │ module.nic is object with no attributes
+│   with data.azurerm_network_interface.existing_nics["secondary-nic-2-additional-01"],
+│   on data.tf line 16, in data "azurerm_network_interface" "existing_nics":
+│   16: data "azurerm_network_interface" "existing_nics" {
 │
-│ This object does not have an attribute named "nic_list".
 ╵
 ╷
-│ Error: Unsupported attribute
+│ Error: Error: Network Interface (Subscription: "59bab8f2-1319-472b-bb69-314d1b034ec0"
+│ Resource Group Name: "demorg1"
+│ Network Interface Name: "secondary-nic-3-additional-01") was not found
 │
-│   on nic-asg-association.tf line 5, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    5:   application_security_group_id = module.network-asg[each.value.asg_name].id
-│     ├────────────────
-│     │ each.value.asg_name is "asg1"
-│     │ module.network-asg is object with 2 attributes
+│   with data.azurerm_network_interface.existing_nics["secondary-nic-3-additional-01"],
+│   on data.tf line 16, in data "azurerm_network_interface" "existing_nics":
+│   16: data "azurerm_network_interface" "existing_nics" {
 │
-│ This object does not have an attribute named "id".
-╵
-╷
-│ Error: Unsupported attribute
-│
-│   on nic-asg-association.tf line 5, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    5:   application_security_group_id = module.network-asg[each.value.asg_name].id
-│     ├────────────────
-│     │ each.value.asg_name is "asg1"
-│     │ module.network-asg is object with 2 attributes
-│
-│ This object does not have an attribute named "id".
-╵
-╷
-│ Error: Unsupported attribute
-│
-│   on nic-asg-association.tf line 5, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    5:   application_security_group_id = module.network-asg[each.value.asg_name].id
-│     ├────────────────
-│     │ each.value.asg_name is "asg2"
-│     │ module.network-asg is object with 2 attributes
-│
-│ This object does not have an attribute named "id".
 ╵
