@@ -36,6 +36,23 @@ resource "azurerm_network_interface_application_security_group_association" "asg
 
   network_interface_id          = local.nic_list[each.value.nic_name] # ✅ Fetches NIC ID dynamically
   application_security_group_id = module.network-asg.asg_list[each.value.asg_name] # ✅ Uses ASG IDs from module output
+
+
+data "azurerm_application_security_group" "existing_asgs" {
+  for_each            = toset([for asg in var.asg_config : asg.asg_name])
+  name                = each.value
+  resource_group_name = var.resource_group_name
+depends_on = [module.network-asg]
+}
+
+
+ asg_list = {
+    for asg in data.azurerm_application_security_group.existing_asgs :
+    asg.name => asg.id
+  }
+network_interface_id          = lookup(local.nic_list, each.value.nic_name, null) # ✅ Fetch NIC ID dynamically
+  application_security_group_id = lookup(local.asg_list, each.value.asg_name, null) # ✅ Fetch ASG ID dynamically
+}
 }
 
 
