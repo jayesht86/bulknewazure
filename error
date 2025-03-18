@@ -1,74 +1,28 @@
-Changes to Outputs:
-  + asg_attachment_debug           = (known after apply)
-  + asg_attachment_list_debug      = [
-      + {
-          + asg_name = "asg1"
-          + nic_name = "primary-nic-2-primary"
-        },
-      + {
-          + asg_name = "asg1"
-          + nic_name = "primary-nic-3-primary"
-        },
-      + {
-          + asg_name = "asg2"
-          + nic_name = "secondary-nic-2-additional-01"
-        },
-    ]
-  + asg_attachment_map_debug       = (known after apply)
-  + asg_attachment_nic_names_debug = [
-      + "primary-nic-2-primary",
-      + "primary-nic-3-primary",
-      + "secondary-nic-2-additional-01",
-    ]
-  + asg_config_debug               = [
-      + {
-          + asg_association_nic_names = [
-              + "primary-nic-2-primary",
-              + "primary-nic-3-primary",
-            ]
-          + asg_custom_tags           = {
-              + Environment = "dev"
-              + Owner       = "jt"
-            }
-          + asg_name                  = "asg1"
-        },
-      + {
-          + asg_association_nic_names = [
-              + "secondary-nic-2-additional-01",
-            ]
-          + asg_custom_tags           = {
-              + Environment = "dev2"
-              + Owner       = "jt1"
-            }
-          + asg_name                  = "asg2"
-        },
-    ]
-  + nic_list_debug                 = {
-      + primary-nic-2-primary         = (known after apply)
-      + primary-nic-3-primary         = (known after apply)
-      + secondary-nic-2-additional-01 = (known after apply)
-      + secondary-nic-3-additional-01 = (known after apply)
-    }
-  + nic_list_key_debug             = [
-      + "primary-nic-2-primary",
-      + "primary-nic-3-primary",
-      + "secondary-nic-2-additional-01",
-      + "secondary-nic-3-additional-01",
-    ]
-╷
-│ Error: Invalid for_each argument
-│
-│   on nic-asg-association.tf line 2, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    2:   for_each = local.asg_attachment_map
+163: asg_mapped = {
+│  164:     for asg in var.asg_config : asg.asg_name => {
+│  165:       asg_name                  = asg.asg_name
+│  166:       asg_custom_tags           = lookup(asg, "asg_custom_tags", {})
+│  167:       asg_association_nic_names = lookup(asg, "asg_association_nic_names", [])
+│  168:     }
+│  169:   }
 │     ├────────────────
-│     │ local.asg_attachment_map will be known only after apply
+│     │ var.asg_config is null
 │
-│ The "for_each" map includes keys derived from resource attributes that cannot be determined until apply, and so Terraform     
-│ cannot determine the full set of keys that will identify the instances of this resource.
-│
-│ When working with unknown values in for_each, it's better to define the map keys statically in your configuration and place   
-│ apply-time results only in the map values.
-│
-│ Alternatively, you could use the -target planning option to first apply only the resources that the for_each value depends    
-│ on, and then apply a second time to fully converge.
+│ A null value cannot be used as the collection in a 'for' expression.
 ╵
+╷
+│ Error: Iteration over null value
+│
+│   on ..\locals.tf line 173, in locals:
+│  172:   asg_attachment_list = flatten([
+│  173:     for asg in var.asg_config : [
+│  174:       for nic in asg.asg_association_nic_names : {
+│  175:         nic_name = lower(trimspace(nic))
+│  176:         asg_name = asg.asg_name
+│  177:       }
+│  178:     ] if length(asg.asg_association_nic_names) > 0
+│  179:   ])
+│     ├────────────────
+│     │ var.asg_config is null
+│
+│ A null value cannot be used as the collection in a 'for' expression.
