@@ -29,3 +29,14 @@ locals {
   nic_list = { for name, nic in data.azurerm_network_interface.existing_nics : name => nic.id }
 }
 
+
+association 
+resource "azurerm_network_interface_application_security_group_association" "asg_association" {
+  for_each = local.asg_attachment_map
+
+  network_interface_id          = local.nic_list[each.value.nic_name] # ✅ Fetches NIC ID dynamically
+  application_security_group_id = module.network-asg.asg_list[each.value.asg_name] # ✅ Uses ASG IDs from module output
+}
+
+
+
