@@ -3,28 +3,28 @@ Changes to Outputs:
   + asg_attachment_list_debug      = [
       + {
           + asg_name = "asg1"
-          + nic_name = "vm1-primary-nic"
+          + nic_name = "primary-nic-2-primary"
         },
       + {
           + asg_name = "asg1"
-          + nic_name = "vm2-primary-nic"
+          + nic_name = "primary-nic-3-primary"
         },
       + {
           + asg_name = "asg2"
-          + nic_name = "vm3-primary-nic"
+          + nic_name = "secondary-nic-2-additional-01"
         },
     ]
   + asg_attachment_map_debug       = (known after apply)
   + asg_attachment_nic_names_debug = [
-      + "vm1-primary-nic",
-      + "vm2-primary-nic",
-      + "vm3-primary-nic",
+      + "primary-nic-2-primary",
+      + "primary-nic-3-primary",
+      + "secondary-nic-2-additional-01",
     ]
   + asg_config_debug               = [
       + {
           + asg_association_nic_names = [
-              + "vm1-primary-nic",
-              + "vm2-primary-nic",
+              + "primary-nic-2-primary",
+              + "primary-nic-3-primary",
             ]
           + asg_custom_tags           = {
               + Environment = "dev"
@@ -34,7 +34,7 @@ Changes to Outputs:
         },
       + {
           + asg_association_nic_names = [
-              + "vm3-primary-nic",
+              + "secondary-nic-2-additional-01",
             ]
           + asg_custom_tags           = {
               + Environment = "dev2"
@@ -72,4 +72,3 @@ Changes to Outputs:
 │ Alternatively, you could use the -target planning option to first apply only the resources that the for_each value depends    
 │ on, and then apply a second time to fully converge.
 ╵
-PS C:\Azure\terraform-azurerm-msci-compute-linux_vm-bulk\terraform-azurerm-msci-compute-linux_vm-bulk> 
