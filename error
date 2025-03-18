@@ -1,27 +1,42 @@
- Error: Missing required argument
+Changes to Outputs:
+  + nic_list_debug = {
+      + primary-nic-2-primary         = (known after apply)
+      + primary-nic-3-primary         = (known after apply)
+      + secondary-nic-2-additional-01 = (known after apply)
+      + secondary-nic-3-additional-01 = (known after apply)
+    }
+╷
+│ Error: Invalid index
 │
-│   with azurerm_network_interface_application_security_group_association.asg_association["vm1-primary-nic-asg1"],
 │   on nic-asg-association.tf line 4, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    4:  network_interface_id          = lookup(local.nic_list, each.value.nic_name, null) # ✅ Fetch NIC ID dynamically        
+│    4:  network_interface_id          = local.nic_list[each.value.nic_name] #, null) # ✅ Fetch NIC ID dynamically
+│     ├────────────────
+│     │ each.value.nic_name is "vm1-primary-nic"
+│     │ local.nic_list is object with 4 attributes
 │
-│ The argument "network_interface_id" is required, but no definition was found.
+│ The given key does not identify an element in this collection value.
 ╵
 ╷
-│ Error: Missing required argument
+│ Error: Invalid index
 │
-│   with azurerm_network_interface_application_security_group_association.asg_association["vm2-primary-nic-asg1"],
 │   on nic-asg-association.tf line 4, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    4:  network_interface_id          = lookup(local.nic_list, each.value.nic_name, null) # ✅ Fetch NIC ID dynamically        
+│    4:  network_interface_id          = local.nic_list[each.value.nic_name] #, null) # ✅ Fetch NIC ID dynamically
+│     ├────────────────
+│     │ each.value.nic_name is "vm2-primary-nic"
+│     │ local.nic_list is object with 4 attributes
 │
-│ The argument "network_interface_id" is required, but no definition was found.
+│ The given key does not identify an element in this collection value.
 ╵
 ╷
-│ Error: Missing required argument
+│ Error: Invalid index
 │
-│   with azurerm_network_interface_application_security_group_association.asg_association["vm3-primary-nic-asg2"],
 │   on nic-asg-association.tf line 4, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    4:  network_interface_id          = lookup(local.nic_list, each.value.nic_name, null) # ✅ Fetch NIC ID dynamically        
+│    4:  network_interface_id          = local.nic_list[each.value.nic_name] #, null) # ✅ Fetch NIC ID dynamically
+│     ├────────────────
+│     │ each.value.nic_name is "vm3-primary-nic"
+│     │ local.nic_list is object with 4 attributes
 │
-│ The argument "network_interface_id" is required, but no definition was found.
+│ The given key does not identify an element in this collection value.
 ╵
 PS C:\Azure\terraform-azurerm-msci-compute-linux_vm-bulk\terraform-azurerm-msci-compute-linux_vm-bulk> 
+PS C:\Azure\terraform-azurerm-msci-compute-linux_vm-bulk\terraform-azurerm-msci-compute-linux_vm-bulk>
