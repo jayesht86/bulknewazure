@@ -1,63 +1,27 @@
-Error: Invalid index
+ Error: Missing required argument
 │
+│   with azurerm_network_interface_application_security_group_association.asg_association["vm1-primary-nic-asg1"],
 │   on nic-asg-association.tf line 4, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    4:  network_interface_id          = local.nic_list[each.value.nic_name] # ✅ Fetches NIC ID dynamically
-│     ├────────────────
-│     │ each.value.nic_name is "vm1-primary-nic"
-│     │ local.nic_list is object with 4 attributes
+│    4:  network_interface_id          = lookup(local.nic_list, each.value.nic_name, null) # ✅ Fetch NIC ID dynamically        
 │
-│ The given key does not identify an element in this collection value.
+│ The argument "network_interface_id" is required, but no definition was found.
 ╵
 ╷
-│ Error: Invalid index
+│ Error: Missing required argument
 │
+│   with azurerm_network_interface_application_security_group_association.asg_association["vm2-primary-nic-asg1"],
 │   on nic-asg-association.tf line 4, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    4:  network_interface_id          = local.nic_list[each.value.nic_name] # ✅ Fetches NIC ID dynamically
-│     ├────────────────
-│     │ each.value.nic_name is "vm2-primary-nic"
-│     │ local.nic_list is object with 4 attributes
+│    4:  network_interface_id          = lookup(local.nic_list, each.value.nic_name, null) # ✅ Fetch NIC ID dynamically        
 │
-│ The given key does not identify an element in this collection value.
+│ The argument "network_interface_id" is required, but no definition was found.
 ╵
 ╷
-│ Error: Invalid index
+│ Error: Missing required argument
 │
+│   with azurerm_network_interface_application_security_group_association.asg_association["vm3-primary-nic-asg2"],
 │   on nic-asg-association.tf line 4, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    4:  network_interface_id          = local.nic_list[each.value.nic_name] # ✅ Fetches NIC ID dynamically
-│     ├────────────────
-│     │ each.value.nic_name is "vm3-primary-nic"
-│     │ local.nic_list is object with 4 attributes
+│    4:  network_interface_id          = lookup(local.nic_list, each.value.nic_name, null) # ✅ Fetch NIC ID dynamically        
 │
-│ The given key does not identify an element in this collection value.
+│ The argument "network_interface_id" is required, but no definition was found.
 ╵
-╷
-│ Error: Unsupported attribute
-│
-│   on nic-asg-association.tf line 5, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    5:   application_security_group_id = module.network-asg.asg_list[each.value.asg_name] # ✅ Uses ASG IDs from module output 
-│     ├────────────────
-│     │ module.network-asg is object with 2 attributes
-│
-│ This object does not have an attribute named "asg_list".
-╵
-╷
-│ Error: Unsupported attribute
-│
-│   on nic-asg-association.tf line 5, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    5:   application_security_group_id = module.network-asg.asg_list[each.value.asg_name] # ✅ Uses ASG IDs from module output 
-│     ├────────────────
-│     │ module.network-asg is object with 2 attributes
-│
-│ This object does not have an attribute named "asg_list".
-╵
-╷
-│ Error: Unsupported attribute
-│
-│   on nic-asg-association.tf line 5, in resource "azurerm_network_interface_application_security_group_association" "asg_associ│   on nic-asg-association.tf line 5, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│   on nic-asg-association.tf line 5, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    5:   application_security_group_id = module.network-asg.asg_list[each.value.asg_name] # ✅ Uses ASG IDs from module output 
-│     ├────────────────
-│     │ module.network-asg is object with 2 attributes
-│
-│ This object does not have an attribute named "asg_list".
-╵
+PS C:\Azure\terraform-azurerm-msci-compute-linux_vm-bulk\terraform-azurerm-msci-compute-linux_vm-bulk> 
