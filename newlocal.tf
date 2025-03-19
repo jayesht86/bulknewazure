@@ -104,3 +104,28 @@ final_vm_list = merge(local.existing_vms, { for vm in local.vm_list : vm.name =>
       if contains(local.nic_list_keys, item.nic_name)
   }
 }
+
+locals {
+  # Step 1: Ensure existing_vm_names Defaults to an Empty Set
+  existing_vm_names = length(azurerm_linux_virtual_machine.vm) > 0 ? keys(azurerm_linux_virtual_machine.vm) : []
+
+  # Step 2: Ensure Terraform Queries Only Existing VMs
+  existing_vms = length(local.existing_vm_names) > 0 ? {
+    for vm in data.azurerm_linux_virtual_machine.existing_vms :
+    vm.name => {
+      name                         = vm.name
+      size                         = vm.size
+      zone                         = vm.zone
+      os_disk_size_gb              = try(vm.os_disk.0.disk_size_gb, null)
+      linux_vm_admin_username      = vm.admin_username
+      linux_vm_admin_password      = vm.admin_password
+    }
+  } : {}
+
+  # Step 3: Merge Old VMs & New VMs to Prevent Destruction
+  final_vm_list = merge(
+    local.existing_vms,  # ✅ Keeps previously created VMs
+    { for vm in local.vm_list : vm.name => vm }  # ✅ Adds new VMs
+  )
+}
+
