@@ -23,19 +23,19 @@ locals {
         # NIC Details
         linux_vm_default_nic    = lookup(config, "linux_vm_default_nic", null)
         linux_vm_additional_nic = lookup(config, "linux_vm_additional_nic", [])
-        # Default NIC (Ensuring Unique Naming)
+        # Default NIC 
         linux_vm_default_nic = {
           nic_name      = format("%s-%s-primary", lookup(config.linux_vm_default_nic, "nic_name", "default-nic"), zone)
           nic_subnet_id = lookup(config.linux_vm_default_nic, "nic_subnet_id", null)
           nic_ip_config = lookup(config.linux_vm_default_nic, "nic_ip_config", [])
         }
-
-        # Additional NICs (Ensuring Unique Naming)
+        # Additional NICs 
         linux_vm_additional_nic = [
           for nic_idx, nic in lookup(config, "linux_vm_additional_nic", []) : {
             nic_name      = format("%s-%s-additional-%02d", lookup(nic, "nic_name", "additional-nic"), zone, nic_idx + 1)
             nic_subnet_id = lookup(nic, "nic_subnet_id", null)
             nic_ip_config = lookup(nic, "nic_ip_config", [])
+        }]
         #OMS Agent Extension		
         vm_extension_failure_suppression_enabled = config.vm_extension_failure_suppression_enabled
         #Extension_Custom_Scripts
@@ -78,30 +78,7 @@ locals {
     ]
     ]
   )
-  # Default NIC Mapping
-  # linux_vm_default_nic = {
-  #   for vm in local.vm_list : vm.name => {
-  #     nic_name      = format("nic-%s", vm.name)
-  #     subnet_id     = lookup(vm, "linux_vm_default_nic", null) != null ? vm.linux_vm_default_nic.nic_subnet_id : null
-  #     dns_servers   = lookup(vm, "linux_vm_default_nic", null) != null ? vm.linux_vm_default_nic.nic_dns_servers : null
-  #     accelerated_networking = lookup(vm, "linux_vm_default_nic", null) != null ? vm.linux_vm_default_nic.accelerated_networking_enabled : false
-  #     ip_configs    = lookup(vm, "linux_vm_default_nic", null) != null ? vm.linux_vm_default_nic.nic_ip_config : []
-  #   }
-  # }
 
-  # # Additional NICs Mapping
-  # linux_vm_additional_nic = flatten([
-  #   for vm in local.vm_list : [
-  #     for nic in lookup(vm, "linux_vm_additional_nic", []) : {
-  #       vm_name       = vm.name
-  #       nic_name      = format("nic-%s-%s", vm.name, nic.nic_name)
-  #       subnet_id     = nic.nic_subnet_id
-  #       dns_servers   = nic.nic_dns_servers
-  #       accelerated_networking = nic.accelerated_networking_enabled
-  #       ip_configs    = nic.nic_ip_config
-  #     }
-  #   ]
-  # ])
   effective_disk_count = var.managed_disk != null ? length(var.managed_disk.managed_disks_list) : 0
 
   vm_managed_disk_extended_list = flatten([
@@ -168,21 +145,49 @@ locals {
   disk_attachments2 = var.managed_disk != null ? { for o in local.disk_attachments : "${o.vm} + ${o.disk}" => o } : {}
 
   vm_lists = azurerm_linux_virtual_machine.vm
-#ASG Association
-  asg_attachment = var.asg != null ? flatten(
-    [
-      for d in var.asg : [
-        for v in d.asg_association_nic_names : {
-          nic : v,
-          asg : d.asg_name
-        }
-      ]
-    ]
-  ) : null
-  asg_attachment2 = local.asg_attachment != null ? { for o in local.asg_attachment : "${o.asg} + ${o.nic}" => o } : {}
+
+  
+ asg_list = {
+    for asg in data.azurerm_application_security_group.existing_asgs :
+    asg.name => asg.id
+  }
+nic_names = flatten([
+    for vm in local.vm_list : concat(
+      [vm.linux_vm_default_nic.nic_name],
+      [for nic in vm.linux_vm_additional_nic : nic.nic_name]
+    )
+  ])
+
+  # Extract NIC IDs from data source
+  nic_list = { for nic in data.azurerm_network_interface.existing_nics : nic.name => nic.id }
+asg_mapped = {
+    for asg in coalesce(var.asg_config, []): asg.asg_name => {
+      asg_name                  = asg.asg_name
+      asg_custom_tags           = lookup(asg, "asg_custom_tags", {})
+      asg_association_nic_names = lookup(asg, "asg_association_nic_names", [])
+    }
+  }
+
+  # Flatten ASG-to-NIC associations for Terraform `for_each`
+  asg_attachment_list = flatten([
+    for asg in coalesce(var.asg_config, []) : [
+      for nic in lookup(asg, "asg_association_nic_names", []) : {
+        nic_name = lower(trimspace(nic))
+        asg_name = asg.asg_name
+      }
+    ] if length(lookup(asg, "asg_association_nic_names", [])) > 0
+  ])
+
+  # Convert ASG associations into a key-value map for Terraform `for_each`
+  asg_attachment_map = {
+    for item  in local.asg_attachment_list : "${item.nic_name}-${item.asg_name}" => item if contains(keys(local.nic_list), item.nic_name) } 
+  }
 
 
-}
+
+
+
+
 
 # output "disk_list" {
 #   value =  local.vm_managed_disk_extended_list
