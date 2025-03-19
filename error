@@ -92,6 +92,8 @@ PS C:\Azure\terraform-azurerm-msci-compute-linux_vm-bulk\terraform-azurerm-msci-
 │ Error: Invalid target "azurerm_linux_virtual_machine.vm[eusicd204]"
 │
 │ Index brackets must contain either a literal number or a literal string.
+
+ Error: Cycle: data.azurerm_linux_virtual_machine.existing_vms, local.existing_vm_names (expand)
 ╵
 Error: Cycle: local.final_vm_list (expand), azurerm_linux_virtual_machine.vm, local.existing_vms (expand)
 Error: Cycle: local.existing_vm_names (expand), data.azurerm_linux_virtual_machine.existing_vms, local.existing_vms (expand), local.final_vm_list (expand), azurerm_linux_virtual_machine.vm
