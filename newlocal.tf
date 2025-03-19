@@ -149,3 +149,9 @@ existing_vm_names = length(data.azurerm_linux_virtual_machine.existing_vms) > 0 
     }
   } : {}
 
+final_vm_list = merge(
+    local.existing_vms,  # Keeps previously created VMs
+    { for vm in local.vm_list : vm.name => vm }  # Adds new VMs
+  )
+}
+
