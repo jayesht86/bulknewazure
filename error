@@ -1,8 +1,0 @@
- Error: Not enough function arguments
-│
-│   on nic-asg-association.tf line 6, in resource "azurerm_network_interface_application_security_group_association" "asg_association":
-│    6:   network_interface_id          = lookup(local.nic_list[each.value.nic_name] )
-│     ├────────────────
-│     │ while calling lookup(inputMap, key, default...)
-│
-│ Function "lookup" expects at least 2 argument(s). Missing value for "key".
