@@ -14,10 +14,10 @@ module "compute-managed_disk" {
 
   #Global Variables used by all deployments
   ##Timeouts
-   managed_disk_timeout_create = var.managed_disk.managed_disk_timeout_create
-   managed_disk_timeout_update = var.managed_disk.managed_disk_timeout_update
-   managed_disk_timeout_read   = var.managed_disk.managed_disk_timeout_read
-   managed_disk_timeout_delete = var.managed_disk.managed_disk_timeout_delete
+  managed_disk_timeout_create = var.managed_disk.managed_disk_timeout_create
+  managed_disk_timeout_update = var.managed_disk.managed_disk_timeout_update
+  managed_disk_timeout_read   = var.managed_disk.managed_disk_timeout_read
+  managed_disk_timeout_delete = var.managed_disk.managed_disk_timeout_delete
 
   #Disk List
 
