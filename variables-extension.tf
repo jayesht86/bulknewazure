@@ -32,7 +32,7 @@ variable "vm_extension" {
   type = object({
     # Required
     vm_extension_name      = string
-    vm_name                = string
+    vm_extension_vm_id     = string
     vm_extension_publisher = string
     vm_extension_type      = string
     vm_extension_version   = string
@@ -42,8 +42,8 @@ variable "vm_extension" {
     vm_extension_auto_upgrade          = optional(bool, false)
 
     # Settings
-    vm_extension_settings               = optional(string)
-    vm_extension_protected_settings     = optional(string)
+    vm_extension_settings                    = optional(string)
+    vm_extension_protected_settings          = optional(string)
     vm_extension_failure_suppression_enabled = optional(bool, false)
 
     # Timeout Configurations
@@ -54,9 +54,9 @@ variable "vm_extension" {
 
     # Extensions
     ## Monitoring Agent Extension
-    linux_vm_extension_monitoring_enabled       = optional(bool, false)
-    linux_vm_extension_monitoring_workspace_id  = optional(string)
-    linux_vm_extension_monitoring_workspace_key = optional(string)
+    linux_vm_extension_monitoring_enabled                     = optional(bool, false)
+    linux_vm_extension_monitoring_workspace_id                = optional(string)
+    linux_vm_extension_monitoring_workspace_key               = optional(string)
     linux_vm_extension_monitoring_failure_suppression_enabled = optional(bool, false)
 
     ## Custom Script Extension
@@ -69,37 +69,32 @@ variable "vm_extension" {
     linux_vm_extension_custom_script_failure_suppression_enabled = optional(bool, false)
 
     ## Encryption Extension
-    linux_vm_extension_encryption_enabled                  = optional(bool, false)
-    linux_vm_extension_encryption_key_vault_name           = optional(string)
-    linux_vm_extension_encryption_key_vault_resource_group = optional(string)
-    linux_vm_extension_encryption_key_vault_kek_name       = optional(string)
-    linux_vm_extension_encryption_key_vault_kek_version    = optional(string)
-    linux_vm_extension_encryption_encrypt_all_disks        = optional(bool, false)
-    linux_vm_extension_encryption_operation                = optional(string)
+    linux_vm_extension_encryption_enabled                     = optional(bool, false)
+    linux_vm_extension_encryption_key_vault_name              = optional(string)
+    linux_vm_extension_encryption_key_vault_resource_group    = optional(string)
+    linux_vm_extension_encryption_key_vault_kek_name          = optional(string)
+    linux_vm_extension_encryption_key_vault_kek_version       = optional(string)
+    linux_vm_extension_encryption_encrypt_all_disks           = optional(bool, false)
+    linux_vm_extension_encryption_operation                   = optional(string)
     linux_vm_extension_encryption_failure_suppression_enabled = optional(bool, false)
 
     ## ADO Agent Extension
-    linux_vm_extension_ado_agent_enabled           = optional(bool, false)
-    linux_vm_extension_ado_agent_name              = optional(string)
-    linux_vm_extension_ado_agent_vsts_account_name = optional(string)
-    linux_vm_extension_ado_agent_team_project      = optional(string)
-    linux_vm_extension_ado_agent_deployment_group  = optional(string)
-    linux_vm_extension_ado_agent_pat_token         = optional(string)
-    linux_vm_extension_ado_agent_tags              = optional(string)
+    linux_vm_extension_ado_agent_enabled                     = optional(bool, false)
+    linux_vm_extension_ado_agent_name                        = optional(string)
+    linux_vm_extension_ado_agent_vsts_account_name           = optional(string)
+    linux_vm_extension_ado_agent_team_project                = optional(string)
+    linux_vm_extension_ado_agent_deployment_group            = optional(string)
+    linux_vm_extension_ado_agent_pat_token                   = optional(string)
+    linux_vm_extension_ado_agent_tags                        = optional(string)
     linux_vm_extension_ado_agent_failure_suppression_enabled = optional(bool, false)
 
     ## AAD SSH Extension
-    linux_vm_extension_aad_ssh_enabled                     = optional(bool, false)
+    linux_vm_extension_aad_ssh_enabled                    = optional(bool, false)
     linux_vm_extension_aadssh_failure_suppression_enabled = optional(bool, false)
   })
 
-  default = {
-    vm_extension_name      = "MonitoringAgentExtension"
-    vm_name                = "eu1pcd109"
-    vm_extension_publisher = "Microsoft.EnterpriseCloud.Monitoring"
-    vm_extension_type      = "OmsAgentForLinux"
-    vm_extension_version   = "1.14"
-  }
+  default = null
+
 }
 
 # Global Variables - Timeout Settings
