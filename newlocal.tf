@@ -4,6 +4,18 @@ locals {
     terraform-azurerm-msci-compute-linux_vm = "True"
   })
 
+ existing_vms = {
+    for vm in azurerm_linux_virtual_machine.vm :
+    vm.name => {
+      name                         = vm.name
+      size                         = vm.size
+      zone                         = vm.zone
+      os_disk_size_gb              = vm.os_disk.0.disk_size_gb
+      linux_vm_admin_username      = vm.admin_username
+      linux_vm_admin_password      = vm.admin_password
+    }
+  }
+
   # ✅ Preserve Existing VMs - Prevent Terraform from Destroying & Recreating
   existing_vm = {
     for vm in azurerm_linux_virtual_machine.vm : vm.name => {
@@ -37,6 +49,9 @@ locals {
 
   # ✅ Ensure Stable List of VMs (Merges New + Existing VMs)
   final_vm_list = merge(local.existing_vm, { for vm in local.vm_list : vm.name => vm })
+
+final_vm_list = merge(local.existing_vms, { for vm in local.vm_list : vm.name => vm })
+
 
   # ✅ Generate NIC Names Dynamically
   nic_list = {
