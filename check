@@ -14,3 +14,6 @@
       }
     ]
   ]) : []
+
+#network_interface_id          = local.nic_list[each.value.nic_name] 
+  #application_security_group_id = local.asg_list[each.value.asg_name] 
