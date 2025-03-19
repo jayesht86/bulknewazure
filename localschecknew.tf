@@ -10,16 +10,17 @@ locals {
   # existing_asgs  = try(data.terraform_remote_state.compute_linux_vm_bulk.outputs.asg_list, {})
 
 #vm_lists = azurerm_linux_virtual_machine.vm
-existing_vms = try(azurerm_linux_virtual_machine.vm, {}) #{ }
-  #   for vm in azurerm_linux_virtual_machine.vm : vm.name => {
-  #     name                         = vm.name
-  #     size                         = vm.size
-  #     zone                         = vm.zone
-  #     os_disk_size_gb              = vm.os_disk.0.disk_size_gb
-  #     linux_vm_admin_username      = vm.admin_username
-  #     linux_vm_admin_password      = vm.admin_password
-  #   }
-  # }
+existing_vms = try(
+   { for vm in azurerm_linux_virtual_machine.vm : vm.name => {
+      name                         = vm.name
+      size                         = vm.size
+      zone                         = try(vm.zone, null)
+      os_disk_size_gb              = try(vm.os_disk.0.disk_size_gb,128)
+      linux_vm_admin_username      = try(vm.admin_username, null)
+      linux_vm_admin_password      = try(vm.admin_password, null)
+    }
+  }
+)
 
   vm_list = flatten([
     for config in [var.vm_config] : [
