@@ -1,13 +1,13 @@
-Error: Cycle: module.network-asg.var.subscription_id (expand), module.network-asg (close), module.network-asg.var.tags (expand), module.network-asg.local.tags (expand), module.network-asg.var.resource_group_object (expand), module.network-asg.var.asg (expand), module.network-asg.azurerm_application_security_group.asg, module.network-asg.local.asg_list (expand), local.asg_mapped (expand), module.network-asg (expand), module.network-asg.output.asg_list (expand), data.azurerm_application_security_group.existing_asgs, local.asg_list (expand)
-│ 
-│ 
-╵
-╷
-│ Error: Cycle: module.nic.var.subscription_id (expand), module.nic.local.nic_default_interface (expand), module.nic.local.nic_additional_interface (expand), module.nic.output.nic_interface_list (expand), module.nic.var.nic_default_interface (expand), module.nic.azurerm_network_interface.default_interface, module.nic.var.tags (expand), module.nic.local.tags (expand), module.nic.var.nic_additional_interface (expand), module.nic.var.nic_subnet_id (expand), module.nic.azurerm_network_interface.additional_interface, module.nic (close), data.azurerm_network_interface.existing_nics, local.nic_list (expand), local.final_nic_list (expand), module.nic (expand), module.nic.var.resource_group_object (expand)
+ Error: Cycle: module.nic.var.subscription_id (expand), module.nic.var.tags (expand), module.nic.local.tags (expand), module.nic.var.nic_additional_interface (expand), module.nic.azurerm_network_interface.additional_interface, module.nic.local.nic_additional_interface (expand), module.nic.var.nic_subnet_id (expand), module.nic.var.nic_default_interface (expand), module.nic.var.resource_group_object (expand), module.nic.azurerm_network_interface.default_interface, module.nic.local.nic_default_interface (expand), local.final_nic_list (expand), module.nic (expand), module.nic.output.nic_interface_list (expand), module.nic (close), data.azurerm_network_interface.existing_nics, local.nic_list (expand)
 │
 │
 ╵
 ╷
-│ Error: Cycle: local.existing_vms (expand), local.final_vm_list (expand), azurerm_linux_virtual_machine.vm     
+│ Error: Cycle: local.final_vm_list (expand), azurerm_linux_virtual_machine.vm, local.existing_vms (expand)     
+│
+│
+╵
+╷
+│ Error: Cycle: module.network-asg.var.subscription_id (expand), module.network-asg.output.asg_list (expand), module.network-asg.local.asg_list (expand), module.network-asg.var.asg (expand), module.network-asg.var.resource_group_object (expand), module.network-asg.azurerm_application_security_group.asg, module.network-asg.var.tags (expand), module.network-asg.local.tags (expand), local.asg_mapped (expand), module.network-asg (expand), module.network-asg (close), data.azurerm_application_security_group.existing_asgs, local.asg_list (expand)
 │
 │
