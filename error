@@ -1,108 +1,19 @@
-Error: creating Linux Virtual Machine: (Name "eusicd204" / Resource Group "demorg1"): compute.VirtualMachinesClient#CreateOrUpdate: Failure sending request: StatusCode=400 -- Original Error: Code="InvalidParameter" Message="The property 'securityProfile.encryptionAtHost' is not valid because the 'Microsoft.Compute/EncryptionAtHost' feature is not enabled for this subscription." Target="securityProfile.encryptionAtHost"
+ Error: Cycle: module.nic.var.subscription_id (expand), module.nic.local.tags (expand), module.nic (close), module.nic.var.nic_additional_interface (expand), module.nic.azurerm_network_interface.additional_interface, module.nic.local.nic_additional_interface (expand), module.nic.var.resource_group_object (expand), module.nic.var.nic_subnet_id (expand), module.nic.var.nic_default_interface (expand), module.nic.azurerm_network_interface.default_interface, module.nic.local.nic_default_interface (expand), module.nic.output.nic_interface_list (expand), data.azurerm_network_interface.existing_nics, local.nic_list (expand), local.final_nic_list (expand), module.nic (expand), module.nic.var.tags (expand)
+│ 
+│ 
+╵
+╷
+│ Error: Cycle: module.network-asg.var.subscription_id (expand), module.network-asg (close), module.network-asg.var.tags (expand), module.network-asg.local.tags (expand), module.network-asg.var.resource_group_object (expand), module.network-asg.var.asg (expand), module.network-asg.azurerm_application_security_group.asg, module.network-asg.local.asg_list (expand), local.asg_mapped (expand), module.network-asg (expand), module.network-asg.output.-asg.local.asg_list (expand), local.asg_mapped (expand), module.network-asg (expand), module.network-asg.output.asg_list (expand), data.azurerm_application_security_group.existing_asgs, local.asg_list (expand)
 │
-│   with module.terratest-compute-linux_vm.azurerm_linux_virtual_machine.vm["eusicd204"],
-│   on ..\main-vm.tf line 1, in resource "azurerm_linux_virtual_machine" "vm":
-│    1: resource "azurerm_linux_virtual_machine" "vm" {
+│
+asg_list (expand), data.azurerm_application_security_group.existing_asgs, local.asg_list (expand)
+│
+│
+│
+│
 │
 ╵
 ╷
-│ Error: creating Linux Virtual Machine: (Name "eusicd103" / Resource Group "demorg1"): compute.VirtualMachinesClient#CreateOrUpdate: Failure sending request: StatusCode=400 -- Original Error: Code="InvalidParameter" Message="The property 'securityProfile.encryptionAtHost' is not valid because the 'Microsoft.Compute/EncryptionAtHost' feature is not enabled for this subscription." Target="securityProfile.encryptionAtHost"
+│ Error: Cycle: local.existing_vms (expand), local.final_vm_list (expand), azurerm_linux_virtual_machine.vm     
 │
-│   with module.terratest-compute-linux_vm.azurerm_linux_virtual_machine.vm["eusicd103"],
-│   on ..\main-vm.tf line 1, in resource "azurerm_linux_virtual_machine" "vm":
-│    1: resource "azurerm_linux_virtual_machine" "vm" {
-
-
- + asg_attachment_debug           = {}
-  + asg_attachment_list_debug      = []
-  + asg_attachment_map_debug       = {}
-  + asg_attachment_nic_names_debug = []
-  + asg_config_debug               = [
-      + {
-          + asg_association_nic_names = [
-              + "primary-nic-2-primary",
-              + "primary-nic-3-primary",
-            ]
-          + asg_custom_tags           = {
-              + Environment = "dev"
-              + Owner       = "jt"
-            }
-          + asg_name                  = "asg1"
-        },
-      + {
-          + asg_association_nic_names = [
-              + "secondary-nic-2-additional-01",
-            ]
-          + asg_custom_tags           = {
-              + Environment = "dev2"
-              + Owner       = "jt1"
-            }
-          + asg_name                  = "asg2"
-        },
-    ]
-  + nic_list_debug                 = {
-      + primary-nic-2-primary         = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/primary-nic-2-primary"
-      + primary-nic-3-primary         = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/primary-nic-3-primary"
-      + secondary-nic-2-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-2-additional-01"
-      + secondary-nic-3-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-3-additional-01"
-      + primary-nic-2-primary         = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/primary-nic-2-primary"
-      + primary-nic-3-primary         = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/primary-nic-3-primary"
-      + secondary-nic-2-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-2-additional-01"
-      + secondary-nic-3-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-3-additional-01"
-      + primary-nic-3-primary         = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/primary-nic-3-primary"
-      + secondary-nic-2-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-2-additional-01"
-      + secondary-nic-3-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-3-additional-01"
-      + secondary-nic-2-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-2-additional-01"
-      + secondary-nic-3-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-3-additional-01"
-      + secondary-nic-3-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-3-additional-01"
-    }
-rg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-3-additional-01"
-    }
-    }
-  + nic_list_key_debug             = [
-      + "primary-nic-2-primary",
-  + nic_list_key_debug             = [
-      + "primary-nic-2-primary",
-      + "primary-nic-2-primary",
-      + "primary-nic-3-primary",
-      + "primary-nic-3-primary",
-      + "secondary-nic-2-additional-01",
-      + "secondary-nic-3-additional-01",
-    ]
-
-───────────────────────────────────────────────────────────
 │
-PS C:\Azure\terraform-azurerm-msci-compute-linux_vm-bulk\terraform-azurerm-msci-compute-linux_vm-bulk\.test> terraform state list | Select-String "azurerm_linux_virtual_machine" 
-
-module.terratest-compute-linux_vm.azurerm_linux_virtual_machine.vm["eusicd103"]
-module.terratest-compute-linux_vm.azurerm_linux_virtual_machine.vm["eusicd204"]
-
-
-PS C:\Azure\terraform-azurerm-msci-compute-linux_vm-bulk\terraform-azurerm-msci-compute-linux_vm-bulk\.test> terraform plan -target="module.terratest-compute-linux_vm.azurerm_linux_virtual_machine.vm["eusicd204"]"
-╷
-│ Error: Invalid target "module.terratest-compute-linux_vm.azurerm_linux_virtual_machine.vm[eusicd204]"
-│
-│ Index brackets must contain either a literal number or a literal string.
-╵
-
-For more help on using this command, run:
-  terraform plan -help
-PS C:\Azure\terraform-azurerm-msci-compute-linux_vm-bulk\terraform-azurerm-msci-compute-linux_vm-bulk\.test> terraform plan -target="azurerm_linux_virtual_machine.vm["eusicd204"]"                                  
-╷
-│ Error: Invalid target "azurerm_linux_virtual_machine.vm[eusicd204]"
-│
-│ Index brackets must contain either a literal number or a literal string.
-
- Error: Cycle: data.azurerm_linux_virtual_machine.existing_vms, local.existing_vm_names (expand)
-╵
-Error: Cycle: local.final_vm_list (expand), azurerm_linux_virtual_machine.vm, local.existing_vms (expand)
-Error: Cycle: local.existing_vm_names (expand), data.azurerm_linux_virtual_machine.existing_vms, local.existing_vms (expand), local.final_vm_list (expand), azurerm_linux_virtual_machine.vm
-Error: Invalid data source
-│ 
-│   on data.tf line 28, in data "azurerm_linux_virtual_machine" "existing_vms":
-│   28: data "azurerm_linux_virtual_machine" "existing_vms" {
-│ 
-│ The provider hashicorp/azurerm does not support data source "azurerm_linux_virtual_machine".
-│ 
-│ Did you intend to use the managed resource type "azurerm_linux_virtual_machine"? If so, declare this using a
-│ "resource" block instead of a "data" block.
