@@ -5,18 +5,18 @@ module "compute-vm_extension" {
 
   source = "git::https://dev.azure.com/msci-otw/tech-iac/_git/terraform-azurerm-msci-compute-vm_extension?ref=0.6"
 
-  for_each = merge({ "extension" = var.vm_extension }, {})
-
+  #for_each = merge({ "extension" = var.vm_extension }, {})
+  for_each = { for obj in local.vm_list : obj.name => obj }
   # Tags
   tags = local.tags
 
   # Variables
   vm_extension = concat(
     # OMS Agent Extension
-    coalesce(each.value["linux_vm_extension_monitoring_enabled"], false) ? [
+    coalesce(each.value.linux_vm_extension_monitoring_enabled, false) ? [
       {
         vm_extension_name      = "MonitoringAgentExtension"
-        vm_name                = "eu1pcd109"
+        vm_extension_vm_id     = local.vm_lists[each.value.name].id
         vm_extension_publisher = "Microsoft.EnterpriseCloud.Monitoring"
         vm_extension_type      = "OmsAgentForLinux"
         vm_extension_version   = "1.14"
@@ -24,7 +24,7 @@ module "compute-vm_extension" {
         vm_extension_minor_version_upgrade = true
         vm_extension_auto_upgrade          = false
 
-        vm_extension_failure_suppression_enabled = each.value["linux_vm_extension_monitoring_failure_suppression_enabled"]
+        vm_extension_failure_suppression_enabled = each.value.linux_vm_extension_monitoring_failure_suppression_enabled
 
         vm_extension_settings = <<SETTINGS
             {
@@ -45,9 +45,9 @@ module "compute-vm_extension" {
     coalesce(each.value["linux_vm_extension_custom_script_enabled"], false) ? [
       {
         vm_extension_name      = "CustomScriptExtension"
-        vm_name                = "eu1pcd109"
-        vm_extension_publisher = "Microsoft.Compute"
-        vm_extension_type      = "CustomScriptExtension"
+        vm_extension_vm_id     = local.vm_lists[each.value.name].id
+        vm_extension_publisher = "Microsoft.Azure.Extensions"
+        vm_extension_type      = "CustomScript"
         vm_extension_version   = "1.9"
 
         vm_extension_minor_version_upgrade = false
@@ -75,7 +75,7 @@ module "compute-vm_extension" {
     coalesce(each.value["linux_vm_extension_encryption_enabled"], false) ? [
       {
         vm_extension_name      = "EncryptionExtension"
-        vm_name                = "eu1pcd109"
+        vm_extension_vm_id     = local.vm_lists[each.value.name].id
         vm_extension_publisher = "Microsoft.Azure.Security"
         vm_extension_type      = "AzureDiskEncryptionForLinux"
         vm_extension_version   = "1.1"
@@ -93,7 +93,7 @@ module "compute-vm_extension" {
                     "KeyEncryptionAlgorithm": "RSA-OAEP",
                     "VolumeType": "${coalesce(each.value["linux_vm_extension_encryption_encrypt_all_disks"], false) ? "All" : "OS"}",
                     "KekVaultResourceId": "/subscriptions/${var.subscription_id}/resourceGroups/${coalesce(each.value["linux_vm_extension_encryption_key_vault_resource_group"], "default-rg")}/providers/Microsoft.KeyVault/vaults/${coalesce(each.value["linux_vm_extension_encryption_key_vault_name"], "default-keyvault")}",
-                    "KeyEncryptionKeyURL": "https://${coalesce(each.value["linux_vm_extension_encryption_key_vault_name"], "default-keyvault")}.vault.azure.net/keys/${coalesce(each.value["linux_vm_extension_encryption_key_vault_kek_name"], "default-kek")}/${coalesce(each.value["linux_vm_extension_encryption_key_vault_kek_version"], "default-version")}"
+                    "KeyEncryptionKeyURL": "https://${coalesce(each.value.linux_vm_extension_encryption_key_vault_name, "default-keyvault")}.vault.azure.net/keys/${coalesce(each.value.linux_vm_extension_encryption_key_vault_kek_name, "default-kek")}/${coalesce(each.value.linux_vm_extension_encryption_key_vault_kek_version, "default-version")}"
                 }
         SETTINGS
       }
@@ -103,7 +103,7 @@ module "compute-vm_extension" {
     coalesce(each.value["linux_vm_extension_ado_agent_enabled"], false) ? [
       {
         vm_extension_name      = "ADOAgentExtension"
-        vm_name                = "eu1pcd109"
+        vm_extension_vm_id     = local.vm_lists[each.value.name].id
         vm_extension_publisher = "Microsoft.VisualStudio.Services"
         vm_extension_type      = "TeamServicesAgentLinux"
         vm_extension_version   = "1.0"
@@ -135,7 +135,7 @@ module "compute-vm_extension" {
     coalesce(each.value["linux_vm_extension_aad_ssh_enabled"], false) ? [
       {
         vm_extension_name      = "AADSSHLoginForLinuxExtension"
-        vm_name                = "eu1pcd109"
+        vm_extension_vm_id     = local.vm_lists[each.value.name].id
         vm_extension_publisher = "Microsoft.Azure.ActiveDirectory.LinuxSSH"
         vm_extension_type      = "AADLoginForLinux"
         vm_extension_version   = "1.0"
