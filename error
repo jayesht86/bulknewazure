@@ -1,1 +1,14 @@
- Error: reading blob properties for AzureRM Storage Account "sacctva2icltstvmdiag11": storage.BlobServicesClient#GetServiceProperties: Failure responding to request: StatusCode=404 -- Original Error: autorest/azure: Service returned an error. Status=404 Code="ParentResourceNotFound" Message="Failed to perform 'read' on resource(s) of type 'storageAccounts/blobServices', because the parent resource '/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/rgrp-tva2-ic-terratest-compute-linux-vm/providers/Microsoft.Storage/storageAccounts/sacctva2icltstvmdiag11' could not be found."
+Error: creating Linux Virtual Machine: (Name "eusicd204" / Resource Group "demorg1"): compute.VirtualMachinesClient#CreateOrUpdate: Failure sending request: StatusCode=400 -- Original Error: Code="InvalidParameter" Message="The property 'securityProfile.encryptionAtHost' is not valid because the 'Microsoft.Compute/EncryptionAtHost' feature is not enabled for this subscription." Target="securityProfile.encryptionAtHost"
+│
+│   with module.terratest-compute-linux_vm.azurerm_linux_virtual_machine.vm["eusicd204"],
+│   on ..\main-vm.tf line 1, in resource "azurerm_linux_virtual_machine" "vm":
+│    1: resource "azurerm_linux_virtual_machine" "vm" {
+│
+╵
+╷
+│ Error: creating Linux Virtual Machine: (Name "eusicd103" / Resource Group "demorg1"): compute.VirtualMachinesClient#CreateOrUpdate: Failure sending request: StatusCode=400 -- Original Error: Code="InvalidParameter" Message="The property 'securityProfile.encryptionAtHost' is not valid because the 'Microsoft.Compute/EncryptionAtHost' feature is not enabled for this subscription." Target="securityProfile.encryptionAtHost"
+│
+│   with module.terratest-compute-linux_vm.azurerm_linux_virtual_machine.vm["eusicd103"],
+│   on ..\main-vm.tf line 1, in resource "azurerm_linux_virtual_machine" "vm":
+│    1: resource "azurerm_linux_virtual_machine" "vm" {
+│
