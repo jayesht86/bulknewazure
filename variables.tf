@@ -1,12 +1,12 @@
 
-variable "vnet_name" { 
+variable "vnet_name" {
   description = "Existing vnet name"
-  type = string 
-  }
-variable "subnet_name" { 
+  type        = string
+}
+variable "subnet_name" {
   description = "Existing vnet name"
-  type = string 
-  }
+  type        = string
+}
 /* variable "tags" {
   description = "BYO Tags, preferrable from a local on your side"
   type        = map(string)
@@ -45,7 +45,7 @@ variable "product_code" {
 variable "vm_os_type" {
   type        = string
   description = "OS Type Code (2 characters)"
-  default = "li"
+  default     = "li"
   validation {
     condition     = length(var.vm_os_type) == 2
     error_message = "OS Type code must be 2 characters."
@@ -55,39 +55,32 @@ variable "vm_os_type" {
 variable "sequence_start" {
   type        = number
   description = "Starting number for VM sequence"
-  default     = 2
+  default     = 3
 }
 
 variable "vm_config" {
   type = object({
-    linux_vm_name     = string
-    size              = string
-    zone_list         = list(string)
-    #vm_count_per_zone = number
-    admin_username    = string
-    admin_password    = string
-    os_disk_size_gb   = number
-    #linux_vm_name = string
+    size            = string
+    zone_list       = list(string)
+    os_disk_size_gb = number
     #linux_vm_size = string
     #Credentials
     linux_vm_admin_username         = optional(string)
     linux_vm_admin_password         = optional(string)
-    linux_vm_password_auth_disabled = optional(bool)
+    linux_vm_password_auth_disabled = optional(bool, false)
     linux_vm_public_keys = optional(list(object({
       linux_vm_username   = optional(string)
       linux_vm_public_key = optional(string)
     })))
-    #Zones
-    linux_vm_zone = optional(string)
     #Default NIC
     linux_vm_default_nic = optional(object({
-      nic_name                           = string
-      nic_subnet_id                      = optional(string)
-      nic_dns_servers                    = optional(list(string))
-      nic_edge_zone                      = optional(string)
-      nic_ip_forwarding_enabled          = optional(bool)
+      nic_name                       = string
+      nic_subnet_id                  = optional(string)
+      nic_dns_servers                = optional(list(string))
+      nic_edge_zone                  = optional(string)
+      nic_ip_forwarding_enabled      = optional(bool)
       accelerated_networking_enabled = optional(bool, false)
-      nic_internal_dns_name_label        = optional(bool)
+      nic_internal_dns_name_label    = optional(bool)
       nic_ip_config = optional(list(object({
         nic_ip_config_name                  = string
         nic_ip_config_private_ip_allocation = optional(string, "Dynamic")
@@ -103,20 +96,20 @@ variable "vm_config" {
     }))
     #Additional NICs
     linux_vm_additional_nic = optional(list(object({
-      nic_name                           = string
-      nic_subnet_id                      = optional(string)
-      nic_dns_servers                    = optional(list(string))
-      nic_edge_zone                      = optional(string)
-      nic_ip_forwarding_enabled          = optional(bool)
+      nic_name                       = string
+      nic_subnet_id                  = optional(string)
+      nic_dns_servers                = optional(list(string))
+      nic_edge_zone                  = optional(string)
+      nic_ip_forwarding_enabled      = optional(bool)
       accelerated_networking_enabled = optional(bool, false)
-      nic_internal_dns_name_label        = optional(bool)
-       nic_ip_config = optional(list(object({
+      nic_internal_dns_name_label    = optional(bool)
+      nic_ip_config = optional(list(object({
         nic_ip_config_name                  = string
         nic_ip_config_private_ip_allocation = optional(string, "Dynamic")
         nic_ip_config_private_ip_address    = optional(string)
         nic_ip_config_public_ip_id          = optional(string)
         nic_ip_config_primary               = optional(bool)
-      })) )
+      })))
     })))
     #Image
     linux_vm_marketplace_image = optional(bool)
@@ -148,25 +141,25 @@ variable "vm_config" {
     linux_vm_secure_boot_enabled = optional(string)
     linux_vm_vtpm_enabled        = optional(string)
     #Additional Capabilities
-    linux_vm_host_encryption_enabled = optional(bool)
-    linux_vm_custom_data             = optional(string)
-    linux_vm_dedicated_host_id       = optional(string)
-    linux_vm_boot_diag_uri           = optional(string)
-    linux_vm_ultra_disks_enabled     = optional(bool)
-    linux_vm_patch_mode              = optional(string)
-    linux_vm_bypass_platform_safety_checks_on_user_schedule_enabled    = optional(bool)
-    linux_vm_patch_assessment_mode                                     = optional(string)
-    linux_vm_reboot_setting          = optional(string)
-    linux_vm_identity_type           = optional(string)
-    linux_vm_identity_ids            = optional(list(string))
-    linux_vm_custom_tags             = optional(map(string))
-    vm_extension_failure_suppression_enabled = optional(bool)
+    linux_vm_host_encryption_enabled                                = optional(bool)
+    linux_vm_custom_data                                            = optional(string)
+    linux_vm_dedicated_host_id                                      = optional(string)
+    linux_vm_boot_diag_uri                                          = optional(string)
+    linux_vm_ultra_disks_enabled                                    = optional(bool)
+    linux_vm_patch_mode                                             = optional(string)
+    linux_vm_bypass_platform_safety_checks_on_user_schedule_enabled = optional(bool)
+    linux_vm_patch_assessment_mode                                  = optional(string)
+    linux_vm_reboot_setting                                         = optional(string)
+    linux_vm_identity_type                                          = optional(string)
+    linux_vm_identity_ids                                           = optional(list(string))
+    linux_vm_custom_tags                                            = optional(map(string))
+    vm_extension_failure_suppression_enabled                        = optional(bool)
     #Extensions
     ##Monitoring Agent Extension
-    linux_vm_extension_monitoring_enabled       = optional(bool)
-    linux_vm_extension_monitoring_workspace_id  = optional(string)
-    linux_vm_extension_monitoring_workspace_key = optional(string)
-    linux_vm_extension_monitoring_failure_suppression_enabled = optional(bool,false)
+    linux_vm_extension_monitoring_enabled                     = optional(bool)
+    linux_vm_extension_monitoring_workspace_id                = optional(string)
+    linux_vm_extension_monitoring_workspace_key               = optional(string)
+    linux_vm_extension_monitoring_failure_suppression_enabled = optional(bool, false)
     ##Custom Script Extension
     linux_vm_extension_custom_script_enabled                     = optional(bool)
     linux_vm_extension_custom_script_blob_storage_account_name   = optional(string)
@@ -174,28 +167,28 @@ variable "vm_config" {
     linux_vm_extension_custom_script_blob_storage_blob_name      = optional(string)
     linux_vm_extension_custom_script_blob_storage_account_key    = optional(string)
     linux_vm_extension_custom_script_parameters                  = optional(string)
-    linux_vm_extension_custom_script_failure_suppression_enabled = optional(bool,false)
+    linux_vm_extension_custom_script_failure_suppression_enabled = optional(bool, false)
     ##Encryption Extension
-    linux_vm_extension_encryption_enabled                  = optional(bool)
-    linux_vm_extension_encryption_key_vault_name           = optional(string)
-    linux_vm_extension_encryption_key_vault_resource_group = optional(string)
-    linux_vm_extension_encryption_key_vault_kek_name       = optional(string)
-    linux_vm_extension_encryption_key_vault_kek_version    = optional(string)
-    linux_vm_extension_encryption_encrypt_all_disks        = optional(bool)
-    linux_vm_extension_encryption_operation                = optional(string)
-    linux_vm_extension_encryption_failure_suppression_enabled = optional(bool,false)
+    linux_vm_extension_encryption_enabled                     = optional(bool)
+    linux_vm_extension_encryption_key_vault_name              = optional(string)
+    linux_vm_extension_encryption_key_vault_resource_group    = optional(string)
+    linux_vm_extension_encryption_key_vault_kek_name          = optional(string)
+    linux_vm_extension_encryption_key_vault_kek_version       = optional(string)
+    linux_vm_extension_encryption_encrypt_all_disks           = optional(bool)
+    linux_vm_extension_encryption_operation                   = optional(string)
+    linux_vm_extension_encryption_failure_suppression_enabled = optional(bool, false)
     ##ADO Agent Extension
-    linux_vm_extension_ado_agent_enabled           = optional(bool)
-    linux_vm_extension_ado_agent_name              = optional(string)
-    linux_vm_extension_ado_agent_vsts_account_name = optional(string)
-    linux_vm_extension_ado_agent_team_project      = optional(string)
-    linux_vm_extension_ado_agent_deployment_group  = optional(string)
-    linux_vm_extension_ado_agent_pat_token         = optional(string)
-    linux_vm_extension_ado_agent_tags              = optional(string)
-    linux_vm_extension_ado_agent_failure_suppression_enabled = optional(bool,false)
+    linux_vm_extension_ado_agent_enabled                     = optional(bool)
+    linux_vm_extension_ado_agent_name                        = optional(string)
+    linux_vm_extension_ado_agent_vsts_account_name           = optional(string)
+    linux_vm_extension_ado_agent_team_project                = optional(string)
+    linux_vm_extension_ado_agent_deployment_group            = optional(string)
+    linux_vm_extension_ado_agent_pat_token                   = optional(string)
+    linux_vm_extension_ado_agent_tags                        = optional(string)
+    linux_vm_extension_ado_agent_failure_suppression_enabled = optional(bool, false)
     ##AAD SSH Extension
-    linux_vm_extension_aad_ssh_enabled             = optional(bool)
-    linux_vm_extension_aadssh_failure_suppression_enabled = optional(bool,false)
+    linux_vm_extension_aad_ssh_enabled                    = optional(bool)
+    linux_vm_extension_aadssh_failure_suppression_enabled = optional(bool, false)
     #Timeouts
     linux_vm_timeout_create = optional(string)
     linux_vm_timeout_update = optional(string)
@@ -233,17 +226,17 @@ variable "linux_vm_timeout_delete" {
 }
 
 #Credentials
-variable "linux_vm_admin_username" {
-  description = "(Required) The username of the local administrator used for the Virtual Machine. Changing this forces a new resource to be created. If this variable filled, will be used for all VMs to be deployed, unless overridden."
-  type        = string
-  default     = null
-}
-variable "linux_vm_admin_password" {
-  description = "(Required) The Password which should be used for the local-administrator on this Virtual Machine. Changing this forces a new resource to be created. If this variable filled, will be used for all VMs to be deployed, unless overridden."
-  type        = string
-  default     = null
-  sensitive   = true
-}
+# variable "linux_vm_admin_username" {
+#   description = "(Required) The username of the local administrator used for the Virtual Machine. Changing this forces a new resource to be created. If this variable filled, will be used for all VMs to be deployed, unless overridden."
+#   type        = string
+#   default     = null
+# }
+# variable "linux_vm_admin_password" {
+#   description = "(Required) The Password which should be used for the local-administrator on this Virtual Machine. Changing this forces a new resource to be created. If this variable filled, will be used for all VMs to be deployed, unless overridden."
+#   type        = string
+#   default     = null
+#   sensitive   = true
+# }
 variable "linux_vm_password_auth_disabled" {
   description = "(Optional) Should Password Authentication be disabled on this Virtual Machine? Defaults to false. Changing this forces a new resource to be created."
   type        = bool
@@ -393,13 +386,13 @@ variable "linux_vm_os_disk_encryption_set_id" {
 # }
 variable "linux_vm_bypass_platform_safety_checks_on_user_schedule_enabled" {
   description = "(Optional) Specifies if bypass platform safety checks on user schedule enabled are Enabled for the Linux Virtual Machine."
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
 variable "linux_vm_patch_assessment_mode" {
   description = "(Optional) Specifies the mode of patch assessment to this Linux Virtual Machine. Possible values are ImageDefault and AutomaticByPlatform. Defaults to ImageDefault"
-  type = string
-  default = "ImageDefault"
+  type        = string
+  default     = "ImageDefault"
 }
 #Ephemeral Disk
 variable "linux_vm_os_disk_ephemeral_enabled" {
