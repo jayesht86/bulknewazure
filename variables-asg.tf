@@ -1,4 +1,4 @@
-variable "asg" {
+variable "asg_config" {
   description = <<EOT
   (Required) The Application Security Groups to be created.
 
@@ -10,9 +10,9 @@ variable "asg" {
 
   EOT
   type = set(object({
-    asg_name                = string
-    asg_custom_tags         = optional(map(string))
+    asg_name                  = string
+    asg_custom_tags           = optional(map(string))
     asg_association_nic_names = optional(list(string))
   }))
-  default = null
+  default = []
 }
