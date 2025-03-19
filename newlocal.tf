@@ -155,3 +155,32 @@ final_vm_list = merge(
   )
 }
 
+variable "existing_vm_names" {
+  description = "List of existing VM names to prevent recreation"
+  type        = list(string)
+  default     = []  # ✅ Ensures Terraform does not fetch existing VMs unless explicitly provided
+}
+data "azurerm_linux_virtual_machine" "existing_vms" {
+  for_each = length(var.existing_vm_names) > 0 ? toset(var.existing_vm_names) : toset([])
+  name     = each.value
+  resource_group_name = var.resource_group_name
+}
+existing_vm_names = var.existing_vm_names != null ? var.existing_vm_names : []
+
+  # ✅ Only fetch existing VMs if we explicitly provide names
+  existing_vms = length(local.existing_vm_names) > 0 ? {
+    for vm in data.azurerm_linux_virtual_machine.existing_vms :
+    vm.name => {
+      name                    = vm.name
+      size                    = vm.size
+      zone                    = vm.zone
+      os_disk_size_gb         = try(vm.os_disk.0.disk_size_gb, null)
+      linux_vm_admin_username = vm.admin_username
+      linux_vm_admin_password = vm.admin_password
+    }
+  } : {}
+  final_vm_list = merge(
+    local.existing_vms,  # Keeps previously created VMs
+    { for vm in local.vm_list : vm.name => vm }  # Adds new VMs
+  )
+
