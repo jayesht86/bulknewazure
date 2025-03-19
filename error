@@ -72,3 +72,24 @@ rg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-3-additional-01"
 
 ───────────────────────────────────────────────────────────
 │
+PS C:\Azure\terraform-azurerm-msci-compute-linux_vm-bulk\terraform-azurerm-msci-compute-linux_vm-bulk\.test> terraform state list | Select-String "azurerm_linux_virtual_machine" 
+
+module.terratest-compute-linux_vm.azurerm_linux_virtual_machine.vm["eusicd103"]
+module.terratest-compute-linux_vm.azurerm_linux_virtual_machine.vm["eusicd204"]
+
+
+PS C:\Azure\terraform-azurerm-msci-compute-linux_vm-bulk\terraform-azurerm-msci-compute-linux_vm-bulk\.test> terraform plan -target="module.terratest-compute-linux_vm.azurerm_linux_virtual_machine.vm["eusicd204"]"
+╷
+│ Error: Invalid target "module.terratest-compute-linux_vm.azurerm_linux_virtual_machine.vm[eusicd204]"
+│
+│ Index brackets must contain either a literal number or a literal string.
+╵
+
+For more help on using this command, run:
+  terraform plan -help
+PS C:\Azure\terraform-azurerm-msci-compute-linux_vm-bulk\terraform-azurerm-msci-compute-linux_vm-bulk\.test> terraform plan -target="azurerm_linux_virtual_machine.vm["eusicd204"]"                                  
+╷
+│ Error: Invalid target "azurerm_linux_virtual_machine.vm[eusicd204]"
+│
+│ Index brackets must contain either a literal number or a literal string.
+╵
