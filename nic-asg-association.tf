@@ -1,6 +1,9 @@
 resource "azurerm_network_interface_application_security_group_association" "asg_association" {
-  for_each = local.asg_attachment2
+  for_each = local.asg_attachment_map
 
-  network_interface_id          = module.compute-linux_vm.linux_vm_list[regex(".*-(.*)",each.value.nic)[0]].nic[each.value.nic].id
-  application_security_group_id = module.network-asg.asg_list[each.value.asg].id
+  network_interface_id          = lookup(local.nic_list,each.value.nic_name, null) 
+  #application_security_group_id = lookup(local.asg_list,each.value.asg_name, null ) 
+  #network_interface_id          = lookup(local.nic_list[each.value.nic_name] )
+  application_security_group_id = local.asg_list[each.value.asg_name] 
+  depends_on = [ module.nic ]
 }
