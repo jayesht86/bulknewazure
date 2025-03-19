@@ -159,9 +159,9 @@ nic_names = flatten([
   ])
 
   # Extract NIC IDs from data source
-  nic_list = { for nic in data.azurerm_network_interface.existing_nics : nic.name => nic.id }
+nic_list = { for nic in data.azurerm_network_interface.existing_nics : nic.name => nic.id }
 asg_mapped = {
-    for asg in coalesce(var.asg_config, []): asg.asg_name => {
+    for asg in var.asg_config : asg.asg_name => {
       asg_name                  = asg.asg_name
       asg_custom_tags           = lookup(asg, "asg_custom_tags", {})
       asg_association_nic_names = lookup(asg, "asg_association_nic_names", [])
@@ -170,12 +170,12 @@ asg_mapped = {
 
   # Flatten ASG-to-NIC associations for Terraform `for_each`
   asg_attachment_list = flatten([
-    for asg in coalesce(var.asg_config, []) : [
-      for nic in lookup(asg, "asg_association_nic_names", []) : {
+    for asg in var.asg_config : [
+      for nic in asg.asg_association_nic_names : {
         nic_name = lower(trimspace(nic))
         asg_name = asg.asg_name
       }
-    ] if length(lookup(asg, "asg_association_nic_names", [])) > 0
+    ] if length(asg.asg_association_nic_names) > 0
   ])
 
   # Convert ASG associations into a key-value map for Terraform `for_each`
