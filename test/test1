@@ -1,0 +1,350 @@
+#Helper Modules
+module "naming" {
+  source             = "git::https://dev.azure.com/msci-otw/tech-iac/_git/terraform-generic-msci-tools///naming?ref=0.9"
+  environment_type   = "t"
+  location_code      = "va2"
+  product_code       = "ic"
+  zone_code          = "1"
+  virtual_machine_os = "l"
+  purpose            = "tstvm"
+  instance_sequence  = "001"
+}
+#Images Module
+# module "images" {
+#   source = "git::https://dev.azure.com/msci-otw/tech-iac/_git/terraform-generic-msci-tools///images?ref=0.9"
+# }
+resource "azurerm_resource_group" "rgrp-tva2-ic-terratest-compute-linux-vm" {
+  name     = "rgrp-tva2-ic-terratest-compute-linux-vm"
+  location = "East US"
+   tags = merge(data.terraform_remote_state.va2_infrastructure.outputs.terratest-tags, {
+   BypassPublicIPPolicy = "True" })
+}
+#Custom BootDiag
+resource "azurerm_storage_account" "bootdiag" {
+  name                      = "sacctva2icltstvmdiag11"
+  resource_group_name       = azurerm_resource_group.rgrp-tva2-ic-terratest-compute-linux-vm.name
+  location                  = azurerm_resource_group.rgrp-tva2-ic-terratest-compute-linux-vm.location
+  account_tier              = "Standard"
+  account_kind              = "StorageV2"
+  account_replication_type  = "LRS"
+  enable_https_traffic_only = "true"
+  min_tls_version           = "TLS1_2"
+
+  tags = merge(data.terraform_remote_state.va2_infrastructure.outputs.terratest-tags, {
+    BootDiagnosticStorageAccount = "True",
+  BypassGovernancePolicy = "True" })
+}
+
+#Linux VM Module
+module "terratest-compute-linux_vm" {
+  # depends_on = [
+  #   azurerm_resource_group.rgrp-tva2-ic-terratest-compute-linux-vm,
+  #   module.naming,
+  #   #module.images,
+  #   azurerm_storage_account.bootdiag
+  # ]
+
+  source = "../"
+  #environment_type   = "t"
+  #location_code      = "va2"
+  product_code = "ic"
+  #zone_code          = "1"
+  #virtual_machine_os = "l"
+  #purpose            = "tstvm"
+  #instance_sequence  = "001"
+  environment_code = "d"
+  region_code      = "eus"
+  managed_disk = {
+    managed_disk_name         = "data-disk"
+    managed_disk_storage_type = "Standard_LRS"
+    managed_disks_list        = [128, 64]
+    #managed_disk_zone        = 1
+    managed_disk_timeout_create = "15m"
+    managed_disk_timeout_update = "15m"
+    managed_disk_timeout_read   = "15m"
+    managed_disk_timeout_delete = "15m"
+    asg_config = [
+      {
+        asg_name                  = "asg1"
+        asg_custom_tags           = { "Environment" = "dev", "Owner" = "jt" }
+        asg_association_nic_names = ["primary-nic-2-primary", "primary-nic-3-primary"]
+      },
+      {
+        asg_name                  = "asg2"
+        asg_custom_tags           = { "Environment" = "dev2", "Owner" = "jt1" }
+        asg_association_nic_names = ["secondary-nic-2-additional-01"]
+      }
+    ]
+
+  }
+  # Resource Group and Location
+  resource_group_name = "demorg1"
+  location            = "East US"
+
+
+  # VNet and Subnet Details
+  vnet_name   = "demovnet1"
+  subnet_name = "demosubnet1"
+  #Subscription
+  subscription_id = data.azurerm_client_config.current.subscription_id
+
+  #Resource Group
+  #resource_group_object = azurerm_resource_group.rgrp-tva2-ic-terratest-compute-linux-vm
+
+  #Tags
+  tags = data.terraform_remote_state.va2_infrastructure.outputs.terratest-tags
+
+  ### Global Variables ###
+
+  #Timeout
+  linux_vm_timeout_create = "20m"
+  linux_vm_timeout_update = "20m"
+  linux_vm_timeout_read   = "10m"
+  linux_vm_timeout_delete = "20m"
+
+  #Credentials
+  #linux_vm_admin_username = data.terraform_remote_state.va2_terratest.outputs.LocalAdminUserName
+  # linux_vm_admin_password = data.terraform_remote_state.va2_terratest.outputs.LocalAdminKeyVaultSecret
+  # linux_vm_password_auth_disabled = false
+  linux_vm_public_keys = [
+    {
+      linux_vm_username   = data.terraform_remote_state.va2_terratest.outputs.LocalAdminUserName
+      linux_vm_public_key = data.terraform_remote_state.va2_terratest.outputs.publickey-linux-vmss001
+    } /* ,
+        {
+          linux_vm_username   = data.terraform_remote_state.va2_terratest.outputs.LocalAdminUserName #"gazsi"
+          linux_vm_public_key = data.terraform_remote_state.va2_terratest.outputs.publickey-linux-vmss002
+        },
+        {
+          linux_vm_username   = data.terraform_remote_state.va2_terratest.outputs.LocalAdminUserName #"ica"
+          linux_vm_public_key = data.terraform_remote_state.va2_terratest.outputs.publickey-linux-vmss003
+        }, */
+  ]
+
+  #Subnet
+  linux_vm_nic_subnet_id = data.terraform_remote_state.va2_infrastructure.outputs.snet-tva2-ic-linux-vm.id
+
+  #Gen2 VMs
+  linux_vm_secure_boot_enabled = false
+  linux_vm_vtpm_enabled        = false
+
+  linux_vm_host_encryption_enabled = false #true
+
+  #Image
+  # linux_vm_marketplace_image = true
+  #linux_vm_image_id = module.images.sharedservice-ubuntu20-gold-uri # module.images.sharedservice-ubuntu20-gold-uri
+  linux_vm_image_publisher = "Canonical"
+  linux_vm_image_offer     = "0001-com-ubuntu-server-focal"
+  linux_vm_image_sku       = "20_04-lts-gen2"
+  linux_vm_image_version   = "latest"
+
+  #Dedicated Hosts
+  # linux_vm_dedicated_host_id =
+
+  #Boot Diag
+  linux_vm_boot_diag_uri = azurerm_storage_account.bootdiag.primary_blob_endpoint
+
+  ### Linux VMs ###
+
+  vm_config = {
+
+    ##########################################
+    #### Virtual Machine 1 - Full Example ####
+    ##########################################
+
+    #Name
+    #linux_vm_name = "tva2ic3ltstvm001"
+
+    #Size
+    size = "Standard_D2s_v3"
+
+    #Zone
+    zone_list                                                    = ["1", "2"]
+    os_disk_size_gb                                              = 64
+    linux_vm_extension_monitoring_enabled                        = true
+    vm_extension_failure_suppression_enabled                     = true
+    linux_vm_extension_custom_script_enabled                     = true
+    linux_vm_extension_custom_script_failure_suppression_enabled = true
+    linux_vm_extension_encryption_enabled                        = true
+    linux_vm_extension_encryption_failure_suppression_enabled    = true
+    linux_vm_extension_ado_agent_enabled                         = true
+    linux_vm_extension_ado_agent_failure_suppression_enabled     = true
+    linux_vm_extension_aad_ssh_enabled                           = true
+    linux_vm_extension_aadssh_failure_suppression_enabled        = true
+    linux_vm_extension_monitoring_failure_suppression_enabled    = true
+    linux_vm_extension_encryption_key_vault_kek_version          = "abcd"
+    linux_vm_extension_encryption_key_vault_kek_name             = "temp"
+    linux_vm_image_publisher                                     = "Canonical"
+    linux_vm_image_offer                                         = "0001-com-ubuntu-server-focal"
+    linux_vm_image_sku                                           = "20_04-lts-gen2"
+    linux_vm_image_version                                       = "latest"
+
+    #Credentials
+    linux_vm_admin_username = "jayeshrt"     #data.terraform_remote_state.va2_terratest.outputs.LocalAdminUserName
+    linux_vm_admin_password = "admin@123#23" #data.terraform_remote_state.va2_terratest.outputs.LocalAdminKeyVaultSecret2
+    # linux_vm_password_auth_disabled = true
+    linux_vm_public_keys = [
+      /* {
+          linux_vm_username   = data.terraform_remote_state.va2_terratest.outputs.LocalAdminUserName
+          linux_vm_public_key = data.terraform_remote_state.va2_terratest.outputs.publickey-linux-vmss001
+        }, */
+      {
+        linux_vm_username   = data.terraform_remote_state.va2_terratest.outputs.LocalAdminUserName #"gazsi"
+        linux_vm_public_key = data.terraform_remote_state.va2_terratest.outputs.publickey-linux-vmss002
+      },
+      {
+        linux_vm_username   = data.terraform_remote_state.va2_terratest.outputs.LocalAdminUserName #"ica"
+        linux_vm_public_key = data.terraform_remote_state.va2_terratest.outputs.publickey-linux-vmss003
+      },
+    ]
+
+    #Default Network Interface
+    linux_vm_default_nic = {
+
+      nic_name      = "primary-nic"
+      nic_subnet_id = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/virtualNetworks/demovnet1/subnets/demosubnet1"
+      #accelerated_networking_enabled = true
+      nic_ip_config = [{
+        nic_ip_config_name = "primary"
+        #private_ip_address_allocation = "Dynamic"
+        nic_ip_config_primary = true
+      }]
+    }
+
+    linux_vm_additional_nic = [{
+      nic_name      = "secondary-nic"
+      nic_subnet_id = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/virtualNetworks/demovnet1/subnets/demosubnet1"
+      #accelerated_networking_enabled = false
+      nic_ip_config = [{
+        nic_ip_config_name = "primary"
+        #private_ip_address_allocation = "Dynamic"
+        nic_ip_config_primary = true
+      }]
+    }]
+    # linux_vm_default_nic = {
+    #   nic_name = "vnic-001-tva2ic3ltstvm001"
+    #   nic_ip_config = [
+    #     #primary
+    #     {
+    #       nic_ip_config_name    = "primary"
+    #       nic_ip_config_primary = true
+
+    #     },
+    #     #secondary
+    #     {
+    #       nic_ip_config_name = "secondary"
+    #       # nic_ip_config_primary = true
+    #     }
+    #   ]
+    # }
+
+    # #Additional Network Interfaces
+    # linux_vm_additional_nic = [
+    #   #NIC2
+    #   {
+    #     nic_name      = "vnic-002-tva2ic3ltstvm001"
+    #     nic_subnet_id = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/virtualNetworks/demovnet1/subnets/demosubnet1" #data.terraform_remote_state.va2_infrastructure.outputs.snet-tva2-ic-linux-vmss.id
+
+    #     nic_ip_config = [
+    #       #primary
+    #       {
+    #         nic_ip_config_name    = "primary"
+    #         nic_ip_config_primary = true
+    #       },
+    #       #secondary
+    #       {
+    #         nic_ip_config_name = "secondary"
+    #       }
+    #     ]
+    #   }
+
+    # ]
+
+    #OS Disk
+    linux_vm_os_disk_type  = "Premium_LRS"
+    linux_vm_os_disk_cache = "ReadWrite"
+    linux_vm_os_disk_size  = 127
+    #linux_vm_os_disk_encryption_type = "DiskWithVMGuestState"
+    linux_vm_host_encryption_enabled = false
+
+    #Custom Data Block
+    linux_vm_custom_data = base64encode("auth: true")
+
+    #Identities
+    linux_vm_identity_type = "SystemAssigned"
+    # linux_vm_identity_ids =
+
+    #Custom Tags
+    linux_vm_custom_tags = {
+      1     = "tyúk",
+      "víz" = "forr"
+    }
+
+    #Timeouts
+    linux_vm_timeout_create = "20m"
+    linux_vm_timeout_update = "20m"
+    linux_vm_timeout_read   = "10m"
+    linux_vm_timeout_delete = "20m"
+
+  }
+}
+
+
+
+
+
+
+# VM Sequence Starting Number
+
+# Additional disk details
+
+
+
+#Outputs
+# #auth
+# output "tenant_id" {
+#   value = data.azurerm_client_config.current.tenant_id
+# }
+# output "subscription_id" {
+#   value = data.azurerm_client_config.current.subscription_id
+# }
+# output "client_id" {
+#   value = data.azurerm_client_config.current.client_id
+# }
+
+# #rgrp
+# output "resource_group_name" {
+#   value = azurerm_resource_group.rgrp-tva2-ic-terratest-compute-linux-vm.name
+# }
+
+# #linux_vm
+# output "linux_vm_list" {
+#   value = module.terratest-compute-linux_vm.linux_vm_list
+# }
+
+# #linux_vm_ids
+# output "linux_vm_ids" {
+#   value = module.terratest-compute-linux_vm.linux_vm_ids
+# }
+output "nic_list_debug" {
+  value = local.nic_list
+}
+output "asg_attachment_debug" {
+  value = local.asg_attachment_map
+}
+output "asg_config_debug" {
+  value = var.asg_config
+}
+output "asg_attachment_list_debug" {
+  value = local.asg_attachment_list
+}
+output "nic_list_key_debug" {
+  value = keys(local.nic_list)
+}
+output "asg_attachment_nic_names_debug" {
+  value = [ for item in local.asg_attachment_list : item.nic_name]
+}
+
+output "asg_attachment_map_debug" {
+  value = local.asg_attachment_map
+}
