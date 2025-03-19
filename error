@@ -97,3 +97,12 @@ PS C:\Azure\terraform-azurerm-msci-compute-linux_vm-bulk\terraform-azurerm-msci-
 ╵
 Error: Cycle: local.final_vm_list (expand), azurerm_linux_virtual_machine.vm, local.existing_vms (expand)
 Error: Cycle: local.existing_vm_names (expand), data.azurerm_linux_virtual_machine.existing_vms, local.existing_vms (expand), local.final_vm_list (expand), azurerm_linux_virtual_machine.vm
+Error: Invalid data source
+│ 
+│   on data.tf line 28, in data "azurerm_linux_virtual_machine" "existing_vms":
+│   28: data "azurerm_linux_virtual_machine" "existing_vms" {
+│ 
+│ The provider hashicorp/azurerm does not support data source "azurerm_linux_virtual_machine".
+│ 
+│ Did you intend to use the managed resource type "azurerm_linux_virtual_machine"? If so, declare this using a
+│ "resource" block instead of a "data" block.
