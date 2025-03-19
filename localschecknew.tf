@@ -10,7 +10,7 @@ locals {
   # existing_asgs  = try(data.terraform_remote_state.compute_linux_vm_bulk.outputs.asg_list, {})
 
 #vm_lists = azurerm_linux_virtual_machine.vm
-existing_vms = { }
+existing_vms = try(azurerm_linux_virtual_machine.vm, {}) #{ }
   #   for vm in azurerm_linux_virtual_machine.vm : vm.name => {
   #     name                         = vm.name
   #     size                         = vm.size
@@ -167,7 +167,7 @@ existing_vms = { }
   vm_lists = azurerm_linux_virtual_machine.vm  
  
 #nic_list = { for nic in data.azurerm_network_interface.existing_nics : nic.name => nic.id }
-nic_list = try(data.azurerm_network_interface.existing_nics, {} )
+nic_list = try({for nic in data.azurerm_network_interface.existing_nics : nic.name => nic.id}, {} )
 nic_names = flatten([
     for vm in local.vm_list : concat(
       [vm.linux_vm_default_nic.nic_name],
@@ -182,7 +182,7 @@ nic_names = flatten([
   #   for asg in data.azurerm_application_security_group.existing_asgs :
   #   asg.name => asg.id
   # }
-  asg_list = try(data.azurerm_application_security_group.existing_asgs, {})
+asg_list = try({ for asg in data.azurerm_application_security_group.existing_asgs: asg.name => asg.id } ,{})
   
    
 asg_mapped = merge(try(local.asg_list ,{}), 
