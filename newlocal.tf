@@ -135,3 +135,17 @@ data "azurerm_linux_virtual_machine" "existing_vms" {
   resource_group_name = var.resource_group_name
 }
 
+existing_vm_names = length(data.azurerm_linux_virtual_machine.existing_vms) > 0 ? keys(data.azurerm_linux_virtual_machine.existing_vms) : []
+
+  existing_vms = length(local.existing_vm_names) > 0 ? {
+    for vm in data.azurerm_linux_virtual_machine.existing_vms :
+    vm.name => {
+      name                    = vm.name
+      size                    = vm.size
+      zone                    = vm.zone
+      os_disk_size_gb         = try(vm.os_disk.0.disk_size_gb, null)
+      linux_vm_admin_username = vm.admin_username
+      linux_vm_admin_password = vm.admin_password
+    }
+  } : {}
+
