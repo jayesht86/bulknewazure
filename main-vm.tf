@@ -1,30 +1,42 @@
 resource "azurerm_linux_virtual_machine" "vm" {
   for_each = { for obj in local.vm_list : obj.name => obj }
-   
-  name                  = each.value.name
-  location              = var.location
-  resource_group_name   = var.resource_group_name
-  size                  = each.value.size
-  admin_username        = each.value.admin_username
-  admin_password        = each.value.admin_password
-  zone                  = var.zones[0]
-  disable_password_authentication = false #var.password_auth_disabled
-  network_interface_ids = toset([for v in values(module.nic[each.key].nic_interface_list) : v.id ])
+
+  name                            = each.value.name
+  location                        = var.location
+  resource_group_name             = var.resource_group_name
+  size                            = each.value.size
+  admin_username                  = each.value.linux_vm_admin_username
+  admin_password                  = each.value.linux_vm_admin_password
+  zone                            = each.value.zone
+  disable_password_authentication = coalesce(each.value.linux_vm_password_auth_disabled, var.linux_vm_password_auth_disabled) #var.password_auth_disabled
+  network_interface_ids           = toset([for v in values(module.nic[each.key].nic_interface_list) : v.id])
 
   # OS Disk Configuration
   os_disk {
-    name                 = "${var.name}-osdisk"
-    caching              = "ReadWrite" #var.linux_vm_os_disk_cache
+    name    = "${each.value.name}-osdisk"
+    caching = "ReadWrite" #var.linux_vm_os_disk_cache
     #create_option        = "FromImage"
     disk_size_gb         = var.os_disk_size_gb
-    storage_account_type = "Standard_LRS" #var.linux_vm_os_disk_type
+    storage_account_type = var.storage_account_type #"Standard_LRS"
+  }
+  dynamic "admin_ssh_key" {
+    for_each = coalesce(each.value.linux_vm_password_auth_disabled, var.vm_config.linux_vm_password_auth_disabled) ? flatten([
+      for e in [
+        each.value.linux_vm_public_keys,
+        var.vm_config.linux_vm_public_keys
+      ] : e if e != null
+    ]) : []
+    content {
+      username   = admin_ssh_key.value.linux_vm_username
+      public_key = admin_ssh_key.value.linux_vm_public_key
+    }
   }
 
-    source_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-focal"
-    sku       = "20_04-lts-gen2"
-    version   = "latest"
+  source_image_reference {
+    publisher = each.value.linux_vm_image_publisher #"Canonical"
+    offer     = each.value.linux_vm_image_offer     #"0001-com-ubuntu-server-focal"
+    sku       = each.value.linux_vm_image_sku       #"20_04-lts-gen2"
+    version   = each.value.linux_vm_image_version   #"latest"
   }
 
   # Secure Boot & vTPM
