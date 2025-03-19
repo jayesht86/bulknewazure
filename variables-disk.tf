@@ -1,5 +1,5 @@
 variable "managed_disk" {
-    type = object({
+  type = object({
     managed_disk_name         = string
     managed_disk_storage_type = string
     #Create Options
@@ -18,7 +18,7 @@ variable "managed_disk" {
     managed_disk_sector_size = optional(number)
     managed_disk_tier        = optional(string)
     managed_disk_max_shares  = optional(number)
-    managed_disk_zone        = optional(number)
+    #managed_disk_zone        = optional(number)
     #Ultra SSD Options
     managed_disk_iops_read_write = optional(string)
     managed_disk_iops_read_only  = optional(string)
@@ -42,7 +42,7 @@ variable "managed_disk" {
     managed_disk_attachment_create_option             = optional(string)
     managed_disk_attachment_write_accelerator_enabled = optional(bool)
   })
-  
+
 }
 
 #Global Vars
