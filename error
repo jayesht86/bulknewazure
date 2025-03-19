@@ -11,4 +11,64 @@ Error: creating Linux Virtual Machine: (Name "eusicd204" / Resource Group "demor
 │   with module.terratest-compute-linux_vm.azurerm_linux_virtual_machine.vm["eusicd103"],
 │   on ..\main-vm.tf line 1, in resource "azurerm_linux_virtual_machine" "vm":
 │    1: resource "azurerm_linux_virtual_machine" "vm" {
+
+
+ + asg_attachment_debug           = {}
+  + asg_attachment_list_debug      = []
+  + asg_attachment_map_debug       = {}
+  + asg_attachment_nic_names_debug = []
+  + asg_config_debug               = [
+      + {
+          + asg_association_nic_names = [
+              + "primary-nic-2-primary",
+              + "primary-nic-3-primary",
+            ]
+          + asg_custom_tags           = {
+              + Environment = "dev"
+              + Owner       = "jt"
+            }
+          + asg_name                  = "asg1"
+        },
+      + {
+          + asg_association_nic_names = [
+              + "secondary-nic-2-additional-01",
+            ]
+          + asg_custom_tags           = {
+              + Environment = "dev2"
+              + Owner       = "jt1"
+            }
+          + asg_name                  = "asg2"
+        },
+    ]
+  + nic_list_debug                 = {
+      + primary-nic-2-primary         = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/primary-nic-2-primary"
+      + primary-nic-3-primary         = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/primary-nic-3-primary"
+      + secondary-nic-2-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-2-additional-01"
+      + secondary-nic-3-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-3-additional-01"
+      + primary-nic-2-primary         = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/primary-nic-2-primary"
+      + primary-nic-3-primary         = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/primary-nic-3-primary"
+      + secondary-nic-2-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-2-additional-01"
+      + secondary-nic-3-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-3-additional-01"
+      + primary-nic-3-primary         = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/primary-nic-3-primary"
+      + secondary-nic-2-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-2-additional-01"
+      + secondary-nic-3-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-3-additional-01"
+      + secondary-nic-2-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-2-additional-01"
+      + secondary-nic-3-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-3-additional-01"
+      + secondary-nic-3-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-3-additional-01"
+    }
+rg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-3-additional-01"
+    }
+    }
+  + nic_list_key_debug             = [
+      + "primary-nic-2-primary",
+  + nic_list_key_debug             = [
+      + "primary-nic-2-primary",
+      + "primary-nic-2-primary",
+      + "primary-nic-3-primary",
+      + "primary-nic-3-primary",
+      + "secondary-nic-2-additional-01",
+      + "secondary-nic-3-additional-01",
+    ]
+
+───────────────────────────────────────────────────────────
 │
