@@ -129,3 +129,9 @@ locals {
   )
 }
 
+data "azurerm_linux_virtual_machine" "existing_vms" {
+  for_each = length(local.existing_vm_names) > 0 ? toset(local.existing_vm_names) : toset([])
+  name     = each.value
+  resource_group_name = var.resource_group_name
+}
+
