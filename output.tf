@@ -28,3 +28,31 @@ output "nic_ids" {
 /* output "nic_names" {
   value = { for k, nic in azurerm_network_interface.nic : k => nic.name}  #azurerm_network_interface.nic.id
 } */
+output "linux_vm_list" {
+  value = {
+    for vm in azurerm_linux_virtual_machine.vm : vm.name => {
+      name = vm.name
+      size = vm.size
+      zone = vm.zone
+    }
+  }
+}
+
+output "nic_list" {
+  value = {
+    for nic in module.nic : nic.nic_name => nic.id
+  }
+}
+
+output "disk_list" {
+  value = {
+    for disk in module.disk : disk.managed_disk_name => disk.id
+  }
+}
+
+output "asg_list" {
+  value = {
+    for asg in module.asg : asg.asg_name => asg.id
+  }
+}
+
