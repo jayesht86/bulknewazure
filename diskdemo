@@ -1,0 +1,29 @@
+vm_managed_disk_list = var.managed_disk != null ? flatten([
+    for obj in local.vm_list : [
+      for disk_idx, disk_size in var.managed_disk.managed_disks_list : {
+        managed_disk_name                             = format("ddsk-%s-%03d", obj.name, disk_idx + 1)
+        managed_disk_storage_type                     = var.managed_disk.managed_disk_storage_type
+        managed_disk_create_option                      = var.managed_disk.managed_disk_create_option
+        managed_disk_marketplace_reference_id           = var.managed_disk.managed_disk_marketplace_reference_id
+        managed_disk_size_gb                          = disk_size
+        managed_disk_zone = obj.zone
+      }
+    ]
+  ]) : []
+
+  disk_attachments = var.managed_disk != null ? flatten([
+    for vm_idx, vm in local.vm_list : [
+      for disk_idx, disk_size in var.managed_disk.managed_disks_list : {
+        vm              = vm.name
+        disk            = format("ddsk-%s-%03d", vm.name, disk_idx + 1)
+        lun             = disk_idx
+        cache           = coalesce(var.managed_disk.managed_disk_attachment_cache, "None")
+        create_option   = coalesce(var.managed_disk.managed_disk_attachment_create_option, "Attach")
+        write_accelerator = coalesce(var.managed_disk.managed_disk_attachment_write_accelerator_enabled, false)
+      }
+    ]
+  ]) : []
+
+  disk_attachments_before_filter = local.disk_attachments
+
+  disk_attachments2 = var.managed_disk != null ? { for o in local.disk_attachments : "${o.vm}-${o.disk}-${o.lun}" => o } : {}
