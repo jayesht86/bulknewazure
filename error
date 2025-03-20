@@ -1,26 +1,36 @@
-Error: Invalid reference
-│ 
-│   on locals.tf line 14, in locals:
-│   14:         zone_sequence_update = zone_sequence
-│ 
-│ A reference to a resource type must be followed by at least one attribute access, specifying the resource
-│ name.
+Planning failed. Terraform encountered an error while generating this plan.
+
+╷
+│ Error: Duplicate object key
+│
+│   on locals.tf line 159, in locals:
+│  159:   disk_attachments2 = var.managed_disk != null ? { for o in local.disk_attachments : "${o.vm} + ${o.disk}" => o } : {}
+│     ├────────────────
+│     │ o.disk is "ddsk-01-eu1pcd1-011"
+│     │ o.vm is "eu1pcd1-011"
+│
+│ Two different items produced the key "eu1pcd1-011 + ddsk-01-eu1pcd1-011" in this 'for' expression. If        
+│ duplicates are expected, use the ellipsis (...) after the value expression to enable grouping by key.        
 ╵
 ╷
-│ Error: Invalid reference
-│ 
-│   on locals.tf line 15, in locals:
-│   15:         zone_sequence = merge(zone_sequence_update, {for k,v in zone_sequence_update : k => k == zone ? v + 1 : v})
+│ Error: Duplicate object key
 │
-│ A reference to a resource type must be followed by at least one attribute access, specifying the resource    
-│ name.
+│   on module-nic.tf line 4, in module "nic":
+│    4:   for_each = { for obj in local.vm_list : obj.name => obj }
+│     ├────────────────
+│     │ obj.name is "eu1pcd1-011"
+│
+│ Two different items produced the key "eu1pcd1-011" in this 'for' expression. If duplicates are expected, use 
+│ the ellipsis (...) after the value expression to enable grouping by key.
 ╵
 ╷
-│ Error: Invalid reference
+│ Error: Duplicate object key
 │
-│   on locals.tf line 15, in locals:
-│   15:         zone_sequence = merge(zone_sequence_update, {for k,v in zone_sequence_update : k => k == zone ? v + 1 : v})
+│   on .terraform\modules\compute-managed_disk\main.tf line 10, in resource "azurerm_managed_disk" "managed_disk":
+│   10:   for_each = var.managed_disk != null ? { for obj in var.managed_disk : obj.managed_disk_name => obj } : {}
+│     ├────────────────
+│     │ obj.managed_disk_name is "ddsk-01-eu1pcd1-011"
 │
-│ A reference to a resource type must be followed by at least one attribute access, specifying the resource    
-│ name.
+│ Two different items produced the key "ddsk-01-eu1pcd1-011" in this 'for' expression. If duplicates are       
+│ expected, use the ellipsis (...) after the value expression to enable grouping by key.
 ╵
