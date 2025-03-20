@@ -129,3 +129,5 @@ zone_sequence_init = {
 name = format("%s%s%s%s-%03d", var.region_code, var.product_code, var.environment_code, zone, local.zone_sequence[zone] + var.sequence_start + 1)
 
 zone_sequence = merge(local.zone_sequence, {for k,v in local.zone_sequence : k => k == zone ? v + 1 : v})
+
+disk_attachments2 = var.managed_disk != null ? { for o in local.disk_attachments : "${o.vm} + ${o.disk} + ${o.lun}" => o } : {}
