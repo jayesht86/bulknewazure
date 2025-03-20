@@ -102,6 +102,9 @@ locals {
 
 
 }
+eu1pcd1-011
+eu1pcd2-011
+eu1pcd3-011
 name = format("%s%s%s%s-%03d", var.region_code, var.product_code, var.environment_code, zone, var.sequence_start + index([for z in config.zone_list : z if z == zone], zone) + 1)
 
 
