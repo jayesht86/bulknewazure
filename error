@@ -229,4 +229,16 @@
         },
     ] -> null
 
+managed_disk = {
+  managed_disk_name         = "data-disk"
+  managed_disk_storage_type = "Standard_LRS"
+  managed_disks_list        = [128]
+  #managed_disk_zone        = 1
+  managed_disk_timeout_create = "15m"
+  managed_disk_timeout_update = "15m"
+  managed_disk_timeout_read   = "15m"
+  managed_disk_timeout_delete = "15m"
+
+}
+
 ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
