@@ -111,6 +111,10 @@ name = format("%s%s%s%s-%03d", var.region_code, var.product_code, var.environmen
 zone_sequence_update = zone_sequence
 zone_sequence = merge(zone_sequence_update, {for k,v in zone_sequence_update : k => k == zone ? v + 1 : v})
 
+zone_sequence = {
+    for zone in distinct(var.vm_config.zone_list) : zone => 0
+  }
+
 
 # output "name" {
 #   value = local.vm_list
