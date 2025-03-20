@@ -108,6 +108,8 @@ output "disk_attachments_debug" {
   value = local.disk_attachments
 }
 
+name               = format("%s%s%s%s-%03d", var.region_code, var.product_code, var.environment_code, zone, local.zone_sequence_init[zone] + var.sequence_start -1 + idx) # Change: name calculation modified
+
 output "disk_attachments_before_filter" {
   value = local.disk_attachments
 }
