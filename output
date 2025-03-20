@@ -1,8 +1,10 @@
-+ disk_attachments_debug   = [
+
+Changes to Outputs:
+  + disk_attachments_before_filter = [
       + {
           + cache             = "None"
           + create_option     = "Attach"
-          + disk              = "ddsk-01-eu1pcd1-011"
+          + disk              = "ddsk-eu1pcd1-011-001"
           + lun               = 0
           + vm                = "eu1pcd1-011"
           + write_accelerator = false
@@ -10,7 +12,7 @@
       + {
           + cache             = "None"
           + create_option     = "Attach"
-          + disk              = "ddsk-01-eu1pcd1-011"
+          + disk              = "ddsk-eu1pcd1-011-001"
           + lun               = 0
           + vm                = "eu1pcd1-011"
           + write_accelerator = false
@@ -18,13 +20,39 @@
       + {
           + cache             = "None"
           + create_option     = "Attach"
-          + disk              = "ddsk-01-eu1pcd3-011"
+          + disk              = "ddsk-eu1pcd3-011-001"
           + lun               = 0
           + vm                = "eu1pcd3-011"
           + write_accelerator = false
         },
     ]
-  + disk_list                = [
+  + disk_attachments_debug         = [
+      + {
+          + cache             = "None"
+          + create_option     = "Attach"
+          + disk              = "ddsk-eu1pcd1-011-001"
+          + lun               = 0
+          + vm                = "eu1pcd1-011"
+          + write_accelerator = false
+        },
+      + {
+          + cache             = "None"
+          + create_option     = "Attach"
+          + disk              = "ddsk-eu1pcd1-011-001"
+          + lun               = 0
+          + vm                = "eu1pcd1-011"
+          + write_accelerator = false
+        },
+      + {
+          + cache             = "None"
+          + create_option     = "Attach"
+          + disk              = "ddsk-eu1pcd3-011-001"
+          + lun               = 0
+          + vm                = "eu1pcd3-011"
+          + write_accelerator = false
+        },
+    ]
+  + disk_list                      = [
       + {
           + managed_disk_access_id                            = null
           + managed_disk_access_policy                        = null
@@ -131,10 +159,10 @@
           + managed_disk_zone                                 = "3"
         },
     ]
-  + managed_disks_list_debug = [
+  + managed_disks_list_debug       = [
       + 128,
     ]
-  + vm_list_debug            = [
+  + vm_list_debug                  = [
       + {
           + linux_vm_additional_nic                                      = [
               + {
@@ -367,7 +395,7 @@
             }
         },
     ]
-  + vm_managed_disk_debug    = [
+  + vm_managed_disk_debug          = [
       + {
           + managed_disk_access_id                            = null
           + managed_disk_access_policy                        = null
