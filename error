@@ -1,5 +1,4 @@
-Changes to Outputs:
-  - disk_attachments_before_filter = [
+ - disk_attachments_before_filter = [
       - {
           - cache             = "None"
           - create_option     = "Attach"
@@ -62,6 +61,43 @@ Changes to Outputs:
       + ddsk-eu1pcd1-010-001 = "ddsk-eu1pcd1-010-001"
       + ddsk-eu1pcd1-011-001 = "ddsk-eu1pcd1-011-001"
       + ddsk-eu1pcd2-012-001 = "ddsk-eu1pcd2-012-001"
+    }
+  + managed_disk_var               = {
+      + managed_disk_access_id                            = null
+      + managed_disk_access_policy                        = null
+      + managed_disk_attachment_cache                     = null
+      + managed_disk_attachment_create_option             = null
+      + managed_disk_attachment_lun                       = null
+      + managed_disk_attachment_vm_name                   = null
+      + managed_disk_attachment_write_accelerator_enabled = null
+      + managed_disk_create_option                        = null
+      + managed_disk_encryption_set_id                    = null
+      + managed_disk_gallery_reference_id                 = null
+      + managed_disk_hyper_v_generation                   = null
+      + managed_disk_iops_read_only                       = null
+      + managed_disk_iops_read_write                      = null
+      + managed_disk_marketplace_reference_id             = null
+      + managed_disk_max_shares                           = null
+      + managed_disk_mbps_read_only                       = null
+      + managed_disk_mbps_read_write                      = null
+      + managed_disk_name                                 = "data-disk"
+      + managed_disk_os_type                              = null
+      + managed_disk_public_access_enabled                = null
+      + managed_disk_sector_size                          = null
+      + managed_disk_size_gb                              = null
+      + managed_disk_source_resource_id                   = null
+      + managed_disk_source_storage_id                    = null
+      + managed_disk_source_uri                           = null
+      + managed_disk_storage_type                         = "Standard_LRS"
+      + managed_disk_tier                                 = null
+      + managed_disk_timeout_create                       = "15m"
+      + managed_disk_timeout_delete                       = "15m"
+      + managed_disk_timeout_read                         = "15m"
+      + managed_disk_timeout_update                       = "15m"
+      + managed_disk_upload_size_bytes                    = null
+      + managed_disks_list                                = [
+          + 128,
+        ]
     }
   - managed_disks_list_debug       = [
       - 128,
@@ -192,3 +228,5 @@ Changes to Outputs:
           - vm_name                                           = "eu1pcd1-010"
         },
     ] -> null
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
