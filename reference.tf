@@ -120,3 +120,12 @@ zone_sequence = {
 #   value = local.vm_list
 # }
 
+zone_sequence_init = {
+    for zone in distinct(var.vm_config.zone_list) : zone => 0
+  }
+
+  zone_sequence = zone_sequence_init
+
+name = format("%s%s%s%s-%03d", var.region_code, var.product_code, var.environment_code, zone, local.zone_sequence[zone] + var.sequence_start + 1)
+
+zone_sequence = merge(local.zone_sequence, {for k,v in local.zone_sequence : k => k == zone ? v + 1 : v})
