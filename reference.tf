@@ -102,7 +102,7 @@ locals {
 
 
 }
-
+name = format("%s%s%s%s-%03d", var.region_code, var.product_code, var.environment_code, zone, var.sequence_start + index([for z in config.zone_list : z if z == zone], zone) + 1)
 
 
 
