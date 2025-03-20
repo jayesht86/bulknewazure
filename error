@@ -1,22 +1,7 @@
-Error: Inconsistent conditional result types
-│
-│   on locals.tf line 213, in locals:
-│  213:   disk_attachments = var.managed_disk != null ? { for o in local.vm_managed_disk_list : "${o.vm_name}-${o.disk_idx}" => 
-│  214:   {
-│  215:         vm              = o.vm_name
-│  216:         disk            = o.managed_disk_name #format("ddsk-%s-%03d", vm.name, disk_idx + 1)
-│  217:         lun             = o.disk_idx
-│  218:         cache           = coalesce(var.managed_disk.managed_disk_attachment_cache, "None")
-│  219:         create_option   = coalesce(var.managed_disk.managed_disk_attachment_create_option, "Attach")
-│  220:         write_accelerator = coalesce(var.managed_disk.managed_disk_attachment_write_accelerator_enabled, false)
-│  221:       }
-│  222:
-│  223:    } : []
-│     ├────────────────
-│     │ local.vm_managed_disk_list is list of object with 1 element
-│     │ var.managed_disk is object with 33 attributes
-│     │ var.managed_disk.managed_disk_attachment_cache is null
-│     │ var.managed_disk.managed_disk_attachment_create_option is null
-│     │ var.managed_disk.managed_disk_attachment_write_accelerator_enabled is null
-│
-│ The true and false result expressions must have consistent types. The 'true' value is object, but the 'false' value is tuple. 
+ # azurerm_virtual_machine_data_disk_attachment.disk_attachment["eu1pcd1-010-ddsk-eu1pcd1-010-001-0"] must be replaced
+-/+ resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment" {
+      ~ id                        = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Compute/virtualMachines/eu1pcd1-010/dataDisks/ddsk-eu1pcd1-010-001" -> (known after apply)
+      ~ managed_disk_id           = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Compute/disks/ddsk-eu1pcd1-010-001" # forces replacement -> (known after apply) # forces replacement
+      ~ virtual_machine_id        = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Compute/virtualMachines/eu1pcd1-010" # forces replacement -> (known after apply) # forces replacement
+        # (4 unchanged attributes hidden)
+    }
