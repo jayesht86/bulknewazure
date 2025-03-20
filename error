@@ -1,7 +1,194 @@
- # azurerm_virtual_machine_data_disk_attachment.disk_attachment["eu1pcd1-010-ddsk-eu1pcd1-010-001-0"] must be replaced
--/+ resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment" {
-      ~ id                        = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Compute/virtualMachines/eu1pcd1-010/dataDisks/ddsk-eu1pcd1-010-001" -> (known after apply)
-      ~ managed_disk_id           = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Compute/disks/ddsk-eu1pcd1-010-001" # forces replacement -> (known after apply) # forces replacement
-      ~ virtual_machine_id        = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Compute/virtualMachines/eu1pcd1-010" # forces replacement -> (known after apply) # forces replacement
-        # (4 unchanged attributes hidden)
+Changes to Outputs:
+  - disk_attachments_before_filter = [
+      - {
+          - cache             = "None"
+          - create_option     = "Attach"
+          - disk              = "ddsk-eu1pcd1-010-001"
+          - lun               = 0
+          - vm                = "eu1pcd1-010"
+          - write_accelerator = false
+        },
+    ] -> null
+  - disk_attachments_debug         = {
+      - eu1pcd1-010-0 = {
+          - cache             = "None"
+          - create_option     = "Attach"
+          - disk              = "ddsk-eu1pcd1-010-001"
+          - lun               = 0
+          - vm                = "eu1pcd1-010"
+          - write_accelerator = false
+        }
+    } -> null
+  - disk_list                      = [
+      - {
+          - disk_idx                                          = 0
+          - managed_disk_access_id                            = null
+          - managed_disk_access_policy                        = null
+          - managed_disk_attachment_cache                     = null
+          - managed_disk_attachment_create_option             = null
+          - managed_disk_attachment_lun                       = null
+          - managed_disk_attachment_vm_name                   = null
+          - managed_disk_attachment_write_accelerator_enabled = null
+          - managed_disk_create_option                        = null
+          - managed_disk_encryption_set_id                    = null
+          - managed_disk_gallery_reference_id                 = null
+          - managed_disk_hyper_v_generation                   = null
+          - managed_disk_iops_read_only                       = null
+          - managed_disk_iops_read_write                      = null
+          - managed_disk_marketplace_reference_id             = null
+          - managed_disk_max_shares                           = null
+          - managed_disk_mbps_read_only                       = null
+          - managed_disk_mbps_read_write                      = null
+          - managed_disk_name                                 = "ddsk-eu1pcd1-010-001"
+          - managed_disk_os_type                              = null
+          - managed_disk_public_access_enabled                = null
+          - managed_disk_sector_size                          = null
+          - managed_disk_size_gb                              = 128
+          - managed_disk_source_resource_id                   = null
+          - managed_disk_source_storage_id                    = null
+          - managed_disk_source_uri                           = null
+          - managed_disk_storage_type                         = "Standard_LRS"
+          - managed_disk_tier                                 = null
+          - managed_disk_timeout_create                       = "15m"
+          - managed_disk_timeout_delete                       = "15m"
+          - managed_disk_timeout_read                         = "15m"
+          - managed_disk_timeout_update                       = "15m"
+          - managed_disk_upload_size_bytes                    = null
+          - managed_disk_zone                                 = "1"
+          - vm_name                                           = "eu1pcd1-010"
+        },
+    ] -> null
+  + managed_disk_ids               = {
+      + ddsk-eu1pcd1-010-001 = "ddsk-eu1pcd1-010-001"
+      + ddsk-eu1pcd1-011-001 = "ddsk-eu1pcd1-011-001"
+      + ddsk-eu1pcd2-012-001 = "ddsk-eu1pcd2-012-001"
     }
+  - managed_disks_list_debug       = [
+      - 128,
+    ] -> null
+  - nic_list_debug                 = {
+      - primary-nic-1-primary         = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/primary-nic-1-primary"
+      - secondary-nic-1-additional-01 = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/secondary-nic-1-additional-01"
+    } -> null
+  + virtual_machine_id             = {
+      + eu1pcd1-010 = "eu1pcd1-010"
+      + eu1pcd1-011 = "eu1pcd1-011"
+      + eu1pcd2-012 = "eu1pcd2-012"
+    }
+  - vm_list_debug                  = [
+      - {
+          - linux_vm_additional_nic                                      = [
+              - {
+                  - nic_ip_config = [
+                      - {
+                          - nic_ip_config_name                  = "primary"
+                          - nic_ip_config_primary               = true
+                          - nic_ip_config_private_ip_address    = null
+                          - nic_ip_config_private_ip_allocation = "Dynamic"
+                          - nic_ip_config_public_ip_id          = null
+                        },
+                    ]
+                  - nic_name      = "secondary-nic-1-additional-01"
+                  - nic_subnet_id = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/virtualNetworks/demovnet1/subnets/demosubnet1"
+                },
+            ]
+          - linux_vm_admin_password                                      = "Password123!"
+          - linux_vm_admin_username                                      = "adminuser"
+          - linux_vm_default_nic                                         = {
+              - nic_ip_config = [
+                  - {
+                      - nic_ip_config_association_appgw_ids = null
+                      - nic_ip_config_association_lb_id     = null
+                      - nic_ip_config_association_nat_id    = null
+                      - nic_ip_config_name                  = "primary"
+                      - nic_ip_config_primary               = true
+                      - nic_ip_config_private_ip_address    = null
+                      - nic_ip_config_private_ip_allocation = "Dynamic"
+                      - nic_ip_config_public_ip_id          = null
+                    },
+                ]
+              - nic_name      = "primary-nic-1-primary"
+              - nic_subnet_id = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/virtualNetworks/demovnet1/subnets/demosubnet1"
+            }
+          - linux_vm_extension_aad_ssh_enabled                           = true
+          - linux_vm_extension_aadssh_failure_suppression_enabled        = true
+          - linux_vm_extension_ado_agent_deployment_group                = null
+          - linux_vm_extension_ado_agent_enabled                         = true
+          - linux_vm_extension_ado_agent_failure_suppression_enabled     = true
+          - linux_vm_extension_ado_agent_name                            = null
+          - linux_vm_extension_ado_agent_pat_token                       = null
+          - linux_vm_extension_ado_agent_tags                            = null
+          - linux_vm_extension_ado_agent_team_project                    = null
+          - linux_vm_extension_ado_agent_vsts_account_name               = null
+          - linux_vm_extension_custom_script_blob_storage_account_key    = null
+          - linux_vm_extension_custom_script_blob_storage_account_name   = null
+          - linux_vm_extension_custom_script_blob_storage_blob_name      = null
+          - linux_vm_extension_custom_script_blob_storage_container_name = null
+          - linux_vm_extension_custom_script_enabled                     = true
+          - linux_vm_extension_custom_script_failure_suppression_enabled = true
+          - linux_vm_extension_encryption_enabled                        = true
+          - linux_vm_extension_encryption_encrypt_all_disks              = null
+          - linux_vm_extension_encryption_failure_suppression_enabled    = true
+          - linux_vm_extension_encryption_key_vault_kek_name             = "temp"
+          - linux_vm_extension_encryption_key_vault_kek_version          = "abcd"
+          - linux_vm_extension_encryption_key_vault_name                 = null
+          - linux_vm_extension_encryption_key_vault_resource_group       = null
+          - linux_vm_extension_encryption_operation                      = null
+          - linux_vm_extension_monitoring_enabled                        = true
+          - linux_vm_extension_monitoring_failure_suppression_enabled    = true
+          - linux_vm_extension_monitoring_workspace_id                   = null
+          - linux_vm_extension_monitoring_workspace_key                  = null
+          - linux_vm_image_offer                                         = "0001-com-ubuntu-server-focal"
+          - linux_vm_image_publisher                                     = "Canonical"
+          - linux_vm_image_sku                                           = "20_04-lts-gen2"
+          - linux_vm_image_version                                       = "latest"
+          - linux_vm_password_auth_disabled                              = false
+          - name                                                         = "eu1pcd1-010"
+          - os_disk_size_gb                                              = 64
+          - size                                                         = "Standard_D2s_v3"
+          - vm_extension_failure_suppression_enabled                     = true
+          - zone                                                         = "1"
+          - zone_sequence_init                                           = {
+              - "1" = 2
+            }
+        },
+    ] -> null
+  - vm_managed_disk_debug          = [
+      - {
+          - disk_idx                                          = 0
+          - managed_disk_access_id                            = null
+          - managed_disk_access_policy                        = null
+          - managed_disk_attachment_cache                     = null
+          - managed_disk_attachment_create_option             = null
+          - managed_disk_attachment_lun                       = null
+          - managed_disk_attachment_vm_name                   = null
+          - managed_disk_attachment_write_accelerator_enabled = null
+          - managed_disk_create_option                        = null
+          - managed_disk_encryption_set_id                    = null
+          - managed_disk_gallery_reference_id                 = null
+          - managed_disk_hyper_v_generation                   = null
+          - managed_disk_iops_read_only                       = null
+          - managed_disk_iops_read_write                      = null
+          - managed_disk_marketplace_reference_id             = null
+          - managed_disk_max_shares                           = null
+          - managed_disk_mbps_read_only                       = null
+          - managed_disk_mbps_read_write                      = null
+          - managed_disk_name                                 = "ddsk-eu1pcd1-010-001"
+          - managed_disk_os_type                              = null
+          - managed_disk_public_access_enabled                = null
+          - managed_disk_sector_size                          = null
+          - managed_disk_size_gb                              = 128
+          - managed_disk_source_resource_id                   = null
+          - managed_disk_source_storage_id                    = null
+          - managed_disk_source_uri                           = null
+          - managed_disk_storage_type                         = "Standard_LRS"
+          - managed_disk_tier                                 = null
+          - managed_disk_timeout_create                       = "15m"
+          - managed_disk_timeout_delete                       = "15m"
+          - managed_disk_timeout_read                         = "15m"
+          - managed_disk_timeout_update                       = "15m"
+          - managed_disk_upload_size_bytes                    = null
+          - managed_disk_zone                                 = "1"
+          - vm_name                                           = "eu1pcd1-010"
+        },
+    ] -> null
