@@ -1,0 +1,26 @@
+Error: Invalid reference
+│ 
+│   on locals.tf line 14, in locals:
+│   14:         zone_sequence_update = zone_sequence
+│ 
+│ A reference to a resource type must be followed by at least one attribute access, specifying the resource
+│ name.
+╵
+╷
+│ Error: Invalid reference
+│ 
+│   on locals.tf line 15, in locals:
+│   15:         zone_sequence = merge(zone_sequence_update, {for k,v in zone_sequence_update : k => k == zone ? v + 1 : v})
+│
+│ A reference to a resource type must be followed by at least one attribute access, specifying the resource    
+│ name.
+╵
+╷
+│ Error: Invalid reference
+│
+│   on locals.tf line 15, in locals:
+│   15:         zone_sequence = merge(zone_sequence_update, {for k,v in zone_sequence_update : k => k == zone ? v + 1 : v})
+│
+│ A reference to a resource type must be followed by at least one attribute access, specifying the resource    
+│ name.
+╵
