@@ -3,11 +3,24 @@ locals {
     creation_mode                           = "terraform"
     terraform-azurerm-msci-compute-linux_vm = "True"
   })
+  # zone_sequence = {
+  #   for zone in distinct(var.vm_config.zone_list) : zone => 0
+  # }
+  zone_sequence_init = {
+    for zone in distinct(var.vm_config.zone_list) : zone => 0
+  }
+
+  #zone_sequence = zone_sequence_init
   vm_list = flatten([
     for config in [var.vm_config] : [
       for idx, zone in config.zone_list : {
         #VM_Config
-        name            = format("%s%s%s%s%02d", var.region_code, var.product_code, var.environment_code, zone, idx + 1 + var.sequence_start)
+        name = format("%s%s%s%s-%03d", var.region_code, var.product_code, var.environment_code, zone, local.zone_sequence_init[zone] + var.sequence_start + 1)
+        #name = format("%s%s%s%s-%03d", var.region_code, var.product_code, var.environment_code, zone, local.zone_sequence[zone] + var.sequence_start + 1)
+        zone_sequence_init = merge(local.zone_sequence_init, {for k,v in local.zone_sequence_init : k => k == zone ? v + 1 : v})
+        #zone_sequence = merge(zone_sequence_update, {for k,v in zone_sequence_update : k => k == zone ? v + 1 : v})
+        #name = format("%s%s%s%s-%03d", var.region_code, var.product_code, var.environment_code, zone, var.sequence_start + index([for z in config.zone_list : z if z == zone], zone) + 1)
+        #name            = format("%s%s%s%s%02d", var.region_code, var.product_code, var.environment_code, zone, idx + 1 + var.sequence_start)
         size            = config.size
         os_disk_size_gb = config.os_disk_size_gb
         zone            = zone
@@ -39,6 +52,7 @@ locals {
         #OMS Agent Extension		
         vm_extension_failure_suppression_enabled = config.vm_extension_failure_suppression_enabled
         #Extension_Custom_Scripts
+
         linux_vm_extension_custom_script_enabled                     = config.linux_vm_extension_custom_script_enabled
         linux_vm_extension_custom_script_blob_storage_container_name = config.linux_vm_extension_custom_script_blob_storage_container_name
         linux_vm_extension_custom_script_blob_storage_blob_name      = config.linux_vm_extension_custom_script_blob_storage_blob_name
