@@ -12,7 +12,7 @@ Changes to Outputs:
           + cache             = "None"
           + create_option     = "Attach"
           + disk              = "ddsk-eu1pcd1-011-001"
-          + lun               = 0
+          + lun               = 1
           + vm                = "eu1pcd1-011"
           + write_accelerator = false
         },
@@ -20,7 +20,7 @@ Changes to Outputs:
           + cache             = "None"
           + create_option     = "Attach"
           + disk              = "ddsk-eu1pcd3-011-001"
-          + lun               = 0
+          + lun               = 2
           + vm                = "eu1pcd3-011"
           + write_accelerator = false
         },
@@ -38,7 +38,7 @@ Changes to Outputs:
           + cache             = "None"
           + create_option     = "Attach"
           + disk              = "ddsk-eu1pcd1-011-001"
-          + lun               = 0
+          + lun               = 1
           + vm                = "eu1pcd1-011"
           + write_accelerator = false
         },
@@ -46,7 +46,7 @@ Changes to Outputs:
           + cache             = "None"
           + create_option     = "Attach"
           + disk              = "ddsk-eu1pcd3-011-001"
-          + lun               = 0
+          + lun               = 2
           + vm                = "eu1pcd3-011"
           + write_accelerator = false
         },
@@ -504,19 +504,6 @@ Changes to Outputs:
 ╷
 │ Error: Duplicate object key
 │
-│   on locals.tf line 225, in locals:
-│  225:   disk_attachments2 = var.managed_disk != null ? { for o in local.disk_attachments : "${o.vm}-${o.disk}-${o.lun}" => o } : {}
-│     ├────────────────
-│     │ o.disk is "ddsk-eu1pcd1-011-001"
-│     │ o.lun is 0
-│     │ o.vm is "eu1pcd1-011"
-│
-│ Two different items produced the key "eu1pcd1-011-ddsk-eu1pcd1-011-001-0" in this 'for' expression. If duplicates are
-│ expected, use the ellipsis (...) after the value expression to enable grouping by key.
-╵
-╷
-│ Error: Duplicate object key
-│
 │   on module-nic.tf line 4, in module "nic":
 │    4:   for_each = { for o in local.vm_list : o.name => o }
 │     ├────────────────
@@ -535,4 +522,3 @@ Changes to Outputs:
 │
 │ Two different items produced the key "ddsk-eu1pcd1-011-001" in this 'for' expression. If duplicates are expected, use the     
 │ ellipsis (...) after the value expression to enable grouping by key.
-╵
