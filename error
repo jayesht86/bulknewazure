@@ -33,4 +33,30 @@ Planning failed. Terraform encountered an error while generating this plan.
 │
 │ Two different items produced the key "ddsk-01-eu1pcd1-011" in this 'for' expression. If duplicates are       
 │ expected, use the ellipsis (...) after the value expression to enable grouping by key.
+
+
+Error: Invalid reference
+│
+│   on locals.tf line 176, in locals:
+│  176:         managed_disk_size_gb     = var.managed_disk.managed_disks_list != null ? (length(var.managed_di╷
+│ Error: Invalid reference
+│
+│   on locals.tf line 176, in locals:
+│  176:         managed_disk_size_gb     = var.managed_disk.managed_disks_list != null ? (length(var.managed_di│ Error: Invalid reference
+│
+│   on locals.tf line 176, in locals:
+│  176:         managed_disk_size_gb     = var.managed_disk.managed_disks_list != null ? (length(var.managed_disk.managed_disks_list) > 0 ? var.managed_disk.managed_disks_list[count_idx] : 128) : 128
+│
+│ A reference to a resource type must be followed by at least one attribute access, specifying the resource    
+│   on locals.tf line 176, in locals:
+│  176:         managed_disk_size_gb     = var.managed_disk.managed_disks_list != null ? (length(var.managed_disk.managed_disks_list) > 0 ? var.managed_disk.managed_disks_list[count_idx] : 128) : 128
+│
+│ A reference to a resource type must be followed by at least one attribute access, specifying the resource    
+sk.managed_disks_list) > 0 ? var.managed_disk.managed_disks_list[count_idx] : 128) : 128
+│
+│ A reference to a resource type must be followed by at least one attribute access, specifying the resource    
+│ A reference to a resource type must be followed by at least one attribute access, specifying the resource    
+│ name.
+│ name.
+╵
 ╵
