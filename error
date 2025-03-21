@@ -4,3 +4,32 @@
 │   on locals.tf line 52, in locals:
 │   52:             nic_name = "vm-" + config.name + "-secondary-nic-" + element(var.vm_config.zone_list, idx) │
 │ Unsuitable value for right operand: a number is required.
+
+locals {
+  // ... (rest of your locals)
+
+  vm_list = flatten([
+    for config in [var.vm_config] : [
+      for idx, zone in config.zone_list : {
+        // ...
+        name = format("%s%s%s%s-%03d", var.region_code, var.product_code, var.environment_code, zone, local.zone_sequence_init[zone] + var.sequence_start -1 + idx)
+        // ...
+        linux_vm_default_nic = {
+          nic_name    = join("", ["vm-", name, "-primary-nic-", element(var.vm_config.zone_list, idx)]) // Corrected Line
+          nic_subnet_id = lookup(config.linux_vm_default_nic, "nic_subnet_id", null)
+          nic_ip_config = lookup(config.linux_vm_default_nic, "nic_ip_config", [])
+        }
+        linux_vm_additional_nic = [
+          for nic_idx, nic in lookup(config, "linux_vm_additional_nic", []) : {
+            nic_name = join("", ["vm-", name, "-secondary-nic-", element(var.vm_config.zone_list, idx), "-", format("%02d", nic_idx + 1)]) // Corrected Line
+            nic_subnet_id = lookup(nic, "nic_subnet_id", null)
+            nic_ip_config = lookup(nic, "nic_ip_config", [])
+          }
+        ]
+        // ...
+      }
+    ]
+  ])
+
+  // ... (rest of your locals)
+}
