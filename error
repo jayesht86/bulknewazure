@@ -1,7 +1,6 @@
- Error: Invalid value for input variable
-│
-│   on module-nic.tf line 19, in module "nic":
-│   19:   nic_default_interface = { name = each.value.linux_vm_default_nic.nic_name }
-│
-│ The given value is not suitable for module.nic.var.nic_default_interface declared at
-│ .terraform\modules\nic\variables-nic.tf:6,1-33: attributes "nic_ip_config" and "nic_name" are required. 
+ Error: Invalid template control keyword
+│ 
+│   on locals.tf line 42, in locals:
+│   42:           nic_name    = format("%s-%s", replace(config.linux_vm_default_nic.nic_name, "%{vm_name}", vm_name), element(var.vm_config.zone_list, idx))
+│ 
+│ "vm_name" is not a valid template control keyword.
