@@ -104,3 +104,23 @@ locals {
     ]
   ])
 }
+
+
+  vm_list = flatten([
+    for idx, vm_name in var.virtual_machine_id : [
+      for config in [var.vm_config] : {
+        name = vm_name
+        zone = element(var.vm_config.zone_list, idx)
+        zone_sequence = local.zone_sequence_init[element(var.vm_config.zone_list, idx)]
+        linux_vm_default_nic = {
+          nic_name    = format("%s-%s", replace(config.linux_vm_default_nic.nic_name, "vm-", "vm\\-${vm_name}-"), element(var.vm_config.zone_list, idx)) // Highlighted Change (Option 1 - Escaping)
+          //nic_name    = format("%s-%s", replace(config.linux_vm_default_nic.nic_name, "vm-", format("vm-%s-", vm_name)), element(var.vm_config.zone_list, idx)) // Highlighted Change (Option 2 - Format)
+          nic_subnet_id = config.linux_vm_default_nic.nic_subnet_id
+          nic_ip_config = config.linux_vm_default_nic.nic_ip_config
+        }
+        linux_vm_additional_nic = [
+          for nic_idx, nic in lookup(config, "linux_vm_additional_nic", []) : {
+            nic_name = format("%s-%s-%02d", replace(nic.nic_name, "vm-", "vm\\-${vm_name}-"), element(var.vm_config.zone_list, idx), nic_idx + 1) // Highlighted Change (Option 1 - Escaping)
+            //nic_name = format("%s-%s-%02d", replace(nic.nic_name, "vm-", format("vm-%s-", vm_name)), element(var.vm_config.zone_list, idx), nic_idx + 1) // Highlighted Change (Option 2 - Format)
+            nic_subnet_id = nic.nic_subnet_id
+            nic_ip_config = nic.nic_ip_config
