@@ -1,7 +1,8 @@
-Error: Invalid reference
+
+│ Error: Invalid reference
 │ 
 │   on locals.tf line 42, in locals:
-│   42:           nic_name    = format("%s-%s", replace(config.linux_vm_default_nic.nic_name, "vm-", "vm-${vm_name}-"), element(var.vm_config.zone_list, idx))
+│   42:           nic_name    = format("%s-%s", replace(config.linux_vm_default_nic.nic_name, "vm-", "vm\\-${vm_name}-"), element(var.vm_config.zone_list, idx))
 │ 
 │ A reference to a resource type must be followed by at least one attribute access, specifying the resource
 │ name.
@@ -9,8 +10,8 @@ Error: Invalid reference
 ╷
 │ Error: Invalid reference
 │ 
-│   on locals.tf line 49, in locals:
-│   49:             nic_name = format("%s-%s-%02d", replace(nic.nic_name, "vm-", "vm-${vm_name}-"), element(var.vm_config.zone_list, idx), nic_idx + 1)
+│   on locals.tf line 50, in locals:
+│   50:             nic_name = format("%s-%s-%02d", replace(nic.nic_name, "vm-", "vm\\-${vm_name}-"), element(var.vm_config.zone_list, idx), nic_idx + 1)
 │ 
 │ A reference to a resource type must be followed by at least one attribute access, specifying the resource
 │ name.
