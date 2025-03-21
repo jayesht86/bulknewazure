@@ -1,17 +1,6 @@
-Error: Invalid reference
-│ 
-│   on locals.tf line 42, in locals:
-│   42:           nic_name    = format("vm-%s-primary-nic-%s", vm_name, element(var.vm_config.zone_list, idx))
-│ 
-│ A reference to a resource type must be followed by at least one attribute access, specifying the resource
-│ name.
-╵
-╷
-│ Error: Invalid reference
-│ 
-│   on locals.tf line 51, in locals:
-│   51:             nic_name = format("vm-%s-secondary-nic-%s-%02d", vm_name, element(var.vm_config.zone_list, idx), nic_idx + 1)
-│ 
-│ A reference to a resource type must be followed by at least one attribute access, specifying the resource
-│ name.
-╵
+
+│ Error: Invalid operand
+│
+│   on locals.tf line 52, in locals:
+│   52:             nic_name = "vm-" + config.name + "-secondary-nic-" + element(var.vm_config.zone_list, idx) │
+│ Unsuitable value for right operand: a number is required.
