@@ -1,6 +1,24 @@
- Error: Invalid template control keyword
+ Error: Variables not allowed
 │ 
-│   on locals.tf line 42, in locals:
-│   42:           nic_name    = format("%s-%s", replace(config.linux_vm_default_nic.nic_name, "%{vm_name}", vm_name), element(var.vm_config.zone_list, idx))
+│   on terraform.tfvars line 38:
+│   38:     nic_name      =  "vm-${vm_name}-primary-nic"
 │ 
-│ "vm_name" is not a valid template control keyword.
+│ Variables may not be used here.
+╵
+╷
+│ Error: Variables not allowed
+│ 
+│   on terraform.tfvars line 49:
+│   49:     nic_name      = "vm-${vm_name}-secondary-nic"
+│ 
+│ Variables may not be used here.
+╵
+╷
+│ Error: No value for required variable
+│ 
+│   on variables.tf line 67:
+│   67: variable "vm_config" {
+│ 
+│ The root module input variable "vm_config" is not set, and has no default value. Use a -var or -var-file
+│ command line argument to provide a value for this variable.
+╵
