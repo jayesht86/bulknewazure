@@ -55,3 +55,52 @@ locals {
           for nic_idx, nic in lookup(config, "linux_vm_additional_nic", []) : {
             nic_name = format("%s-%s-%02d", replace(nic.nic_name, "vm-%{vm_name}", "vm-${vm_name}"), element(var.vm_config.zone_list, idx), nic_idx + 1) // Corrected Line
             nic_subnet_id = nic.nic_subnet_id
+
+
+locals {
+  tags = merge(
+    var.tags,
+    {
+      terraform_module = "vm"
+    }
+  )
+
+  zone_sequence_init = { for zone in distinct(var.vm_config.zone_list) : zone => 0 }
+
+  vm_list = flatten([
+    for idx, vm_name in var.virtual_machine_id : [
+      for config in [var.vm_config] : {
+        name = vm_name
+        zone = element(var.vm_config.zone_list, idx)
+        zone_sequence = local.zone_sequence_init[element(var.vm_config.zone_list, idx)]
+        linux_vm_default_nic = {
+          nic_name    = format("%s-%s", replace(config.linux_vm_default_nic.nic_name, "vm-", "vm-${vm_name}-"), element(var.vm_config.zone_list, idx)) // Highlighted Change
+          nic_subnet_id = config.linux_vm_default_nic.nic_subnet_id
+          nic_ip_config = config.linux_vm_default_nic.nic_ip_config
+        }
+        linux_vm_additional_nic = [
+          for nic_idx, nic in lookup(config, "linux_vm_additional_nic", []) : {
+            nic_name = format("%s-%s-%02d", replace(nic.nic_name, "vm-", "vm-${vm_name}-"), element(var.vm_config.zone_list, idx), nic_idx + 1) // Highlighted Change
+            nic_subnet_id = nic.nic_subnet_id
+            nic_ip_config = nic.nic_ip_config
+          }
+        ]
+        size = lookup(config, "linux_vm_size", "Standard_DS1_v2")
+        linux_vm_image_publisher = lookup(config, "linux_vm_image_publisher", "Canonical")
+        linux_vm_image_offer = lookup(config, "linux_vm_image_offer", "UbuntuServer")
+        linux_vm_image_sku = lookup(config, "linux_vm_image_sku", "18.04-LTS")
+        linux_vm_image_version = lookup(config, "linux_vm_image_version", "latest")
+        linux_vm_admin_username = lookup(config, "linux_vm_admin_username", "azureuser")
+        linux_vm_admin_password = lookup(config, "linux_vm_admin_password", "Password123!")
+        linux_vm_password_auth_disabled = lookup(config, "linux_vm_password_auth_disabled", false)
+      }
+    ]
+  ])
+
+  nic_names = flatten([
+    for obj in local.vm_list : [
+      obj.linux_vm_default_nic.nic_name,
+      [for nic in obj.linux_vm_additional_nic : nic.nic_name]...
+    ]
+  ])
+}
