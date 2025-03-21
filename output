@@ -16,3 +16,27 @@
       + eu1pcd2-013 = "eu1pcd2-013"
 
 zone_list                                                    = ["1","1","2","2"] 
+
+ linux_vm_default_nic = {
+
+    nic_name      = "primary-nic"
+    nic_subnet_id = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/virtualNetworks/demovnet1/subnets/demosubnet1"
+    #accelerated_networking_enabled = true
+    nic_ip_config = [{
+      nic_ip_config_name = "primary"
+      #private_ip_address_allocation = "Dynamic"
+      nic_ip_config_primary = true
+    }]
+  }
+
+  linux_vm_additional_nic = [{
+    nic_name      = "secondary-nic"
+    nic_subnet_id = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/virtualNetworks/demovnet1/subnets/demosubnet1"
+    #accelerated_networking_enabled = false
+    nic_ip_config = [{
+      nic_ip_config_name = "primary"
+      #private_ip_address_allocation = "Dynamic"
+      nic_ip_config_primary = true
+    }]
+  }]
+}
