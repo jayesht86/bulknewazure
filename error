@@ -1,27 +1,23 @@
-locals {
-  // ... (rest of your locals)
-
-  vm_list = flatten([
-    for config in [var.vm_config] : [
-      for idx, zone in config.zone_list : {
-        name = format("%s%s%s%s-%03d", var.region_code, var.product_code, var.environment_code, zone, local.zone_sequence_init[zone] + var.sequence_start - 1 + idx)
-        // ...
-        linux_vm_default_nic = {
-          nic_name    = format("vm-%s-primary-nic-%s", format("%s%s%s%s-%03d", var.region_code, var.product_code, var.environment_code, zone, local.zone_sequence_init[zone] + var.sequence_start - 1 + idx), zone) // Corrected Line
-          nic_subnet_id = lookup(config.linux_vm_default_nic, "nic_subnet_id", null)
-          nic_ip_config = lookup(config.linux_vm_default_nic, "nic_ip_config", [])
-        }
-        linux_vm_additional_nic = [
-          for nic_idx, nic in lookup(config, "linux_vm_additional_nic", []) : {
-            nic_name = format("vm-%s-secondary-nic-%s-%02d", format("%s%s%s%s-%03d", var.region_code, var.product_code, var.environment_code, zone, local.zone_sequence_init[zone] + var.sequence_start - 1 + idx), zone, nic_idx + 1) // Corrected Line
-            nic_subnet_id = lookup(nic, "nic_subnet_id", null)
-            nic_ip_config = lookup(nic, "nic_ip_config", [])
-          }
-        ]
-        // ...
-      }
-    ]
-  ])
-
-  // ... (rest of your locals)
-}
+data.azurerm_network_interface.existing_nics["vm-eu1pcd1-010-primary-nic-1"]
+data.azurerm_network_interface.existing_nics["vm-eu1pcd1-010-secondary-nic-1-01"]
+data.azurerm_network_interface.existing_nics["vm-eu1pcd1-011-primary-nic-1"]
+data.azurerm_network_interface.existing_nics["vm-eu1pcd1-011-secondary-nic-1-01"]
+data.azurerm_network_interface.existing_nics["vm-eu1pcd2-012-primary-nic-2"]
+data.azurerm_network_interface.existing_nics["vm-eu1pcd2-012-secondary-nic-2-01"]
+data.azurerm_network_interface.existing_nics["vm-eu1pcd3-013-primary-nic-3"]
+data.azurerm_network_interface.existing_nics["vm-eu1pcd3-013-secondary-nic-3-01"]
+data.azurerm_resource_group.existing_rg
+data.azurerm_subnet.existing_subnet
+data.azurerm_virtual_network.existing_vnet
+azurerm_linux_virtual_machine.vm["eu1pcd1-010"]
+azurerm_linux_virtual_machine.vm["eu1pcd1-011"]
+azurerm_linux_virtual_machine.vm["eu1pcd2-012"]
+azurerm_linux_virtual_machine.vm["eu1pcd3-013"]
+module.nic["eu1pcd1-010"].azurerm_network_interface.additional_interface["vm-eu1pcd1-010-secondary-nic-1-01"]  
+module.nic["eu1pcd1-010"].azurerm_network_interface.default_interface
+module.nic["eu1pcd1-011"].azurerm_network_interface.additional_interface["vm-eu1pcd1-011-secondary-nic-1-01"]  
+module.nic["eu1pcd1-011"].azurerm_network_interface.default_interface
+module.nic["eu1pcd2-012"].azurerm_network_interface.additional_interface["vm-eu1pcd2-012-secondary-nic-2-01"]  
+module.nic["eu1pcd2-012"].azurerm_network_interface.default_interface
+module.nic["eu1pcd3-013"].azurerm_network_interface.additional_interface["vm-eu1pcd3-013-secondary-nic-3-01"]  
+module.nic["eu1pcd3-013"].azurerm_network_interface.default_interface
