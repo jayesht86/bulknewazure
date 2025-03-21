@@ -1,24 +1,16 @@
- Error: Variables not allowed
+Error: Invalid reference
 │ 
-│   on terraform.tfvars line 38:
-│   38:     nic_name      =  "vm-${vm_name}-primary-nic"
+│   on locals.tf line 42, in locals:
+│   42:           nic_name    = format("%s-%s", replace(config.linux_vm_default_nic.nic_name, "vm-", "vm-${vm_name}-"), element(var.vm_config.zone_list, idx))
 │ 
-│ Variables may not be used here.
+│ A reference to a resource type must be followed by at least one attribute access, specifying the resource
+│ name.
 ╵
 ╷
-│ Error: Variables not allowed
+│ Error: Invalid reference
 │ 
-│   on terraform.tfvars line 49:
-│   49:     nic_name      = "vm-${vm_name}-secondary-nic"
+│   on locals.tf line 49, in locals:
+│   49:             nic_name = format("%s-%s-%02d", replace(nic.nic_name, "vm-", "vm-${vm_name}-"), element(var.vm_config.zone_list, idx), nic_idx + 1)
 │ 
-│ Variables may not be used here.
-╵
-╷
-│ Error: No value for required variable
-│ 
-│   on variables.tf line 67:
-│   67: variable "vm_config" {
-│ 
-│ The root module input variable "vm_config" is not set, and has no default value. Use a -var or -var-file
-│ command line argument to provide a value for this variable.
-╵
+│ A reference to a resource type must be followed by at least one attribute access, specifying the resource
+│ name.
