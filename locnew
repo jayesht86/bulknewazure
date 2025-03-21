@@ -1,0 +1,58 @@
+locals {
+  tags = merge(var.tags, {
+    creation_mode                                = "terraform"
+    terraform-azurerm-msci-compute-linux_vm = "True"
+  })
+
+  zone_sequence = {
+    "1" = 1,
+    "2" = 2,
+    "3" = 3,
+    // Add more zone mappings as needed
+  }
+
+  vm_list = flatten([
+    for config in [var.vm_config] : [
+      for zone in config.zone_list : {
+        name = format("%s%s%s%s-%03s",
+          var.region_code,
+          var.product_code,
+          var.environment_code,
+          zone,
+          tostring(local.zone_sequence[zone] + var.sequence_start - 1)
+        )
+        size                     = config.size
+        os_disk_size_gb          = config.os_disk_size_gb
+        zone                     = zone
+        linux_vm_image_publisher = config.linux_vm_image_publisher
+        linux_vm_image_offer     = config.linux_vm_image_offer
+        linux_vm_image_sku       = config.linux_vm_image_sku
+        linux_vm_image_version   = config.linux_vm_image_version
+        linux_vm_admin_username  = config.linux_vm_admin_username
+        linux_vm_admin_password  = config.linux_vm_admin_password
+        linux_vm_default_nic     = lookup(config, "linux_vm_default_nic", null)
+        linux_vm_additional_nic  = lookup(config, "linux_vm_additional_nic", [])
+
+        linux_vm_default_nic = {
+          nic_name    = format("vm-%s-primary-nic-%s", format("%s%s%s%s-%03s", var.region_code, var.product_code, var.environment_code, zone, tostring(local.zone_sequence[zone] + var.sequence_start - 1)), zone)
+          nic_subnet_id = lookup(config.linux_vm_default_nic, "nic_subnet_id", null)
+          nic_ip_config = lookup(config.linux_vm_default_nic, "nic_ip_config", [])
+        }
+
+        linux_vm_additional_nic = [
+          for nic_idx, nic in lookup(config, "linux_vm_additional_nic", []) : {
+            nic_name    = format("vm-%s-secondary-nic-%s-%02d", format("%s%s%s%s-%03s", var.region_code, var.product_code, var.environment_code, zone, tostring(local.zone_sequence[zone] + var.sequence_start - 1)), zone, nic_idx + 1)
+            nic_subnet_id = lookup(nic, "nic_subnet_id", null)
+            nic_ip_config = lookup(nic, "nic_ip_config", [])
+          }
+        ]
+
+        vm_extension_failure_suppression_enabled = config.vm_extension_failure_suppression_enabled
+        linux_vm_extension_custom_script_enabled = config.linux_vm_extension_custom_script_enabled
+        // ... rest of your config ...
+      }
+    ]
+  ])
+
+  // ... rest of your locals ...
+}
