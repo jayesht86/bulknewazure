@@ -1,0 +1,378 @@
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated
+with the following symbols:
+  + create
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # data.azurerm_network_interface.existing_nics["vm-eu1pcd1-010-primary-nic-1"] will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "azurerm_network_interface" "existing_nics" {
+      + accelerated_networking_enabled = (known after apply)
+      + applied_dns_servers            = (known after apply)
+      + dns_servers                    = (known after apply)
+      + enable_accelerated_networking  = (known after apply)
+      + enable_ip_forwarding           = (known after apply)
+      + id                             = (known after apply)
+      + internal_dns_name_label        = (known after apply)
+      + ip_configuration               = (known after apply)
+      + ip_forwarding_enabled          = (known after apply)
+      + location                       = (known after apply)
+      + mac_address                    = (known after apply)
+      + name                           = "vm-eu1pcd1-010-primary-nic-1"
+      + network_security_group_id      = (known after apply)
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "demorg1"
+      + tags                           = (known after apply)
+      + virtual_machine_id             = (known after apply)
+    }
+
+  # data.azurerm_network_interface.existing_nics["vm-eu1pcd1-010-secondary-nic-1-01"] will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "azurerm_network_interface" "existing_nics" {
+      + accelerated_networking_enabled = (known after apply)
+      + applied_dns_servers            = (known after apply)
+      + dns_servers                    = (known after apply)
+      + enable_accelerated_networking  = (known after apply)
+      + enable_ip_forwarding           = (known after apply)
+      + id                             = (known after apply)
+      + internal_dns_name_label        = (known after apply)
+      + ip_configuration               = (known after apply)
+      + ip_forwarding_enabled          = (known after apply)
+      + location                       = (known after apply)
+      + mac_address                    = (known after apply)
+      + name                           = "vm-eu1pcd1-010-secondary-nic-1-01"
+      + network_security_group_id      = (known after apply)
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "demorg1"
+      + tags                           = (known after apply)
+      + virtual_machine_id             = (known after apply)
+    }
+
+  # data.azurerm_network_interface.existing_nics["vm-eu1pcd2-011-primary-nic-2"] will be read during apply     
+  # (depends on a resource or a module with changes pending)
+ <= data "azurerm_network_interface" "existing_nics" {
+      + accelerated_networking_enabled = (known after apply)
+      + applied_dns_servers            = (known after apply)
+      + dns_servers                    = (known after apply)
+      + enable_accelerated_networking  = (known after apply)
+      + enable_ip_forwarding           = (known after apply)
+      + id                             = (known after apply)
+      + internal_dns_name_label        = (known after apply)
+      + ip_configuration               = (known after apply)
+      + ip_forwarding_enabled          = (known after apply)
+      + location                       = (known after apply)
+      + mac_address                    = (known after apply)
+      + name                           = "vm-eu1pcd2-011-primary-nic-2"
+      + network_security_group_id      = (known after apply)
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "demorg1"
+      + tags                           = (known after apply)
+      + virtual_machine_id             = (known after apply)
+    }
+
+  # data.azurerm_network_interface.existing_nics["vm-eu1pcd2-011-secondary-nic-2-01"] will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "azurerm_network_interface" "existing_nics" {
+      + accelerated_networking_enabled = (known after apply)
+      + applied_dns_servers            = (known after apply)
+      + dns_servers                    = (known after apply)
+      + enable_accelerated_networking  = (known after apply)
+      + enable_ip_forwarding           = (known after apply)
+      + id                             = (known after apply)
+      + internal_dns_name_label        = (known after apply)
+      + ip_configuration               = (known after apply)
+      + ip_forwarding_enabled          = (known after apply)
+      + location                       = (known after apply)
+      + mac_address                    = (known after apply)
+      + name                           = "vm-eu1pcd2-011-secondary-nic-2-01"
+      + network_security_group_id      = (known after apply)
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "demorg1"
+      + tags                           = (known after apply)
+      + virtual_machine_id             = (known after apply)
+    }
+
+  # azurerm_linux_virtual_machine.vm["eu1pcd1-010"] will be created
+  + resource "azurerm_linux_virtual_machine" "vm" {
+      + admin_password                                         = (sensitive value)
+      + admin_username                                         = "adminuser"
+      + allow_extension_operations                             = true
+      + bypass_platform_safety_checks_on_user_schedule_enabled = false
+      + computer_name                                          = (known after apply)
+      + disable_password_authentication                        = false
+      + disk_controller_type                                   = (known after apply)
+      + encryption_at_host_enabled                             = false
+      + extensions_time_budget                                 = "PT1H30M"
+      + id                                                     = (known after apply)
+      + location                                               = "eastus"
+      + max_bid_price                                          = -1
+      + name                                                   = "eu1pcd1-010"
+      + network_interface_ids                                  = (known after apply)
+      + patch_assessment_mode                                  = "ImageDefault"
+      + patch_mode                                             = "ImageDefault"
+      + platform_fault_domain                                  = -1
+      + priority                                               = "Regular"
+      + private_ip_address                                     = (known after apply)
+      + private_ip_addresses                                   = (known after apply)
+      + provision_vm_agent                                     = true
+      + public_ip_address                                      = (known after apply)
+      + public_ip_addresses                                    = (known after apply)
+      + resource_group_name                                    = "demorg1"
+      + secure_boot_enabled                                    = false
+      + size                                                   = "Standard_D2s_v3"
+      + tags                                                   = {
+          + "env" = "local-dev"
+        }
+      + virtual_machine_id                                     = (known after apply)
+      + vm_agent_platform_updates_enabled                      = false
+      + vtpm_enabled                                           = false
+      + zone                                                   = "1"
+
+      + additional_capabilities {
+          + hibernation_enabled = false
+          + ultra_ssd_enabled   = false
+        }
+
+      + boot_diagnostics {}
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = 64
+          + name                      = "eu1pcd1-010-osdisk"
+          + storage_account_type      = "Standard_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "0001-com-ubuntu-server-focal"
+          + publisher = "Canonical"
+          + sku       = "20_04-lts-gen2"
+          + version   = "latest"
+        }
+    }
+
+  # azurerm_linux_virtual_machine.vm["eu1pcd2-011"] will be created
+  + resource "azurerm_linux_virtual_machine" "vm" {
+      + admin_password                                         = (sensitive value)
+      + admin_username                                         = "adminuser"
+      + allow_extension_operations                             = true
+      + bypass_platform_safety_checks_on_user_schedule_enabled = false
+      + computer_name                                          = (known after apply)
+      + disable_password_authentication                        = false
+      + disk_controller_type                                   = (known after apply)
+      + encryption_at_host_enabled                             = false
+      + extensions_time_budget                                 = "PT1H30M"
+      + id                                                     = (known after apply)
+      + location                                               = "eastus"
+      + max_bid_price                                          = -1
+      + name                                                   = "eu1pcd2-011"
+      + network_interface_ids                                  = (known after apply)
+      + patch_assessment_mode                                  = "ImageDefault"
+      + patch_mode                                             = "ImageDefault"
+      + platform_fault_domain                                  = -1
+      + priority                                               = "Regular"
+      + private_ip_address                                     = (known after apply)
+      + private_ip_addresses                                   = (known after apply)
+      + provision_vm_agent                                     = true
+      + public_ip_address                                      = (known after apply)
+      + public_ip_addresses                                    = (known after apply)
+      + resource_group_name                                    = "demorg1"
+      + secure_boot_enabled                                    = false
+      + size                                                   = "Standard_D2s_v3"
+      + tags                                                   = {
+          + "env" = "local-dev"
+        }
+      + virtual_machine_id                                     = (known after apply)
+      + vm_agent_platform_updates_enabled                      = false
+      + vtpm_enabled                                           = false
+      + zone                                                   = "2"
+
+      + additional_capabilities {
+          + hibernation_enabled = false
+          + ultra_ssd_enabled   = false
+        }
+
+      + boot_diagnostics {}
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = 64
+          + name                      = "eu1pcd2-011-osdisk"
+          + storage_account_type      = "Standard_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "0001-com-ubuntu-server-focal"
+          + publisher = "Canonical"
+          + sku       = "20_04-lts-gen2"
+          + version   = "latest"
+        }
+    }
+
+  # module.nic["eu1pcd1-010"].azurerm_network_interface.default_interface will be created
+  + resource "azurerm_network_interface" "default_interface" {
+      + accelerated_networking_enabled = (known after apply)
+      + applied_dns_servers            = (known after apply)
+      + dns_servers                    = (known after apply)
+      + enable_accelerated_networking  = (known after apply)
+      + enable_ip_forwarding           = (known after apply)
+      + id                             = (known after apply)
+      + internal_domain_name_suffix    = (known after apply)
+      + ip_forwarding_enabled          = (known after apply)
+      + location                       = "eastus"
+      + mac_address                    = (known after apply)
+      + name                           = "vm-eu1pcd1-010-primary-nic-1"
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "demorg1"
+      + virtual_machine_id             = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "primary"
+          + primary                                            = true
+          + private_ip_address                                 = (known after apply)
+          + private_ip_address_allocation                      = "Dynamic"
+          + private_ip_address_version                         = "IPv4"
+          + subnet_id                                          = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/virtualNetworks/demovnet1/subnets/demosubnet1"       
+        }
+    }
+
+  # module.nic["eu1pcd2-011"].azurerm_network_interface.default_interface will be created
+  + resource "azurerm_network_interface" "default_interface" {
+      + accelerated_networking_enabled = (known after apply)
+      + applied_dns_servers            = (known after apply)
+      + dns_servers                    = (known after apply)
+      + enable_accelerated_networking  = (known after apply)
+      + enable_ip_forwarding           = (known after apply)
+      + id                             = (known after apply)
+      + internal_domain_name_suffix    = (known after apply)
+      + ip_forwarding_enabled          = (known after apply)
+      + location                       = "eastus"
+      + mac_address                    = (known after apply)
+      + name                           = "vm-eu1pcd2-011-primary-nic-2"
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "demorg1"
+      + virtual_machine_id             = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "primary"
+          + primary                                            = true
+          + private_ip_address                                 = (known after apply)
+          + private_ip_address_allocation                      = "Dynamic"
+          + private_ip_address_version                         = "IPv4"
+          + subnet_id                                          = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/virtualNetworks/demovnet1/subnets/demosubnet1"       
+        }
+    }
+
+Plan: 4 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + managed_disk_ids   = {
+      + ddsk-eu1pcd1-010-001 = "ddsk-eu1pcd1-010-001"
+      + ddsk-eu1pcd2-011-001 = "ddsk-eu1pcd2-011-001"
+    }
+  + managed_disk_var   = {
+      + managed_disk_access_id                            = null
+      + managed_disk_access_policy                        = null
+      + managed_disk_attachment_cache                     = null
+      + managed_disk_attachment_create_option             = null
+      + managed_disk_attachment_lun                       = null
+      + managed_disk_attachment_vm_name                   = null
+      + managed_disk_attachment_write_accelerator_enabled = null
+      + managed_disk_create_option                        = null
+      + managed_disk_encryption_set_id                    = null
+      + managed_disk_gallery_reference_id                 = null
+      + managed_disk_hyper_v_generation                   = null
+      + managed_disk_iops_read_only                       = null
+      + managed_disk_iops_read_write                      = null
+      + managed_disk_marketplace_reference_id             = null
+      + managed_disk_max_shares                           = null
+      + managed_disk_mbps_read_only                       = null
+      + managed_disk_mbps_read_write                      = null
+      + managed_disk_name                                 = "data-disk"
+      + managed_disk_os_type                              = null
+      + managed_disk_public_access_enabled                = null
+      + managed_disk_sector_size                          = null
+      + managed_disk_size_gb                              = null
+      + managed_disk_source_resource_id                   = null
+      + managed_disk_source_storage_id                    = null
+      + managed_disk_source_uri                           = null
+      + managed_disk_storage_type                         = "Standard_LRS"
+      + managed_disk_tier                                 = null
+      + managed_disk_timeout_create                       = "15m"
+      + managed_disk_timeout_delete                       = "15m"
+      + managed_disk_timeout_read                         = "15m"
+      + managed_disk_timeout_update                       = "15m"
+      + managed_disk_upload_size_bytes                    = null
+      + managed_disks_list                                = [
+          + 128,
+        ]
+    }
+  + nic_name_list      = [
+      + "vm-eu1pcd1-010-primary-nic-1",
+      + "vm-eu1pcd1-010-secondary-nic-1-01",
+      + "vm-eu1pcd2-011-primary-nic-2",
+      + "vm-eu1pcd2-011-secondary-nic-2-01",
+      + managed_disk_timeout_read                         = "15m"
+      + managed_disk_timeout_update                       = "15m"
+      + managed_disk_upload_size_bytes                    = null
+      + managed_disks_list                                = [
+          + 128,
+        ]
+    }
+  + nic_name_list      = [
+      + "vm-eu1pcd1-010-primary-nic-1",
+      + "vm-eu1pcd1-010-secondary-nic-1-01",
+      + "vm-eu1pcd2-011-primary-nic-2",
+      + "vm-eu1pcd2-011-secondary-nic-2-01",
+      + managed_disks_list                                = [
+          + 128,
+        ]
+    }
+  + nic_name_list      = [
+      + "vm-eu1pcd1-010-primary-nic-1",
+      + "vm-eu1pcd1-010-secondary-nic-1-01",
+      + "vm-eu1pcd2-011-primary-nic-2",
+      + "vm-eu1pcd2-011-secondary-nic-2-01",
+        ]
+    }
+  + nic_name_list      = [
+      + "vm-eu1pcd1-010-primary-nic-1",
+      + "vm-eu1pcd1-010-secondary-nic-1-01",
+      + "vm-eu1pcd2-011-primary-nic-2",
+      + "vm-eu1pcd2-011-secondary-nic-2-01",
+    }
+  + nic_name_list      = [
+      + "vm-eu1pcd1-010-primary-nic-1",
+      + "vm-eu1pcd1-010-secondary-nic-1-01",
+      + "vm-eu1pcd2-011-primary-nic-2",
+      + "vm-eu1pcd2-011-secondary-nic-2-01",
+      + "vm-eu1pcd1-010-primary-nic-1",
+      + "vm-eu1pcd1-010-secondary-nic-1-01",
+      + "vm-eu1pcd2-011-primary-nic-2",
+      + "vm-eu1pcd2-011-secondary-nic-2-01",
+      + "vm-eu1pcd2-011-primary-nic-2",
+      + "vm-eu1pcd2-011-secondary-nic-2-01",
+    ]
+      + "vm-eu1pcd2-011-secondary-nic-2-01",
+    ]
+    ]
+  + virtual_machine_id = {
+  + virtual_machine_id = {
+      + eu1pcd1-010 = "eu1pcd1-010"
+      + eu1pcd1-010 = "eu1pcd1-010"
+      + eu1pcd2-011 = "eu1pcd2-011"
+    }
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+
+Saved the plan to: tfplan
