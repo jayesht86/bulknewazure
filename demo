@@ -113,3 +113,15 @@ name               = format("%s%s%s%s-%03d", var.region_code, var.product_code, 
 output "disk_attachments_before_filter" {
   value = local.disk_attachments
 }
+
+nic_additional_interface = [
+    for nic in each.value.linux_vm_additional_nic : {
+      name            = nic.nic_name
+      nic_name        = nic.nic_name
+      nic_subnet_id   = nic.nic_subnet_id
+      nic_ip_config = [
+        {
+          nic_ip_config_primary = lookup(nic.nic_ip_config[0], "nic_ip_config_primary", false)
+          nic_ip_config_name    = lookup(nic.nic_ip_config[0], "nic_ip_config_name", "secondary")
+        }
+      ]
