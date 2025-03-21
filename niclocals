@@ -45,3 +45,13 @@ locals {
     ]
   ])
 }
+
+ linux_vm_default_nic = {
+          nic_name    = format("%s-%s", replace(config.linux_vm_default_nic.nic_name, "vm-%{vm_name}", "vm-${vm_name}"), element(var.vm_config.zone_list, idx)) // Corrected Line
+          nic_subnet_id = config.linux_vm_default_nic.nic_subnet_id
+          nic_ip_config = config.linux_vm_default_nic.nic_ip_config
+        }
+        linux_vm_additional_nic = [
+          for nic_idx, nic in lookup(config, "linux_vm_additional_nic", []) : {
+            nic_name = format("%s-%s-%02d", replace(nic.nic_name, "vm-%{vm_name}", "vm-${vm_name}"), element(var.vm_config.zone_list, idx), nic_idx + 1) // Corrected Line
+            nic_subnet_id = nic.nic_subnet_id
