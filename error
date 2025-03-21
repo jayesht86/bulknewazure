@@ -21,3 +21,10 @@ module.nic["eu1pcd2-012"].azurerm_network_interface.additional_interface["vm-eu1
 module.nic["eu1pcd2-012"].azurerm_network_interface.default_interface
 module.nic["eu1pcd3-013"].azurerm_network_interface.additional_interface["vm-eu1pcd3-013-secondary-nic-3-01"]  
 module.nic["eu1pcd3-013"].azurerm_network_interface.default_interface
+
+ Error: Index value required
+│ 
+│   on  line 1:
+│   (source code not available)
+│ 
+│ Index brackets must contain either a literal number or a literal string.
