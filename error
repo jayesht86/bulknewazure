@@ -1,4 +1,62 @@
-Error: Incorrect attribute value type
+ + disk_attachement   = [
+      + {
+          + cache             = "None"
+          + create_option     = "Attach"
+          + lun               = "ddsk-01-eu1pcd111"
+          + managed_disk_id   = (known after apply)
+          + vm_name           = "eu1pcd111"
+          + write_accelerator = false
+        },
+      + {
+          + cache             = "None"
+          + create_option     = "Attach"
+          + lun               = "ddsk-01-eu1pcd212"
+          + managed_disk_id   = (known after apply)
+          + vm_name           = "eu1pcd212"
+          + write_accelerator = false
+        },
+      + {
+          + cache             = "None"
+          + create_option     = "Attach"
+          + lun               = "ddsk-01-eu1pcd313"
+          + managed_disk_id   = (known after apply)
+          + vm_name           = "eu1pcd313"
+          + write_accelerator = false
+        },
+    ]
+  + disk_attachement2  = {
+      + "eu1pcd111 + ddsk-01-eu1pcd111" = {
+          + cache             = "None"
+          + create_option     = "Attach"
+          + lun               = "ddsk-01-eu1pcd111"
+          + managed_disk_id   = (known after apply)
+          + vm_name           = "eu1pcd111"
+          + write_accelerator = false
+        }
+      + "eu1pcd212 + ddsk-01-eu1pcd212" = {
+          + cache             = "None"
+          + create_option     = "Attach"
+          + lun               = "ddsk-01-eu1pcd212"
+          + managed_disk_id   = (known after apply)
+          + vm_name           = "eu1pcd212"
+          + write_accelerator = false
+        }
+      + "eu1pcd313 + ddsk-01-eu1pcd313" = {
+          + cache             = "None"
+          + create_option     = "Attach"
+          + lun               = "ddsk-01-eu1pcd313"
+          + managed_disk_id   = (known after apply)
+          + vm_name           = "eu1pcd313"
+          + write_accelerator = false
+        }
+    }
+  + virtual_machine_id = {
+      + eu1pcd111 = "eu1pcd111"
+      + eu1pcd212 = "eu1pcd212"
+      + eu1pcd313 = "eu1pcd313"
+    }
+╷
+│ Error: Incorrect attribute value type
 │
 │   on main-disk-attachment.tf line 6, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
 │    6:   lun                       = each.value.lun
@@ -13,22 +71,8 @@ Error: Incorrect attribute value type
 │   on main-disk-attachment.tf line 6, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
 │    6:   lun                       = each.value.lun
 │     ├────────────────
-│     │ each.value.lun is "ddsk-01-eu1pcd313"
-│
-│ Inappropriate value for attribute "lun": a number is required.
-│
-│ Inappropriate value for attribute "lun": a number is required.
-│ Inappropriate value for attribute "lun": a number is required.
-╵
-╷
-│ Error: Incorrect attribute value type
-│ Error: Incorrect attribute value type
-│ Error: Incorrect attribute value type
-│
-│   on main-disk-attachment.tf line 6, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
-│    6:   lun                       = each.value.lun
-│     ├────────────────
 │     │ each.value.lun is "ddsk-01-eu1pcd111"
 │
 │ Inappropriate value for attribute "lun": a number is required.
 ╵
+╷
