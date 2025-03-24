@@ -1,15 +1,34 @@
-│ Error: Invalid for_each argument
+Error: Incorrect attribute value type
 │
-│   on main-disk-attachment.tf line 2, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
-│    2:   for_each = local.disk_attachments2
+│   on main-disk-attachment.tf line 6, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
+│    6:   lun                       = each.value.lun
 │     ├────────────────
-│     │ local.disk_attachments2 will be known only after apply
+│     │ each.value.lun is "ddsk-01-eu1pcd212"
 │
-│ The "for_each" map includes keys derived from resource attributes that cannot be determined until apply, and 
-│ so Terraform cannot determine the full set of keys that will identify the instances of this resource.        
+│ Inappropriate value for attribute "lun": a number is required.
+╵
+╷
+│ Error: Incorrect attribute value type
 │
-│ When working with unknown values in for_each, it's better to define the map keys statically in your
-│ configuration and place apply-time results only in the map values.
+│   on main-disk-attachment.tf line 6, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
+│    6:   lun                       = each.value.lun
+│     ├────────────────
+│     │ each.value.lun is "ddsk-01-eu1pcd313"
 │
-│ Alternatively, you could use the -target planning option to first apply only the resources that the for_each 
-│ value depends on, and then apply a second time to fully converge.
+│ Inappropriate value for attribute "lun": a number is required.
+│
+│ Inappropriate value for attribute "lun": a number is required.
+│ Inappropriate value for attribute "lun": a number is required.
+╵
+╷
+│ Error: Incorrect attribute value type
+│ Error: Incorrect attribute value type
+│ Error: Incorrect attribute value type
+│
+│   on main-disk-attachment.tf line 6, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
+│    6:   lun                       = each.value.lun
+│     ├────────────────
+│     │ each.value.lun is "ddsk-01-eu1pcd111"
+│
+│ Inappropriate value for attribute "lun": a number is required.
+╵
