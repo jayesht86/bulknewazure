@@ -1,42 +1,78 @@
-  + nic_name_list      = [
-      + "primary-nic-1-primary",
-      + "secondary-nic-1-additional-01",
-      + "primary-nic-1-primary",
-      + "secondary-nic-1-additional-01",
-      + "primary-nic-2-primary",
-      + "secondary-nic-2-additional-01",
-      + "primary-nic-2-primary",
-      + "secondary-nic-2-additional-01",
-    ]
+# # output "vm_names" {
+# #   #value = [for vm in module.vm : vm.name]
+# #   value = {for k, v in module.vm : k => v.vm_name }
+# # }
+# /*output "nic_names" {
+#   #value = [for vm in module.vm : vm.name]
+#   value = {for k, v in module.nic : k => v.nic_names }
+# } */
+# /* output "disk_names" {
+#   #value = [for vm in module.vm : vm.name]
+#   value = {for k, v in module.disk : k => v.disk_names }
+# } */
+# # output "vm_name" {
+# #   #value = [for vm in module.vm : vm.name]
+# #   value = var.name
+# # }
+# # output "disk_ids" {
+# #   #value = [for d in azurerm_managed_disk.disk : d.id]
+# #   value = { for disk_key, disk in azurerm_managed_disk.disk : disk_key => disk.id }
+# # }
+# # output "disk_names" {
+# #   #value = [for d in azurerm_managed_disk.disk : d.id]
+# #   value = { for k, disk in azurerm_managed_disk.disk : k => disk.name }
+# # }
+# # output "nic_ids" {
+# #   value = { for key, nic in azurerm_network_interface.nic : key => nic.id }  #azurerm_network_interface.nic.id
+# # }
+# /* output "nic_names" {
+#   value = { for k, nic in azurerm_network_interface.nic : k => nic.name}  #azurerm_network_interface.nic.id
+# } */
+# output "nic_list_debug" {
+#   value = local.nic_list
+# }
+# # output "asg_attachment_debug" {
+# #   value = local.asg_attachment_map
+# # }
+# # output "asg_config_debug" {
+# #   value = var.asg_config
+# # }
+# # output "asg_attachment_list_debug" {
+# #   value = local.asg_attachment_list
+# # }
+# # output "nic_list_key_debug" {
+# #   value = keys(local.nic_list)
+# # }
+# # output "asg_attachment_nic_names_debug" {
+# #   value = [ for item in local.asg_attachment_list : item.nic_name]
+# # }
 
- + virtual_machine_id = {
-      + eu1pcd1-010 = "eu1pcd1-010"
-      + eu1pcd1-011 = "eu1pcd1-011"
-      + eu1pcd2-012 = "eu1pcd2-012"
-      + eu1pcd2-013 = "eu1pcd2-013"
+# # output "asg_attachment_map_debug" {
+# #   value = local.asg_attachment_map
+# # }
+# output "vm_list_debug" {
+#   value = local.vm_list
+# }
+# output "vm_managed_disk_debug" {
+#   value = local.vm_managed_disk_list
+# }
+# output "managed_disks_list_debug" {
+#   value = var.managed_disk.managed_disks_list
+# }
+# output "disk_attachments_debug" {
+#   value = local.disk_attachments
+# }
+# output "disk_attachments_before_filter" {
+#   value = local.disk_attachments_before_filter
+# }
+output "managed_disk_ids" {
+  value = { for disk in local.vm_managed_disk_extended_list : disk.managed_disk_name => disk.managed_disk_name }
 
-zone_list                                                    = ["1","1","2","2"] 
-
- linux_vm_default_nic = {
-
-    nic_name      = "primary-nic"
-    nic_subnet_id = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/virtualNetworks/demovnet1/subnets/demosubnet1"
-    #accelerated_networking_enabled = true
-    nic_ip_config = [{
-      nic_ip_config_name = "primary"
-      #private_ip_address_allocation = "Dynamic"
-      nic_ip_config_primary = true
-    }]
-  }
-
-  linux_vm_additional_nic = [{
-    nic_name      = "secondary-nic"
-    nic_subnet_id = "/subscriptions/59bab8f2-1319-472b-bb69-314d1b034ec0/resourceGroups/demorg1/providers/Microsoft.Network/virtualNetworks/demovnet1/subnets/demosubnet1"
-    #accelerated_networking_enabled = false
-    nic_ip_config = [{
-      nic_ip_config_name = "primary"
-      #private_ip_address_allocation = "Dynamic"
-      nic_ip_config_primary = true
-    }]
-  }]
 }
+output "virtual_machine_id" {
+  value = { for vm in local.vm_list : vm.name => vm.name }
+}
+# output "managed_disk_var" {
+#   value = var.managed_disk
+# }
+
