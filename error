@@ -1,16 +1,146 @@
-Error: Invalid reference
-│ 
-│   on locals.tf line 28, in locals:
-│   28:           nic_name      = format("%s-%s-primary", name,  lookup(config.linux_vm_default_nic, "nic_name", "default-nic"), zone)
-│ 
-│ A reference to a resource type must be followed by at least one attribute access, specifying the resource
-│ name.
+ Error: Error in function call
+│
+│   on locals.tf line 29, in locals:
+│   29:           nic_name      = format("%s-%s-primary", format("%s%s%s%s%02d", var.region_code, var.product_code, var.environment_code, zone, idx + 1 + var.sequence_start))
+│     ├────────────────
+│     │ var.environment_code is "d"
+│     │ var.product_code is "pc"
+│     │ var.region_code is "eu1"
+│     │ var.sequence_start is 10
+│
+│ Call to function "format" failed: not enough arguments for "%s" at 3: need index 2 but have 1 total.
 ╵
 ╷
-│ Error: Invalid reference
-│ 
-│   on locals.tf line 35, in locals:
-│   35:             nic_name      = format("%s-%s-additional-%02d", name,  lookup(nic, "nic_name", "additional-nic"), zone, nic_idx + 1)
+│ Error: Error in function call
 │
-│ A reference to a resource type must be followed by at least one attribute access, specifying the resource    
-│ name.
+│   on locals.tf line 29, in locals:
+│   29:           nic_name      = format("%s-%s-primary", format("%s%s%s%s%02d", var.region_code, var.product_code, var.environment_code, zone, idx + 1 + var.sequence_start))
+│     ├────────────────
+│     │ var.environment_code is "d"
+│     │ var.product_code is "pc"
+│     │ var.region_code is "eu1"
+│     │ var.sequence_start is 10
+│
+│ Call to function "format" failed: not enough arguments for "%s" at 3: need index 2 but have 1 total.
+╵
+╷
+│ Error: Error in function call
+│
+│   on locals.tf line 29, in locals:
+│   29:           nic_name      = format("%s-%s-primary", format("%s%s%s%s%02d", var.region_code, var.product_code, var.environment_code, zone, idx + 1 + var.sequence_start))
+│     ├────────────────
+│     │ var.environment_code is "d"
+│     │ var.product_code is "pc"
+│     │ var.region_code is "eu1"
+│     │ var.sequence_start is 10
+│
+│ Call to function "format" failed: not enough arguments for "%s" at 3: need index 2 but have 1 total.
+╵
+╷
+│ Error: Error in function call
+│
+│   on locals.tf line 37, in locals:
+│   37:             nic_name      = format("%s-%s-additional-%02d", format("%s%s%s%s%02d", var.region_code, var.product_code, var.environment_code, zone, idx + 1 + var.sequence_start), nic_idx + 1 )
+│     ├────────────────
+│     │ var.environment_code is "d"
+│     │ var.product_code is "pc"
+│     │ var.region_code is "eu1"
+│     │ var.sequence_start is 10
+│
+│ Call to function "format" failed: not enough arguments for "%02d" at 17: need index 3 but have 2 total.      
+╵
+╷
+│ Error: Error in function call
+│
+│   on locals.tf line 37, in locals:
+│   37:             nic_name      = format("%s-%s-additional-%02d", format("%s%s%s%s%02d", var.region_code, var.product_code, var.environment_code, zone, idx + 1 + var.sequence_start), nic_idx + 1 )
+│     ├────────────────
+│     │ var.environment_code is "d"
+│     │ var.product_code is "pc"
+│     │ var.region_code is "eu1"
+│     │ var.sequence_start is 10
+│
+│ Call to function "format" failed: not enough arguments for "%02d" at 17: need index 3 but have 2 total.      
+╵
+╷
+│ Error: Error in function call
+│
+│   on locals.tf line 37, in locals:
+.product_code, var.environment_code, zone, idx + 1 + var.sequence_start), nic_idx + 1 )
+│     ├────────────────
+│     │ var.environment_code is "d"
+│     │ var.product_code is "pc"
+│     │ var.region_code is "eu1"
+│     │ var.sequence_start is 10
+│
+│ Call to function "format" failed: not enough arguments for "%02d" at 17: need index 3 but have 2 total.      
+╵
+╷
+│ Error: Error in function call
+│
+│   on locals.tf line 37, in locals:
+│     ├────────────────
+│     │ var.environment_code is "d"
+│     │ var.product_code is "pc"
+│     │ var.region_code is "eu1"
+│     │ var.sequence_start is 10
+│
+│ Call to function "format" failed: not enough arguments for "%02d" at 17: need index 3 but have 2 total.      
+╵
+╷
+│ Error: Error in function call
+│
+│   on locals.tf line 37, in locals:
+│     │ var.environment_code is "d"
+│     │ var.product_code is "pc"
+│     │ var.region_code is "eu1"
+│     │ var.sequence_start is 10
+│
+│ Call to function "format" failed: not enough arguments for "%02d" at 17: need index 3 but have 2 total.      
+╵
+╷
+│ Error: Error in function call
+│
+│   on locals.tf line 37, in locals:
+│     │ var.region_code is "eu1"
+│     │ var.sequence_start is 10
+│
+│ Call to function "format" failed: not enough arguments for "%02d" at 17: need index 3 but have 2 total.      
+╵
+╷
+│ Error: Error in function call
+│
+│   on locals.tf line 37, in locals:
+│     │ var.sequence_start is 10
+│
+│ Call to function "format" failed: not enough arguments for "%02d" at 17: need index 3 but have 2 total.      
+╵
+╷
+│ Error: Error in function call
+│
+│   on locals.tf line 37, in locals:
+│ Call to function "format" failed: not enough arguments for "%02d" at 17: need index 3 but have 2 total.      
+╵
+╷
+│ Error: Error in function call
+│
+│   on locals.tf line 37, in locals:
+╷
+│ Error: Error in function call
+│
+│   on locals.tf line 37, in locals:
+│ Error: Error in function call
+│
+│   on locals.tf line 37, in locals:
+│   37:             nic_name      = format("%s-%s-additional-%02d", format("%s%s%s%s%02d", var.region_code, var│
+│   on locals.tf line 37, in locals:
+│   37:             nic_name      = format("%s-%s-additional-%02d", format("%s%s%s%s%02d", var.region_code, var│   on locals.tf line 37, in locals:
+│   37:             nic_name      = format("%s-%s-additional-%02d", format("%s%s%s%s%02d", var.region_code, var│   37:             nic_name      = format("%s-%s-additional-%02d", format("%s%s%s%s%02d", var.region_code, var.product_code, var.environment_code, zone, idx + 1 + var.sequence_start), nic_idx + 1 )
+│     ├────────────────
+│     │ var.environment_code is "d"
+│     │ var.product_code is "pc"
+│     │ var.region_code is "eu1"
+│     │ var.sequence_start is 10
+│
+│ Call to function "format" failed: not enough arguments for "%02d" at 17: need index 3 but have 2 total.      
+╵
