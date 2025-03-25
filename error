@@ -1,78 +1,39 @@
- + disk_attachement   = [
-      + {
-          + cache             = "None"
-          + create_option     = "Attach"
-          + lun               = "ddsk-01-eu1pcd111"
-          + managed_disk_id   = (known after apply)
-          + vm_name           = "eu1pcd111"
-          + write_accelerator = false
-        },
-      + {
-          + cache             = "None"
-          + create_option     = "Attach"
-          + lun               = "ddsk-01-eu1pcd212"
-          + managed_disk_id   = (known after apply)
-          + vm_name           = "eu1pcd212"
-          + write_accelerator = false
-        },
-      + {
-          + cache             = "None"
-          + create_option     = "Attach"
-          + lun               = "ddsk-01-eu1pcd313"
-          + managed_disk_id   = (known after apply)
-          + vm_name           = "eu1pcd313"
-          + write_accelerator = false
-        },
-    ]
-  + disk_attachement2  = {
-      + "eu1pcd111 + ddsk-01-eu1pcd111" = {
-          + cache             = "None"
-          + create_option     = "Attach"
-          + lun               = "ddsk-01-eu1pcd111"
-          + managed_disk_id   = (known after apply)
-          + vm_name           = "eu1pcd111"
-          + write_accelerator = false
-        }
-      + "eu1pcd212 + ddsk-01-eu1pcd212" = {
-          + cache             = "None"
-          + create_option     = "Attach"
-          + lun               = "ddsk-01-eu1pcd212"
-          + managed_disk_id   = (known after apply)
-          + vm_name           = "eu1pcd212"
-          + write_accelerator = false
-        }
-      + "eu1pcd313 + ddsk-01-eu1pcd313" = {
-          + cache             = "None"
-          + create_option     = "Attach"
-          + lun               = "ddsk-01-eu1pcd313"
-          + managed_disk_id   = (known after apply)
-          + vm_name           = "eu1pcd313"
-          + write_accelerator = false
-        }
-    }
-  + virtual_machine_id = {
-      + eu1pcd111 = "eu1pcd111"
-      + eu1pcd212 = "eu1pcd212"
-      + eu1pcd313 = "eu1pcd313"
-    }
-╷
-│ Error: Incorrect attribute value type
+Error: Missing required argument
 │
-│   on main-disk-attachment.tf line 6, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
-│    6:   lun                       = each.value.lun
-│     ├────────────────
-│     │ each.value.lun is "ddsk-01-eu1pcd212"
+│   with azurerm_virtual_machine_data_disk_attachment.disk_attachment["eu1pcd212 + ddsk-01-eu1pcd212"],        
+│   on main-disk-attachment.tf line 4, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
+│    4:   managed_disk_id           = try(module.compute-managed_disk.managed_disks_list[each.value.disk].id, null)
 │
-│ Inappropriate value for attribute "lun": a number is required.
+│ The argument "managed_disk_id" is required, but no definition was found.
 ╵
 ╷
-│ Error: Incorrect attribute value type
+│ Error: Missing required argument
 │
-│   on main-disk-attachment.tf line 6, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
-│    6:   lun                       = each.value.lun
-│     ├────────────────
-│     │ each.value.lun is "ddsk-01-eu1pcd111"
+│   with azurerm_virtual_machine_data_disk_attachment.disk_attachment["eu1pcd313 + ddsk-01-eu1pcd313"],        
+│   on main-disk-attachment.tf line 4, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
+│    4:   managed_disk_id           = try(module.compute-managed_disk.managed_disks_list[each.value.disk].id, null)
 │
-│ Inappropriate value for attribute "lun": a number is required.
+│ The argument "managed_disk_id" is required, but no definition was found.
 ╵
 ╷
+│ Error: Missing required argument
+│
+│   with azurerm_virtual_machine_data_disk_attachment.disk_attachment["eu1pcd111 + ddsk-01-eu1pcd111"],        
+│   on main-disk-attachment.tf line 4, in resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment":
+│    4:   managed_disk_id           = try(module.compute-managed_disk.managed_disks_list[each.value.disk].id, null)
+│
+│ The argument "managed_disk_id" is required, but no definition was found.
+
+resource "azurerm_virtual_machine_data_disk_attachment" "disk_attachment" {
+  for_each = local.disk_attachments2
+
+  managed_disk_id           = try(module.compute-managed_disk.managed_disks_list[each.value.disk].id, null)
+  virtual_machine_id        = try(one([for vm in azurerm_linux_virtual_machine.vm : vm.id if vm.name == each.value.vm]), null)
+  lun                       = each.value.lun
+  caching                   = each.value.cache
+  create_option             = each.value.create_option
+  write_accelerator_enabled = each.value.write_accelerator
+
+
+}
+
