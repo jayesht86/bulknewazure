@@ -1,47 +1,16 @@
-module "nic" {
-  source = "git::https://dev.azure.com/msci-otw/tech-iac/_git/terraform-azurerm-msci-network-nic?ref=0.7"
-
-  for_each = { for o in local.vm_list : o.name => o }
-  
-
-  #Subscription
-  subscription_id = var.subscription_id
-
-  #Resource Group
-  #resource_group_object = var.resource_group_object
-  resource_group_object = data.azurerm_resource_group.existing_rg
-  #Tags
-  tags = local.tags
-  #Global Variables
-  #nic_subnet_id = var.linux_vm_nic_subnet_id
-  #Variables
-
-  nic_default_interface = { 
-    name                                   = each.value.linux_vm_default_nic.nic_name 
-    nic_name                               = each.value.linux_vm_default_nic.nic_name
-    nic_subnet_id                          = each.value.linux_vm_default_nic.nic_subnet_id
-    nic_ip_config = [
-      {
-        #nic_ip_config_private_ip_allocation = lookup(each.value.linux_vm_default_nic.nic_ip_config[0], "nic_ip_config_private_ip_allocation", "Dynamic")
-        nic_ip_config_primary               = lookup(each.value.linux_vm_default_nic.nic_ip_config[0], "nic_ip_config_primary", true)
-        nic_ip_config_name                  = lookup(each.value.linux_vm_default_nic.nic_ip_config[0], "nic_ip_config_name", "primary")
-        #nic_subnet_id                          = each.value.linux_vm_default_nic.nic_subnet_id
-    }
-    ]
-  }
-  nic_additional_interface = [ 
-    for nic in each.value.linux_vm_additional_nic : { 
-      name = nic.nic_name
-      nic_name        = nic.nic_name
-      nic_subnet_id   = nic.nic_subnet_id
-      nic_ip_config = [
-        {
-          nic_ip_config_primary = lookup(nic.nic_ip_config[0], "nic_ip_config_primary", false)
-          nic_ip_config_name    = lookup(nic.nic_ip_config[0], "nic_ip_config_name", "secondary")
-        }
-
-      ]
-}
-  ]
-}
-
+Error: Invalid reference
+│ 
+│   on locals.tf line 28, in locals:
+│   28:           nic_name      = format("%s-%s-primary", name,  lookup(config.linux_vm_default_nic, "nic_name", "default-nic"), zone)
+│ 
+│ A reference to a resource type must be followed by at least one attribute access, specifying the resource
+│ name.
+╵
+╷
+│ Error: Invalid reference
+│ 
+│   on locals.tf line 35, in locals:
+│   35:             nic_name      = format("%s-%s-additional-%02d", name,  lookup(nic, "nic_name", "additional-nic"), zone, nic_idx + 1)
+│
+│ A reference to a resource type must be followed by at least one attribute access, specifying the resource    
+│ name.
