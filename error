@@ -7,3 +7,8 @@
 │     │ var.sequence_start is 10
 │
 │ Call to function "format" failed: not enough arguments for "%s" at 3: need index 2 but have 1 total.
+
+nic_name = format("%s%s%s%s%02d-primary", var.region_code, var.product_code, var.environment_code, zone, idx + 1 + var.sequence_start)
+
+nic_name = format("%s%s%s%s%02d-additional-%02d", var.region_code, var.product_code, var.environment_code, zone, idx + 1 + var.sequence_start, nic_idx + 1)
+
